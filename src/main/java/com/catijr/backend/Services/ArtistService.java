@@ -1,12 +1,9 @@
 package com.catijr.backend.Services;
 
 
-import com.catijr.backend.DTOs.GetMusicDTO;
 import com.catijr.backend.Entities.Album;
-import com.catijr.backend.Entities.Artist;
 import com.catijr.backend.Entities.Music;
 import com.catijr.backend.Repositories.ArtistRepository;
-import com.catijr.backend.Repositories.MusicRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,8 +11,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
