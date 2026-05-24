@@ -4,6 +4,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,7 +34,7 @@ public class UserController {
     /*
     GET METHOD:
 
-    This method is used to list artists the user recently listened to,
+    This method is used to list (the last 5) artists the user recently listened to,
     since this project has no support for metrics that allow this to be
     a functional route, the result of this method will be a fixed set of artists
     initialized in the database
@@ -44,7 +48,7 @@ public class UserController {
     /*
     GET METHOD:
 
-    This method is used to list the most played artists of the user,
+    This method is used to list the 5 most played artists of the user,
     since this project has no support for metrics that allow this to be
     a functional route, the result of this method will be a fixed set of artists
     initialized in the database
@@ -58,7 +62,7 @@ public class UserController {
     /*
     GET METHOD:
     
-    This method is used to list the user's recently played musics,
+    This method is used to list the user's (last 5) recently played musics,
     since this project has no support for metrics that allow this to be
     a functional route, the result of this method will be a fixed set of musics
     initialized in the database
@@ -71,7 +75,7 @@ public class UserController {
     /*
     GET METHOD:
     
-    This method is used to list the user's most played musics,
+    This method is used to list the user's 5 most played musics,
     since this project has no support for metrics that allow this to be
     a functional route, the result of this method will be a fixed set of musics
     initialized in the database
@@ -84,7 +88,7 @@ public class UserController {
      /*
     GET METHOD:
     
-    This method is used to list the user's recently played albums,
+    This method is used to list the user's (last 5) recently played albums,
     since this project has no support for metrics that allow this to be
     a functional route, the result of this method will be a fixed set of albums
     initialized in the database
@@ -102,8 +106,10 @@ public class UserController {
     fixed set of data not initialized in the database
     */ 
     @GetMapping("/followers")
-    public String getUserFollowers(@RequestParam String param) {
-        return new String();
+    public List<String> getUserFollowers(@RequestParam String param) {
+        List<String> followers =new ArrayList<>(List.of("deadbeat7","xmc0-Infinity","John Doe", "Jose Manuel Alberto Lopez","XCS_2026"));
+
+        return followers;
     }
     
     
