@@ -1,6 +1,6 @@
 package com.catijr.backend.Controllers;
 
-import com.catijr.backend.DTOs.GetMusicDTO;
+import com.catijr.backend.DTOs.Music.GetMusicDTO;
 import com.catijr.backend.Services.AlbumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

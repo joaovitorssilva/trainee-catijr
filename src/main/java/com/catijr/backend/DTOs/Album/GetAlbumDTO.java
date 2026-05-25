@@ -1,5 +1,6 @@
-package com.catijr.backend.DTOs;
+package com.catijr.backend.DTOs.Album;
 
+import com.catijr.backend.DTOs.Music.GetMusicDTO;
 import com.catijr.backend.Entities.Album;
 
 import java.time.Instant;
@@ -25,4 +26,5 @@ public record GetAlbumDTO(UUID id, String title,
                 album.getUpdatedAt()
         );
     }
+    
 }
