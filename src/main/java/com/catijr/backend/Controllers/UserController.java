@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -34,8 +35,8 @@ public class UserController {
 
     */
     @GetMapping("/playlists")
-    public List<GetPlaylistDTO> getUserPlaylists() {
-        return userService.getUserPlaylists();
+    public ResponseEntity<List<GetPlaylistDTO>> getUserPlaylists() {
+        return ResponseEntity.ok( userService.getUserPlaylists());
     }
 
     /*
@@ -47,8 +48,8 @@ public class UserController {
     initialized in the database
     */
     @GetMapping("/recentArtists")
-    public List<GetArtistDTO> getUserRecentArtists() {
-        return userService.getUserRecentArtists();
+    public ResponseEntity<List<GetArtistDTO>> getUserRecentArtists() {
+        return ResponseEntity.ok(userService.getUserRecentArtists());
     }
     
 
@@ -62,8 +63,8 @@ public class UserController {
 
     */
     @GetMapping("/mostPlayedArtists")
-    public List<GetArtistDTO> getUserMostPlayedArtists() {
-        return userService.getUserMostPlayedArtists();
+    public ResponseEntity<List<GetArtistDTO>> getUserMostPlayedArtists() {
+        return ResponseEntity.ok( userService.getUserMostPlayedArtists());
     }
 
     /*
@@ -75,8 +76,8 @@ public class UserController {
     initialized in the database
     */
     @GetMapping("/recentMusics")
-    public List<GetMusicDTO> getUserRecentMusics() {
-        return userService.getUserRecentMusics();
+    public ResponseEntity<List<GetMusicDTO>> getUserRecentMusics() {
+        return ResponseEntity.ok(userService.getUserRecentMusics());
     }
 
     /*
@@ -88,8 +89,8 @@ public class UserController {
     initialized in the database
     */
     @GetMapping("/mostPlayedMusics")
-    public List<GetMusicDTO> getUserMostPlayedMusics() {
-        return userService.getUserMostPlayedMusics();
+    public ResponseEntity<List<GetMusicDTO>> getUserMostPlayedMusics() {
+        return ResponseEntity.ok(userService.getUserMostPlayedMusics());
     }
 
      /*
@@ -101,8 +102,8 @@ public class UserController {
     initialized in the database
     */
     @GetMapping("/recentAlbums")
-    public List<GetAlbumNoMusicsDTO> getUserRecentAlbums() {
-        return userService.getUserRecentAlbums();
+    public ResponseEntity<List<GetAlbumNoMusicsDTO>> getUserRecentAlbums() {
+        return ResponseEntity.ok( userService.getUserRecentAlbums());
     }
 
     /*
@@ -113,10 +114,10 @@ public class UserController {
     fixed set of data not initialized in the database
     */ 
     @GetMapping("/followers")
-    public List<String> getUserFollowers() {
+    public ResponseEntity< List<String>> getUserFollowers() {
         List<String> followers =new ArrayList<>(List.of("deadbeat7","xmc0-Infinity","John Doe", "Jose Manuel Alberto Lopez","XCS_2026"));
 
-        return followers;
+        return ResponseEntity.ok(followers);
     }
     
     
