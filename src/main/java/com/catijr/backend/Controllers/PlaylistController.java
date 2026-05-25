@@ -2,6 +2,7 @@ package com.catijr.backend.Controllers;
 
 
 import com.catijr.backend.DTOs.Music.GetMusicDTO;
+import com.catijr.backend.DTOs.Playlist.GetPlaylistDTO;
 import com.catijr.backend.DTOs.Playlist.GetPlaylistNoMusicDTO;
 import com.catijr.backend.DTOs.Playlist.PutPlaylistDTO;
 import com.catijr.backend.Services.PlaylistService;
@@ -19,11 +20,11 @@ public class PlaylistController {
 
     private final PlaylistService playlistService;
 
-    @GetMapping("{playlistId}/musics")
-    public ResponseEntity<List<GetMusicDTO>> getMusicsByPlaylistId(@PathVariable String playlistId) {
-        var musics = playlistService.getMusicsByPlaylistId(UUID.fromString(playlistId));
+    @GetMapping("{playlistId}")
+    public ResponseEntity<GetPlaylistDTO> getPlaylistById(@PathVariable String playlistId) {
+        var playlist = playlistService.getPlaylistById(UUID.fromString(playlistId));
 
-        List<GetMusicDTO> responseDTO = musics.stream().map(music -> new GetMusicDTO(music)).toList();
+        GetPlaylistDTO responseDTO = new GetPlaylistDTO(playlist);
 
         return ResponseEntity.ok(responseDTO);
     }
@@ -34,6 +35,16 @@ public class PlaylistController {
         var edited_playlist = playlistService.editPlaylistAttributes(UUID.fromString(playlistId), changesDTO);
 
         GetPlaylistNoMusicDTO responseDTO = new GetPlaylistNoMusicDTO(edited_playlist);
+
+        return ResponseEntity.ok(responseDTO);
+    }
+
+    @PatchMapping("{playlistId}/{musicId}")
+    public ResponseEntity<GetPlaylistDTO> addMusicToPlaylist(@PathVariable String playlistId,
+                                                             @PathVariable String musicId) {
+        var playlist = playlistService.addMusicToPlaylist(UUID.fromString(playlistId), UUID.fromString(musicId));
+
+        GetPlaylistDTO responseDTO = new GetPlaylistDTO(playlist);
 
         return ResponseEntity.ok(responseDTO);
     }

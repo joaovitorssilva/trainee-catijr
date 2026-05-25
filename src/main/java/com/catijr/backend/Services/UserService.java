@@ -4,11 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.catijr.backend.DTOs.Album.GetAlbumDTO;
 import com.catijr.backend.DTOs.Album.GetAlbumNoMusicsDTO;
 import com.catijr.backend.DTOs.Artist.GetArtistDTO;
 import com.catijr.backend.DTOs.Music.GetMusicDTO;
-import com.catijr.backend.DTOs.Playlist.GetPlaylistDTO;
+import com.catijr.backend.DTOs.Playlist.GetPlaylistNoMusicDTO;
 import com.catijr.backend.Entities.Album;
 import com.catijr.backend.Entities.Artist;
 import com.catijr.backend.Entities.Music;
@@ -39,7 +38,7 @@ public class UserService {
     private final MusicMapper           musicMapper;
 
 
-    public List<GetPlaylistDTO> getUserPlaylists(){
+    public List<GetPlaylistNoMusicDTO> getUserPlaylists(){
         List<Playlist> albums = playlistRepository.findAll();
         
         return albums.stream().map(playlistMapper::toDTO).toList();

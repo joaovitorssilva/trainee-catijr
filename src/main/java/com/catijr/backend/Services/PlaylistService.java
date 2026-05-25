@@ -4,6 +4,7 @@ package com.catijr.backend.Services;
 import com.catijr.backend.DTOs.Playlist.PutPlaylistDTO;
 import com.catijr.backend.Entities.Music;
 import com.catijr.backend.Entities.Playlist;
+import com.catijr.backend.Repositories.MusicRepository;
 import com.catijr.backend.Repositories.PlaylistRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,12 +21,13 @@ import java.util.stream.Collectors;
 public class PlaylistService {
 
     private final PlaylistRepository playlistRepository;
+    private final MusicRepository musicRepository;
 
-    public List<Music> getMusicsByPlaylistId(UUID playlistId) {
+    public Playlist getPlaylistById(UUID playlistId) {
         var playlist = playlistRepository.findById(playlistId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        return playlist.getSongs();
+        return playlist;
     }
 
     public Playlist editPlaylistAttributes(UUID playlistId, PutPlaylistDTO changesDTO) {
@@ -45,6 +47,29 @@ public class PlaylistService {
         return edited;
     }
 
+    public Playlist addMusicToPlaylist(UUID playlistId, UUID musicId) {
+        var playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        if (!playlistRepository.musicExistsById(playlistId, musicId)) {
+            var music = musicRepository.findById(musicId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+            List<Music> musics = new ArrayList<>(playlist.getSongs());
+
+            musics.add(music);
+
+            playlist.setSongs(musics);
+            playlist.setMusicQtd(playlist.getMusicQtd() + 1);
+            playlist.setDuration(playlist.getDuration() + music.getDuration());
+
+            var updated = playlistRepository.save(playlist);
+
+            return updated;
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+    }
 
     public void deletePlaylistById(UUID playlistId) {
         if (playlistRepository.existsById(playlistId)) {
@@ -59,9 +84,14 @@ public class PlaylistService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         if (playlistRepository.musicExistsById(playlistId, musicId)) {
+            var music = musicRepository.findById(musicId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
             List<Music> musics = new ArrayList<>(playlist.getSongs());
 
-            musics.removeIf(music -> music.getId().equals(musicId));
+            musics.removeIf(tgt_music -> tgt_music.getId().equals(musicId));
+
+            playlist.setMusicQtd(playlist.getMusicQtd() - 1);
+            playlist.setDuration(playlist.getDuration() - music.getDuration());
 
             playlist.setSongs(musics);
 

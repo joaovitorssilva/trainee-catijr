@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.catijr.backend.DTOs.Album.GetAlbumNoMusicsDTO;
 import com.catijr.backend.DTOs.Artist.GetArtistDTO;
 import com.catijr.backend.DTOs.Music.GetMusicDTO;
-import com.catijr.backend.DTOs.Playlist.GetPlaylistDTO;
+import com.catijr.backend.DTOs.Playlist.GetPlaylistNoMusicDTO;
 import com.catijr.backend.Services.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class UserController {
 
     */
     @GetMapping("/playlists")
-    public List<GetPlaylistDTO> getUserPlaylists() {
+    public List<GetPlaylistNoMusicDTO> getUserPlaylists() {
         return userService.getUserPlaylists();
     }
 
