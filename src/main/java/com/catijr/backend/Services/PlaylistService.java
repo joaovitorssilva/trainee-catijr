@@ -1,6 +1,7 @@
 package com.catijr.backend.Services;
 
 
+import com.catijr.backend.DTOs.Playlist.GetPlaylistNoMusicDTO;
 import com.catijr.backend.DTOs.Playlist.PutPlaylistDTO;
 import com.catijr.backend.Entities.Music;
 import com.catijr.backend.Entities.Playlist;
@@ -76,7 +77,7 @@ public class PlaylistService {
         }
     }
   
-    public GetPlaylistDTO createPlaylist(CreatePlaylistDTO playlist){
+    public GetPlaylistNoMusicDTO createPlaylist(CreatePlaylistDTO playlist){
         Playlist playlistEntity = playlistMapper.toEntity(playlist);
         Playlist savedEntity = playlistRepository.save(playlistEntity);
 

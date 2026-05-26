@@ -1,5 +1,6 @@
 package com.catijr.backend.Controllers;
 
+import com.catijr.backend.DTOs.Playlist.GetPlaylistDTO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,7 +36,7 @@ public class UserController {
 
     */
     @GetMapping("/playlists")
-    public ResponseEntity<List<GetPlaylistDTO>> getUserPlaylists() {
+    public ResponseEntity<List<GetPlaylistNoMusicDTO>> getUserPlaylists() {
         return ResponseEntity.ok( userService.getUserPlaylists());
     }
 

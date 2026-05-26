@@ -55,7 +55,7 @@ public class PlaylistController {
     }
     
     @PostMapping("/")
-    public GetPlaylistDTO postMethodName(@RequestBody CreatePlaylistDTO playlist) {
+    public GetPlaylistNoMusicDTO postMethodName(@RequestBody CreatePlaylistDTO playlist) {
         return playlistService.createPlaylist(playlist);
     }
     
