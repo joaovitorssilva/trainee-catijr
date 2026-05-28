@@ -10,7 +10,7 @@ Rotas responsáveis por buscar o histórico e os dados associados ao perfil do u
 | GET | /user/recentArtists | Retorna os artistas ouvidos recentemente. |
 | GET | /user/mostPlayedArtists | Retorna os artistas mais ouvidos. |
 | GET | /user/recentMusics | Retorna as músicas ouvidas recentemente. |
-| GET | /user/mostPlayedMusics | Retorna as músicas mais ouvidas. |
+backend| GET | /user/mostPlayedMusics | Retorna as músicas mais ouvidas. |
 | GET | /user/recentAlbums | Retorna os álbuns ouvidos recentemente. |
 | GET | /user/followers | Retorna a lista de todos os seguidores do usuário. |
 
