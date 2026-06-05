@@ -1,3 +1,4 @@
+import axios from "axios"
 import type {
   AlbumDTO,
   AlbumNoMusicsDTO,
@@ -9,84 +10,76 @@ import type {
   PutPlaylistDTO,
 } from "./types"
 
-async function fetchJSON<T>(url: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(url, {
-    headers: { "Content-Type": "application/json" },
-    ...init,
-  })
-  if (!res.ok) throw new Error(`HTTP ${res.status} - ${res.statusText}`)
-  if (res.status === 204) return undefined as T
-  return res.json()
-}
+const api = axios.create({
+  headers: { "Content-Type": "application/json" },
+})
+
+api.interceptors.response.use(null, (error) => {
+  const status = error.response?.status
+  const msg = error.response?.data?.message ?? error.message
+  return Promise.reject(new Error(`HTTP ${status ?? "??"} - ${msg}`))
+})
 
 export function getUserPlaylists(): Promise<PlaylistNoMusicDTO[]> {
-  return fetchJSON("/user/playlists")
+  return api.get("/user/playlists").then((r) => r.data)
 }
 
 export function getRecentArtists(): Promise<ArtistDTO[]> {
-  return fetchJSON("/user/recentArtists")
+  return api.get("/user/recentArtists").then((r) => r.data)
 }
 
 export function getMostPlayedArtists(): Promise<ArtistDTO[]> {
-  return fetchJSON("/user/mostPlayedArtists")
+  return api.get("/user/mostPlayedArtists").then((r) => r.data)
 }
 
 export function getRecentMusics(): Promise<MusicDTO[]> {
-  return fetchJSON("/user/recentMusics")
+  return api.get("/user/recentMusics").then((r) => r.data)
 }
 
 export function getMostPlayedMusics(): Promise<MusicDTO[]> {
-  return fetchJSON("/user/mostPlayedMusics")
+  return api.get("/user/mostPlayedMusics").then((r) => r.data)
 }
 
 export function getRecentAlbums(): Promise<AlbumNoMusicsDTO[]> {
-  return fetchJSON("/user/recentAlbums")
+  return api.get("/user/recentAlbums").then((r) => r.data)
 }
 
 export function getUserFollowers(): Promise<string[]> {
-  return fetchJSON("/user/followers")
+  return api.get("/user/followers").then((r) => r.data)
 }
 
 export function getPlaylistById(id: string): Promise<PlaylistDTO> {
-  return fetchJSON(`/playlist/${id}`)
+  return api.get(`/playlist/${id}`).then((r) => r.data)
 }
 
 export function createPlaylist(data: CreatePlaylistDTO): Promise<PlaylistNoMusicDTO> {
-  return fetchJSON("/playlist/", {
-    method: "POST",
-    body: JSON.stringify(data),
-  })
+  return api.post("/playlist/", data).then((r) => r.data)
 }
 
 export function updatePlaylistAttributes(id: string, data: PutPlaylistDTO): Promise<PlaylistNoMusicDTO> {
-  return fetchJSON(`/playlist/${id}/attributes`, {
-    method: "PUT",
-    body: JSON.stringify(data),
-  })
+  return api.put(`/playlist/${id}/attributes`, data).then((r) => r.data)
 }
 
 export function addMusicToPlaylist(playlistId: string, musicId: string): Promise<PlaylistDTO> {
-  return fetchJSON(`/playlist/${playlistId}/${musicId}`, {
-    method: "PATCH",
-  })
+  return api.patch(`/playlist/${playlistId}/${musicId}`).then((r) => r.data)
 }
 
 export function deletePlaylist(id: string): Promise<void> {
-  return fetchJSON(`/playlist/${id}`, { method: "DELETE" })
+  return api.delete(`/playlist/${id}`)
 }
 
 export function removeMusicFromPlaylist(playlistId: string, musicId: string): Promise<void> {
-  return fetchJSON(`/playlist/${playlistId}/${musicId}`, { method: "DELETE" })
+  return api.delete(`/playlist/${playlistId}/${musicId}`)
 }
 
 export function getArtistPopularMusics(artistId: string): Promise<MusicDTO[]> {
-  return fetchJSON(`/artist/${artistId}/popularMusics`)
+  return api.get(`/artist/${artistId}/popularMusics`).then((r) => r.data)
 }
 
 export function getArtistAlbums(artistId: string): Promise<AlbumDTO[]> {
-  return fetchJSON(`/artist/${artistId}/albums`)
+  return api.get(`/artist/${artistId}/albums`).then((r) => r.data)
 }
 
 export function getAlbumMusics(albumId: string): Promise<MusicDTO[]> {
-  return fetchJSON(`/album/${albumId}/musics`)
+  return api.get(`/album/${albumId}/musics`).then((r) => r.data)
 }
