@@ -22,14 +22,19 @@ Antes de começar, certifique-se de ter instalado:
   git clone https://github.com/joaovitorssilva/trainee-catijr
 ```
 
-2. Inicie o banco de dados postgresql e o backend em spring boot:
+2. Inicie o banco de dados PostgreSQL:
 ```bash
-  docker-compose up -d && ./mvnw spring-boot:run  
+  cd backend && docker compose up -d
 ```
 
-3. Inicie o frontend:
+3. Inicie o backend (Spring Boot):
 ```bash
-  pnpm dev
+  cd backend && ./mvnw spring-boot:run
+```
+
+4. Em outro terminal, inicie o frontend:
+```bash
+  cd frontend && pnpm install && pnpm dev
 ```
 
 ## Contribuindo
