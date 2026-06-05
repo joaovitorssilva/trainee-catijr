@@ -1,1 +1,28 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+
+  --color-bg: #000000;
+  --color-bg-base: #121212;
+  --color-bg-highlight: #1F1F1F;
+  --color-home-bg-gradient-variant: #202020;
+  --color-bg-elements: #2D2D2D;
+
+  --color-text: #FFFFFF;
+  --color-subdued: #AAAAAA;
+  --color-text-subdued: #B3B3B3;
+
+  --color-track-bar: #4D4D4D;
+  --color-essential-subdued: #7C7C7C;
+  --color-options-button-pressed: #343333;
+
+  --text-10-medium: 10px;
+  --font-wheight-10-medium: 500;
+  --leading-10-medium: 100%;
+  --tracking-10-medium: 0%;
+}
+
+.text-10-medium{
+  @apply text-10-medium font-wheight-10-medium leading-10-medium tracking-10-medium 
+}
