@@ -10,6 +10,8 @@
   --color-bg-elements: #2D2D2D;
 
   --color-text: #FFFFFF;
+  --color-primary: #6FD168;
+  --color-accent: #7AD87A;
   --color-subdued: #AAAAAA;
   --color-text-subdued: #B3B3B3;
 
@@ -25,4 +27,27 @@
 
 .text-10-medium{
   @apply text-10-medium font-wheight-10-medium leading-10-medium tracking-10-medium 
+}
+
+@layer base {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #1F1F1F;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #4D4D4D;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #7C7C7C;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #4D4D4D #1F1F1F;
+  }
 }
