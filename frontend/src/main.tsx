@@ -8,8 +8,8 @@ import AppLayout from './components/layout/AppLayout'
 import HomePage from './pages/HomePage'
 import PlaylistPage from './pages/PlaylistPage'
 import ArtistPage from './pages/ArtistPage'
-import './index.css'
 import AlbumPage from './pages/AlbumPage'
+import './index.css'
 
 const router = createBrowserRouter([
   {
@@ -20,26 +20,32 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+        errorElement: <NotFoundPage />
       },
       {
         path: "/playlist/:playlistId",
-        element: <PlaylistPage />
+        element: <PlaylistPage />,
+        errorElement: <NotFoundPage />
       },
       {
         path: "/artist/:artistId",
-        element: <ArtistPage />
+        element: <ArtistPage />,
+        errorElement: <NotFoundPage />
       },
       {
         path: "/album/:albumId",
-        element: <AlbumPage/>
+        element: <AlbumPage />,
+        errorElement: <NotFoundPage />
       },
       {
         path: "/profile",
         element: <ProfilePage />,
+        errorElement: <NotFoundPage />,
         children: [
           {
             path: "/profile/:profileId",
-            element: <ProfilePage />
+            element: <ProfilePage />,
+            errorElement: <NotFoundPage />
           }
         ]
       },
