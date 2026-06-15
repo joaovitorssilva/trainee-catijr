@@ -11,14 +11,14 @@ export default function ArtistCard({ name, onClick }: ArtistCardProps) {
     <div 
       onClick={onClick}
       className="flex flex-col gap-2 cursor-pointer ">
-      <div className="w-33 h-33">
+      <div className="w-15 h-15 md:w-33 md:h-33">
         <img src={ArtistCover} alt="Artist Profile Image" className="rounded-full" />
       </div>
       <div className="flex flex-col gap-1">
-        <span className="text-white text-xs font-medium">
+        <span className="text-white text-12-medium">
           {name}
         </span>
-        <span className="text-subdued text-10-medium">
+        <span className="hidden md:block text-subdued text-10-medium">
           Artista
         </span>
       </div>

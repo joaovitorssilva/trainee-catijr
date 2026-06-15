@@ -4,30 +4,34 @@ import { getUserPlaylists } from "@/services/api";
 import type { PlaylistNoMusicDTO } from "@/services/types";
 import PlaylistCard from "./PlaylistCard";
 
-export default function PlaylistSection() {
+interface PlaylistSectionProps {
+  activeFilter: string
+}
+
+export default function PlaylistSection({ activeFilter }: PlaylistSectionProps) {
   const navigate = useNavigate()
   const [playlists, setPlaylists] = useState<PlaylistNoMusicDTO[]>([])
 
   useEffect(() => {
-    getUserPlaylists()
-      .then(setPlaylists)
+    getUserPlaylists().then(setPlaylists)
   }, [])
 
+  if (activeFilter !== "Tudo" && activeFilter !== "Playlists") return null
+
   return (
-    <div className="flex flex-col gap-2.5">
-      <span className="text-base font-bold text-white">
+    <div className="flex flex-col gap-3">
+      <span className="text-white text-16-bold">
         Suas Playlists
       </span>
       <section className="flex gap-3">
         {playlists.map((p) => (
-          <PlaylistCard 
+          <PlaylistCard
             key={p.id}
             id={p.id}
             name={p.name}
             onClick={() => navigate(`/playlist/${p.id}`)} />
         ))}
       </section>
-
     </div>
   )
 }
