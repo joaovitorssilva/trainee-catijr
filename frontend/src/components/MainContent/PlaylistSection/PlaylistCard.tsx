@@ -11,15 +11,15 @@ export default function PlaylistCard({ name, onClick }: PlaylistCardProps) {
     <div
       onClick={onClick}
       className="flex flex-col gap-2 cursor-pointer ">
-      <div className=" w-[132px] h-[132px]">
+      <div className="w-15 h-15 md:w-[132px] md:h-[132px]">
         <img src={PlaylistCover} className="w-full aspect-square object-cover rounded-xs " />
       </div>
 
       <div className="flex flex-col gap-1 overflow-hidden">
-        <span className="text-white text-xs font-medium ">
+        <span className="text-white text-12-medium ">
           {name}
         </span>
-        <span className="text-subdued text-xs">
+        <span className="hidden md:block text-subdued text-10-medium">
           Playlist • Vitoria Tenorio
         </span>
       </div>

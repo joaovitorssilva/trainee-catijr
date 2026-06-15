@@ -2,9 +2,9 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
+import App from './App'
 import ProfilePage from './pages/ProfilePage'
 import NotFoundPage from './pages/NotFoundPage'
-import AppLayout from './components/layout/AppLayout'
 import HomePage from './pages/HomePage'
 import PlaylistPage from './pages/PlaylistPage'
 import ArtistPage from './pages/ArtistPage'
@@ -14,7 +14,7 @@ import './index.css'
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <AppLayout />,
+    element: <App />,
     errorElement: <NotFoundPage />,
     children: [
       {
