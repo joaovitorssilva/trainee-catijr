@@ -1,42 +1,58 @@
 import { useNavigate } from "react-router-dom";
-
-import SpotifyLogo from "../../assets/spotify-logo.svg";
-import HomeIcon from "../../assets/icons/home-icon.svg";
-import BellIcon from "../../assets/icons/bell-icon.svg";
 import SearchBar from "../ui/SearchBar";
-import { User } from "lucide-react";
+import Button from "../ui/Button";
+import SpotifyLogo from "@/assets/spotify-logo.svg";
+import HomeIcon from "@/assets/icons/home-icon.svg";
+import BellIcon from "@/assets/icons/bell-icon.svg";
+import DownloadIcon from "@/assets/icons/download-icon.svg"
+import UserAvatar from "@/assets/user-avatar.png"
 
 export default function Topbar() {
   const navigate = useNavigate();
 
   return (
-    <header className="sticky top-0 flex items-center gap-2 px-4 py-3 select-none z-50">
-      <img src={SpotifyLogo} alt="Spotify" className="h-7 w-7" />
+    <header className="flex items-center justify-between gap-2 p-3 sticky top-0 z-50">
+      <img src={SpotifyLogo} alt="Spotify" className="hidden md:block h-7 w-7" />
 
-      <div className="flex flex-1 items-center justify-center gap-2 min-w-0">
-        <button
+      <div className="flex flex-1 items-center md:justify-center gap-1">
+        <Button
+          variant="icon"
+          size="md"
           onClick={() => navigate("/")}
-          className="flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-bg-highlight border-none cursor-pointer">
-          <img src={HomeIcon} alt="Home" className="w-4 h-4" />
-        </button>
-
+          className="w-9 h-9 rounded-full bg-bg-highlight cursor-pointer">
+          <img
+            src={HomeIcon}
+            alt="Home Icon"
+            className="w-4 h-4" />
+        </Button>
         <SearchBar />
       </div>
 
       <div className="flex items-center gap-2 shrink-0">
-        <button
-          className="flex items-center justify-center w-9 h-9 rounded-full hover:bg-bg-highlight transition ease-out duration-300 cursor-pointer"
-        >
-          <img src={BellIcon} alt="Notifications" />
-        </button>
-
-        <button
-          className="flex items-center justify-center w-8 h-8 rounded-full overflow-hidden cursor-pointer"
-        >
-          <span className="flex items-center justify-center w-full h-full text-[13px] font-bold bg-bg-highlight">
-            <User className="text-subdued w-4 h-4" />
+        <div className="hidden md:flex gap-1.5">
+          <img
+            src={DownloadIcon}
+            alt="Download Icon"
+          />
+          <span className="text-subdued text-10-bold">
+            Instalar Aplicativo
           </span>
-        </button>
+        </div>
+
+        <div className="hidden md:block">
+          <Button variant="icon" size="sm">
+            <img src={BellIcon} alt="Notifications" />
+          </Button>
+        </div>
+
+        <Button variant="icon" size="sm" onClick={() => navigate("/profile")}>
+          <div className="flex items-center justify-center w-8 h-8 rounded-full overflow-hidden  bg-bg-highlight cursor-pointer border-4 border-bg-highlight">
+            <img
+              src={UserAvatar}
+              alt="Profile Image"
+            />
+          </div>
+        </Button>
       </div>
     </header>
   );
