@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
-import PlayerBar from "./components/layout/PlayerBar";
-import Sidebar from "./components/layout/Sidebar";
-import Topbar from "./components/layout/Topbar";
-import { PlayerProvider } from "./context/PlayerContext";
+import PlayerBar from "./PlayerBar";
+import Sidebar from "./Sidebar";
+import Topbar from "./Topbar";
+import { PlayerProvider } from "@/context/PlayerContext";
 
 export default function App() {
   return (
