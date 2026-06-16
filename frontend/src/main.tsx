@@ -10,6 +10,7 @@ import PlaylistPage from './pages/PlaylistPage'
 import ArtistPage from './pages/ArtistPage'
 import AlbumPage from './pages/AlbumPage'
 import './index.css'
+import NowPlayingPage from './pages/NowPlayingPage'
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,11 @@ const router = createBrowserRouter([
 
     ]
   },
+  {
+    path: "/now-playing",
+    element: <NowPlayingPage/>,
+    errorElement: <NotFoundPage/>
+  }
 ])
 
 createRoot(document.getElementById('root')!).render(
