@@ -11,7 +11,7 @@ export default function Topbar() {
   const navigate = useNavigate();
 
   return (
-    <header className="flex items-center justify-between gap-2 p-3 sticky top-0 z-50">
+    <header className="flex items-center justify-between gap-2 p-3 sticky top-0 bg-bg z-50">
       <img src={SpotifyLogo} alt="Spotify" className="hidden md:block h-7 w-7" />
 
       <div className="flex flex-1 items-center md:justify-center gap-1">
@@ -28,7 +28,7 @@ export default function Topbar() {
         <SearchBar />
       </div>
 
-      <div className="flex items-center gap-2 shrink-0">
+      <div className="flex items-center gap-1 shrink-0">
         <div className="hidden md:flex gap-1.5">
           <img
             src={DownloadIcon}
@@ -39,14 +39,12 @@ export default function Topbar() {
           </span>
         </div>
 
-        <div className="hidden md:block">
-          <Button variant="icon" size="sm">
-            <img src={BellIcon} alt="Notifications" />
-          </Button>
-        </div>
+        <Button variant="icon" size="sm" className="hidden md:block p-3 hover:bg-bg-highlight ">
+          <img src={BellIcon} alt="Notifications" />
+        </Button>
 
         <Button variant="icon" size="sm" onClick={() => navigate("/profile")}>
-          <div className="flex items-center justify-center w-8 h-8 rounded-full overflow-hidden  bg-bg-highlight cursor-pointer border-4 border-bg-highlight">
+          <div className=" w-9 h-9 rounded-full overflow-hidden cursor-pointer border-4 border-bg-highlight">
             <img
               src={UserAvatar}
               alt="Profile Image"

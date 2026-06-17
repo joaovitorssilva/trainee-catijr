@@ -23,7 +23,7 @@ export default function PlaylistSection({ activeFilter }: PlaylistSectionProps) 
       <span className="text-white text-16-bold">
         Suas Playlists
       </span>
-      <section className="flex gap-3">
+      <section className="flex gap-3 overflow-hidden">
         {playlists.map((p) => (
           <PlaylistCard
             key={p.id}

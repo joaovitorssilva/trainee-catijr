@@ -68,8 +68,7 @@ export default function ProgressBar({ progress, onChange }: ProgressBarProps) {
         }}
       />
       <div
-        className="absolute top-1/2 -translate-y-1/2 rounded-full bg-white shadow-md pointer-events-none
-                   transition-opacity duration-100"
+        className="absolute top-1/2 -translate-y-1/2 rounded-full bg-white shadow-md pointer-events-none transition-opacity duration-100"
         style={{
           left: `calc(${pct} - 6px)`,
           width: 12,

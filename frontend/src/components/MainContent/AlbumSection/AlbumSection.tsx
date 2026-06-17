@@ -20,12 +20,11 @@ export default function AlbumSection({ activeFilter }: Props) {
   if (activeFilter !== "Tudo") return null
 
   return (
-
     <div className="flex flex-col gap-3">
       <span className="text-white text-16-bold">
         Álbuns Recentes
       </span>
-      <section className="flex gap-3">
+      <section className="flex gap-3 overflow-hidden">
         {albums.map((a) => (
           <AlbumCard
             key={a.id}

@@ -14,13 +14,13 @@ const variantStyles: Record<ButtonVariant, string> = {
   primary: "bg-options-button-pressed text-white font-medium ",
   ghost: "bg-transparent text-subdued hover:text-white",
   active: "bg-white text-black font-semibold rounded-full",
-  outline: "border border-essential-subdued text-white font-bold text-[10px] px-3 py-1.5 ",
-  icon: "bg-transparent text-subdued ",
+  outline: "border border-essential-subdued text-white font-bold text-[10px]",
+  icon: "bg-transparent text-subdued rounded-full",
 }
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: "text-[10px] px-2 py-2.5 ",
-  md: "text-[10px] px-4 py-2.5",
+  sm: "text-[10px] px-3 py-1.5 ",
+  md: "text-[10px] flex justify-center w-[56px] py-2.5",
   lg: "text-base px-6 py-3"
 }
 

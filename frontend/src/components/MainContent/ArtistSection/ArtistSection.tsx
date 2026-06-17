@@ -30,7 +30,7 @@ export default function ArtistSection({ activeFilter }: ArtistSectionProps) {
         </span >
 
       </div>
-      <section className="flex gap-3">
+      <section className="flex gap-3 overflow-hidden">
         {artists.map((a) => (
           <ArtistCard
             key={a.id}
