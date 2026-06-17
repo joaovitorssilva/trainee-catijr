@@ -32,8 +32,6 @@ export default function DiscographySection() {
           />
         ))}
       </section>
-
-
     </div>
   )
 }

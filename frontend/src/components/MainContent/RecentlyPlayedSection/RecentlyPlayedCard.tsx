@@ -15,9 +15,9 @@ export default function RecentlyPlayedCard({ title, isPlaying, onToggle }: Recen
     <div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`flex items-center justify-between  rounded-sm cursor-pointer ${isHovered ? "bg-[#5B5A5A99]" : "bg-bg-elements"}`}
+      className={`flex items-center justify-between rounded-sm cursor-pointer ${isHovered ? "bg-[#5B5A5A99]" : "bg-bg-elements"}`}
     >
-      <div className="w-8 h-8 md:w-12 md:h-12 shrink-0">
+      <div className="w-8 h-8 md:w-15 md:h-15 shrink-0">
         <img src={TrackCover} className="w-full h-full rounded-xs" />
       </div>
       <span className=" text-white text-12-bold pl-2.5">

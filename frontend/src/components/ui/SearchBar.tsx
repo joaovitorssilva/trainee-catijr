@@ -5,7 +5,7 @@ export default function SearchBar() {
   const inputRef = useRef<HTMLInputElement>(null)
 
   return (
-    <div className="flex items-center md:w-full max-w-[355px] h-9 p-3.51 gap-2 rounded-full bg-bg-highlight" >
+    <div className="flex items-center md:w-full max-w-[355px] h-9 p-3.5 gap-2 rounded-full bg-bg-highlight" >
       <img
         src={SearchIcon}
         alt="Search Icon"
