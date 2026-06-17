@@ -1,36 +1,45 @@
-# Frontend 
+# Spotify Clone App
 
-Breve explicação da organização de páginas e arquivos do projeto
+Projeto em desenvolvimento
 
-## Estrutura de diretórios
+## Pré-requisitos
 
-| Diretório / Arquivo | Descrição |
-|---|---|
-| `assets/` | Imagens, ícones SVG e logos |
-| `assets/icons/` | Ícones usados na interface (.svg) |
-| `assets/*.png` | Imagens de capas, avatares, banners |
-| `components/layout/` | Estrutura da página (Sidebar, Topbar, PlayerBar) |
-| `components/sidebar/` | Itens da seção lateral (NavMenu, LibraryItem) |
-| `components/player/` | Player de música (TrackInfo, ProgressBar, VolumeControl, PlayerControls) |
-| `components/ui/` | Componentes reutilizáveis (Button, SearchBar, PlayButton, FollowButton) |
-| `components/MainContent/` | Seções da HomePage (RecentlyPlayed, Playlist, Artist e Album Section) |
-| `components/PlaylistContent/` | Header e tabela de músicas de uma playlist |
-| `components/ArtistContent/` | Header, músicas populares e discografia do artista |
-| `components/ProfileContent/` | Header, top artistas e top músicas do perfil |
-| `context/` | Contextos React (PlayerContext - estado global do player) |
-| `pages/` | Páginas/rotas da aplicação (Home, Playlist, Artist, Album, Profile, Search, NowPlaying, NotFound) |
-| `services/` | Camada de API (axios) e tipos TypeScript |
-| `services/api.ts` | Funções de requisição HTTP |
-| `services/types.ts` | Interfaces DTOs (ArtistDTO, MusicDTO, PlaylistDTO, etc.) |
-| `utils/` | Funções utilitárias (formatação de duração, contagem, etc.) |
-| `App.tsx` | Componente raiz com layout e provedor de contexto |
-| `main.tsx` | Entry point com configuração de rotas (react-router-dom) |
-| `index.css` | Estilos globais e tema Tailwind (cores, scrollbar, utilitários) |
+Antes de começar, certifique-se de ter instalado:
 
-## Arquitetura
+| Ferramenta | Versão | Motivo |
+|---|---|---|
+| **Node.js** | 20+ | Runtime do frontend |
+| **pnpm** | — | Gerenciador de pacotes do frontend |
+| **Java** | 25 | Runtime do backend (Spring Boot) |
+| **Docker** | — | Para rodar o banco PostgreSQL |
 
-- **Roteamento**: Feito pelo `react-router-dom` com layout aninhado. O componente `App` renderiza `Topbar`, `Sidebar`, o conteúdo da rota (`Outlet`) e `PlayerBar`.
-- **Estado global**: O `PlayerContext` (via `useReducer`) gerencia a fila de reprodução, faixa atual, progresso e estado de play/pause.
-- **Estilos**: Tailwind CSS 4 com tema customizado no `index.css` (cores escuras estilo Spotify).
-- **API**: Chamadas HTTP centralizadas em `services/api.ts` com proxy configurado no `vite.config.ts` (resolvi não ativar o CORS no backend em desenvolvimento) em `localhost:8080`.
-- **Alias `@/`**: Mapeado para `src/` no `tsconfig.app.json` e `vite.config.ts`.
+> O Maven **não** precisa ser instalado globalmente — o projeto usa o **Maven Wrapper** (`mvnw`), que baixa a versão correta automaticamente.
+
+## Getting Started
+
+1. Clone esse repositório:
+```bash
+  git clone https://github.com/joaovitorssilva/trainee-catijr
+```
+
+2. Inicie o banco de dados PostgreSQL:
+```bash
+  cd backend && docker compose up -d
+```
+
+3. Inicie o backend (Spring Boot):
+```bash
+  cd backend && ./mvnw spring-boot:run
+```
+
+4. Em outro terminal, inicie o frontend:
+```bash
+  cd frontend && pnpm install && pnpm dev
+```
+
+## Contribuindo
+1. Crie um fork do repositório
+2. Crie uma branch de funcionalidade (`git checkout -b feature/nova-funcionalidade`)
+3. Comite suas alterações (`git commit -m 'Adicionar nova funcionalidade'`)
+4. Push para a branch (`git push origin feature/nova-funcionalidade`)
+5. Abra um Pull Request
