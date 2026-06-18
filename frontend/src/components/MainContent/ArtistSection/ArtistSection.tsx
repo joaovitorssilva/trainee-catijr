@@ -13,8 +13,7 @@ export default function ArtistSection({ activeFilter }: ArtistSectionProps) {
   const [artists, setArtists] = useState<ArtistDTO[]>([])
 
   useEffect(() => {
-    getRecentArtists()
-      .then(setArtists)
+    getRecentArtists().then(setArtists)
   }, [])
 
   if (activeFilter !== "Tudo") return null

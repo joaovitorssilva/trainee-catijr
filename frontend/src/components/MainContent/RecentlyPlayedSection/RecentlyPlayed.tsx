@@ -21,7 +21,9 @@ export default function RecentlyPlayed({ activeFilter }: RecentlyPlayedProps) {
       {musics.map((m) => (
         <RecentlyPlayedCard
           key={m.id}
-          title={m.title} />
+          music={m}
+          musics={musics}
+        />
       ))}
     </div>
   )

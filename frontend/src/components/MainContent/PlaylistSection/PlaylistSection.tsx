@@ -29,6 +29,7 @@ export default function PlaylistSection({ activeFilter }: PlaylistSectionProps) 
             key={p.id}
             id={p.id}
             name={p.name}
+            musicQtd={p.musicQtd}
             onClick={() => navigate(`/playlist/${p.id}`)} />
         ))}
       </section>
