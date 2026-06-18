@@ -36,10 +36,3 @@ Antes de começar, certifique-se de ter instalado:
 ```bash
   cd frontend && pnpm install && pnpm dev
 ```
-
-## Contribuindo
-1. Crie um fork do repositório
-2. Crie uma branch de funcionalidade (`git checkout -b feature/nova-funcionalidade`)
-3. Comite suas alterações (`git commit -m 'Adicionar nova funcionalidade'`)
-4. Push para a branch (`git push origin feature/nova-funcionalidade`)
-5. Abra um Pull Request
