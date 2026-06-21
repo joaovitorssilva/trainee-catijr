@@ -28,6 +28,7 @@ export default function AlbumSection({ activeFilter }: Props) {
         {albums.map((a) => (
           <AlbumCard
             key={a.id}
+            id={a.id}
             title={a.title}
             year={a.year}
             onClick={() => navigate(`/album/${a.id}`)}
