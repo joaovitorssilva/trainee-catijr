@@ -26,6 +26,7 @@ export default function DiscographySection() {
         {albums.map((album) => (
           <AlbumCard
             key={album.id}
+            id={album.id}
             title={album.title}
             year={album.year}
             onClick={() => navigate(`/album/${album.id}`)}
