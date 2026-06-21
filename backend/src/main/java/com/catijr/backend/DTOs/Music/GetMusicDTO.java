@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public record GetMusicDTO(UUID id, String title, UUID artistId,
+                          String artistName,
                           UUID albumId, List<UUID> playlistsId,
                           int duration, Instant releaseDate, int timesListen,
                           Boolean explicit, Instant createdAt,
@@ -20,6 +21,7 @@ public record GetMusicDTO(UUID id, String title, UUID artistId,
                 music.getId(),
                 music.getTitle(),
                 music.getArtist().getId(),
+                music.getArtist().getName(),
                 music.getAlbum().getId(),
                 music.getPlaylists().stream().map(
                         Playlist::getId
