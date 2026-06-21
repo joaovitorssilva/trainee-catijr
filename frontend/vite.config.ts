@@ -16,11 +16,5 @@ export default defineConfig({
   },
   server: {
     port: 3000,
-    proxy: {
-      '/user': 'http://localhost:8080',
-      '/playlist': 'http://localhost:8080',
-      '/artist': 'http://localhost:8080',
-      '/album': 'http://localhost:8080',
-    }
   }
 })
