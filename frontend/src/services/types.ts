@@ -11,6 +11,7 @@ export interface MusicDTO {
   id: string
   title: string
   artistId: string | null
+  artistName: string | null
   albumId: string | null
   playlistsId: string[] | null
   duration: number
