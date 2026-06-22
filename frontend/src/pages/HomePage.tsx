@@ -30,7 +30,7 @@ export default function HomePage() {
 
       <div className="flex flex-1 flex-col overflow-y-auto gap-8 pt-3">
         <RecentlyPlayed activeFilter={activeFilter} />
-        <PlaylistSection activeFilter={activeFilter} />
+        <PlaylistSection activeFilter={activeFilter} title="Suas Playlists" />
         <ArtistSection activeFilter={activeFilter} />
         <AlbumSection activeFilter={activeFilter} />
       </div>

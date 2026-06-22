@@ -2,7 +2,7 @@ import { useState } from "react"
 import { formatDuration } from "@/utils/FormatDuration"
 import { formatPlayCount } from "@/utils/FormatPlayCount"
 import { cn } from "@/utils/utils"
-import SavedIcon from "@/assets/icons/verified-icon.svg"
+// import SavedIcon from "@/assets/icons/verified-icon.svg"
 import PlayIcon from "@/assets/icons/play-icon.svg"
 import OptionsIcon from "@/assets/icons/options-icon.svg"
 import TrackCover from "@/assets/track-cover1.png"
@@ -26,7 +26,7 @@ export default function PopularTrackRow({ title, timesListen, duration, index, i
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        "grid grid-cols-[16px_40px_1fr_auto_auto_auto_auto] w-lg items-center gap-2.5 px-2 py-1 transition ease-in-out duration-300 cursor-pointer rounded-sm",
+        "grid grid-cols-[16px_36px_1fr] md:grid-cols-[16px_36px_1fr_auto_auto_auto_auto] w-full min-w-0 items-center gap-2.5 px-2 py-1 transition ease-in-out duration-300 cursor-pointer rounded-sm overflow-hidden",
         isActive && "bg-bg-elements"
       )}>
 
@@ -48,7 +48,7 @@ export default function PopularTrackRow({ title, timesListen, duration, index, i
       />
 
       <div className="flex flex-col gap-1 overflow-hidden">
-        <span className="text-white font-bold text-10-medium">
+        <span className="text-white font-bold text-10-medium truncate">
           {title}
         </span>
 
@@ -62,18 +62,18 @@ export default function PopularTrackRow({ title, timesListen, duration, index, i
 
       </div>
 
-      <span className="text-10-medium text-subdued">
+      <span className="hidden md:block text-10-medium text-subdued">
         {formatPlayCount(timesListen ?? 0)}      
       </span>
 
       {/* todo: botao de adicionar à playlist  */}
-      <img src={SavedIcon} />
+      {/* <img src={SavedIcon} /> */}
 
-      <span className="text-10-medium text-subdued">
+      <span className="hidden md:block text-10-medium text-subdued">
         {formatDuration(duration)}
       </span>
 
-      <span>
+      <span className="hidden md:block">
         <img src={OptionsIcon} />
       </span>
     </div>

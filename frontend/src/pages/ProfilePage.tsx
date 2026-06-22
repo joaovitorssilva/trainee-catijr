@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { getUserFollowers } from "@/services/api";
 import ProfileHeader from "@/components/ProfileContent/ProfileHeader";
 import TopArtists from "@/components/ProfileContent/TopArtists";
-// import TopTracks from "@/components/ProfileContent/TopTracks";
+import TopTracks from "@/components/ProfileContent/TopTracks";
+import FollowersSection from "@/components/ProfileContent/FollowersSection";
+import PlaylistSection from "@/components/MainContent/PlaylistSection/PlaylistSection";
 
 export default function ProfilePage() {
   const [user, setUser] = useState<string[]>([])
@@ -17,8 +19,10 @@ export default function ProfilePage() {
         followers={String(user.length)}
       />
       <div className="flex flex-col gap-6 px-4">
-        <TopArtists />
-        {/* <TopTracks /> */}
+        <TopArtists showAll />
+        <TopTracks />
+        <PlaylistSection title="Playlists Públicas" showAll/>
+        <FollowersSection showAll/>
       </div>
     </div>
   )
