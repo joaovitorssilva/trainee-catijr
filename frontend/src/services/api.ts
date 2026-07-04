@@ -81,6 +81,10 @@ export function getArtistAlbums(artistId: string): Promise<AlbumDTO[]> {
   return api.get(`/artist/${artistId}/albums`).then((r) => r.data)
 }
 
+export function getAlbumById(id: string): Promise<AlbumDTO> {
+  return api.get(`/album/${id}`).then((r) => r.data)
+}
+
 export function getAlbumMusics(albumId: string): Promise<MusicDTO[]> {
   return api.get(`/album/${albumId}/musics`).then((r) => r.data)
 }
