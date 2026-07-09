@@ -34,7 +34,13 @@ export default function TracksTable() {
       </div>
 
       {playlist.musics.map((music, index) => (
-        <TrackTableRow key={music.id} music={music} index={index} musics={playlist.musics} />
+        <TrackTableRow 
+          key={music.id}
+          id={music.id}
+          music={music}
+          index={index}
+          musics={playlist.musics}
+        />
       ))}
     </div>
   )
