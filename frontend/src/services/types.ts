@@ -28,6 +28,7 @@ export interface PlaylistNoMusicDTO {
   description: string
   musicQtd: number
   duration: number
+  isPublic: boolean
   createdAt: string
   updatedAt: string | null
 }
@@ -39,6 +40,7 @@ export interface PlaylistDTO {
   musicQtd: number
   duration: number
   musics: MusicDTO[]
+  isPublic: boolean
   createdAt: string
   updatedAt: string | null
 }
@@ -67,9 +69,11 @@ export interface AlbumDTO {
 export interface CreatePlaylistDTO {
   name: string
   description: string
+  isPublic?: boolean
 }
 
 export interface PutPlaylistDTO {
   name: string
   description: string
+  isPublic?: boolean
 }

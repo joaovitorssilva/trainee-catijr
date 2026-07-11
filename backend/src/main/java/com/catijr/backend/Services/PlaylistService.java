@@ -48,6 +48,10 @@ public class PlaylistService {
             playlist.setDescription(changesDTO.description());
         }
 
+        if (changesDTO.isPublic() != null) {
+            playlist.setIsPublic(changesDTO.isPublic());
+        }
+
         var edited = playlistRepository.save(playlist);
 
         return edited;
@@ -79,6 +83,9 @@ public class PlaylistService {
   
     public GetPlaylistNoMusicDTO createPlaylist(CreatePlaylistDTO playlist){
         Playlist playlistEntity = playlistMapper.toEntity(playlist);
+        if (playlistEntity.getIsPublic() == null) {
+            playlistEntity.setIsPublic(true);
+        }
         Playlist savedEntity = playlistRepository.save(playlistEntity);
 
         return playlistMapper.toDTO(savedEntity);

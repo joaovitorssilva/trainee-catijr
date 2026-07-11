@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public record GetPlaylistDTO(UUID id, String name, String description, int musicQtd,
-                             int duration, List<GetMusicDTO> musics,
+                             int duration, Boolean isPublic, List<GetMusicDTO> musics,
                              Instant createdAt, Instant updatedAt ) {
 
     public GetPlaylistDTO(Playlist playlist) {
@@ -18,6 +18,7 @@ public record GetPlaylistDTO(UUID id, String name, String description, int music
                 playlist.getDescription(),
                 playlist.getMusicQtd(),
                 playlist.getDuration(),
+                playlist.getIsPublic(),
                 playlist.getSongs().stream().map(song -> new GetMusicDTO(song)).toList(),
                 playlist.getCreatedAt(),
                 playlist.getUpdatedAt()
