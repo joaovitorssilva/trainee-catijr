@@ -123,6 +123,7 @@ public class DataSeeder implements CommandLineRunner {
             Playlist playlist = Playlist.builder()
                     .name(playlistNames[p])
                     .description("Sua seleção especial para: " + playlistNames[p])
+                    .isPublic(true)
                     .songs(playlistSongs)
                     .musicQtd(targetMusicCount)
                     .duration(totalDuration)

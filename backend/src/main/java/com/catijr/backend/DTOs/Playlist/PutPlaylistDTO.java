@@ -1,4 +1,4 @@
 package com.catijr.backend.DTOs.Playlist;
 
-public record PutPlaylistDTO(String name, String description) {
+public record PutPlaylistDTO(String name, String description, Boolean isPublic) {
 }
