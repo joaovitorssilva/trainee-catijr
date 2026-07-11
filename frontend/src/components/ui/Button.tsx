@@ -38,7 +38,7 @@ export default function Button({
   return (
     <button
       className={cn(
-        "rounded-full cursor-pointer transition-all duration-150 flex items-center gap-2", 
+        "rounded-full cursor-pointer transition-all duration-150 flex items-center outline-none gap-2", 
         variantStyles[resolvedVariant], 
         sizeStyles[size],
         className     

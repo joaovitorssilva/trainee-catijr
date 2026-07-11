@@ -8,12 +8,15 @@
   --color-bg-elements: #2D2D2D;
   --color-bg-divider: #2A2A2A;
   --color-bg-popup: #282828;
+  --color-textbox-bg: #3E3E3E;
 
   --color-text: #FFFFFF;
   --color-primary: #6FD168;
   --color-accent: #7AD87A;
   --color-subdued: #AAAAAA;
   --color-text-subdued: #B3B3B3;
+  --color-danger: #D03930;
+  --color-danger-hover: #8A0800;
 
   --color-track-bar: #4D4D4D;
   --color-essential-subdued: #7C7C7C;
@@ -47,14 +50,32 @@
   }
 }
 
+@utility bg-header-gradient {
+  background: linear-gradient(to bottom, #938D8E, #3E3939)
+}
+
 @utility drop-shadow {
   box-shadow: 0px 12px 22.2px 0px #00000040;
 }
 
+@utility text-8-bold {
+  font-family: Inter;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 8px;
+  leading-trim: NONE;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
 @utility text-10-medium {
-  font-family: 'Inter', sans-serif;
+  font-family: Inter;
   font-weight: 500;
+  font-style: Medium;
   font-size: 10px;
+  leading-trim: NONE;
+  line-height: 100%;
+  letter-spacing: 0%;
 }
 
 @utility text-10-bold {

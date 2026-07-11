@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import { getUserPlaylists, getRecentArtists, getRecentAlbums } from "../../services/api"
+import { createPlaylist, getUserPlaylists, getRecentArtists, getRecentAlbums } from "../../services/api"
 import type { PlaylistNoMusicDTO } from "../../services/types"
 import type { ArtistDTO } from "../../services/types"
 import type { AlbumNoMusicsDTO } from "../../services/types"
 import { LibraryItem } from "../sidebar/LibraryItem";
 import { NavMenu } from "../sidebar/NavMenu";
+import { useMenuContext } from "@/context/useMenuContext";
 
 interface LibraryFilter {
   id: string
@@ -18,6 +19,7 @@ interface LibraryFilter {
 export default function Sidebar() {
   const navigate = useNavigate()
   const location = useLocation()
+  const { refreshKey } = useMenuContext()
   const [activeFilter, setActiveFilter] = useState("Tudo")
   const [playlists, setPlaylists] = useState<PlaylistNoMusicDTO[]>([])
   const [artists, setArtists] = useState<ArtistDTO[]>([])
@@ -27,7 +29,7 @@ export default function Sidebar() {
     getUserPlaylists().then(setPlaylists)
     getRecentArtists().then(setArtists)
     getRecentAlbums().then(setAlbums)
-  }, [])
+  }, [refreshKey])
 
   const allEntries: LibraryFilter[] = [
     ...playlists.map((playlist) => ({
@@ -61,12 +63,29 @@ export default function Sidebar() {
       return true
     })
 
+  const handleCreatePlaylist = async () => {
+    try {
+      const newPlaylist = await createPlaylist({ 
+          name: `Minha Playlist #${playlists.length + 1}`,
+          description: "" 
+        })
+      setPlaylists((prev) => [...prev, newPlaylist])
+      navigate(`/playlist/${newPlaylist.id}`)
+    } catch {
+      console.error("Falha ao criar playlist")
+    }
+  }
+
   const currentPath = location.pathname
 
   return (
     <aside className="flex flex-col gap-3 min-h-0 w-16 md:w-72 bg-bg-base playlist-4 shrink-0 rounded-lg">
       <div className="hidden md:flex md:flex-col">
-        <NavMenu activeFilter={activeFilter} onFilterChange={setActiveFilter} />
+        <NavMenu
+          activeFilter={activeFilter}
+          onFilterChange={setActiveFilter}
+          onCreatePlaylist={handleCreatePlaylist}
+        />
       </div>
 
       <div className="flex flex-col gap-2 md:gap-4 p-1.5 md:p-3 overflow-y-auto flex-1 min-h-0">
