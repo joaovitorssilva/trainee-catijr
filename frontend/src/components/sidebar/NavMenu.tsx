@@ -4,9 +4,10 @@ import LibrarySearchBar from "../ui/LibrarySearchBar";
 interface NavMenuProps {
   activeFilter: string
   onFilterChange: (filter: string) => void
+  onCreatePlaylist?: () => void
 }
 
-export function NavMenu({ activeFilter, onFilterChange }: NavMenuProps) {
+export function NavMenu({ activeFilter, onFilterChange, onCreatePlaylist }: NavMenuProps) {
   const filters = ["Tudo", "Playlists", "Albuns", "Artistas"]
 
   return (
@@ -15,7 +16,9 @@ export function NavMenu({ activeFilter, onFilterChange }: NavMenuProps) {
         <span className="text-white text-xs font-bold transition duration-150">
           Sua Biblioteca
         </span>
-        <Button variant="outline" size="sm">Criar Playlist</Button>
+        <Button variant="outline" size="sm" onClick={onCreatePlaylist}>
+          Criar Playlist
+        </Button>
       </div>
 
       <nav className="flex gap-2">
@@ -33,7 +36,6 @@ export function NavMenu({ activeFilter, onFilterChange }: NavMenuProps) {
       </nav>
 
       <LibrarySearchBar/>
-
     </div>
   )
 }

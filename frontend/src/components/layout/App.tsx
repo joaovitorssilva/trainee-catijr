@@ -1,10 +1,12 @@
 import { Outlet } from "react-router-dom";
-import PlayerBar from "./PlayerBar";
-import Sidebar from "./Sidebar";
-import Topbar from "./Topbar";
 import { PlayerProvider } from "@/context/PlayerContext";
 import { MenuProvider } from "@/context/useMenuContext";
 import OptionsMenuRenderer from "../OptionsMenuContent/OptionsMenuRenderer";
+import EditPlaylistModalRenderer from "../PlaylistContent/EditPlaylistModalRenderer";
+import DeletePlaylistModalRenderer from "../PlaylistContent/DeletePlaylistModalRenderer";
+import PlayerBar from "./PlayerBar";
+import Sidebar from "./Sidebar";
+import Topbar from "./Topbar";
 
 export default function App() {
   return (
@@ -21,7 +23,9 @@ export default function App() {
           <PlayerBar />
         </div>
 
-        <OptionsMenuRenderer/>
+        <OptionsMenuRenderer />
+        <EditPlaylistModalRenderer />
+        <DeletePlaylistModalRenderer />
       </MenuProvider>
     </PlayerProvider>
   );
