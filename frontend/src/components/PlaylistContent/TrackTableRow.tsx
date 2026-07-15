@@ -1,25 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePlayer } from "@/context/PlayerContext";
 import { formatDuration } from "@/utils/FormatDuration";
+import { useMenuContext } from "@/context/useMenuContext";
+import { getAlbumById, toggleMusicLike } from "@/services/api";
 import type { MusicDTO } from "@/services/types";
 
 import TrackCover3 from "@/assets/track-cover3.png"
 import PauseIcon from "@/assets/icons/pause-icon.svg"
 import PlayIcon from "@/assets/icons/play-icon.svg"
 import OptionsIcon from "@/assets/icons/options-icon.svg"
+import SavedIcon from "@/assets/icons/verified-icon.svg"
 import AddSubduedIcon from "@/assets/icons/add-subdued-icon.svg"
-import { useMenuContext } from "@/context/useMenuContext";
-
+import AddFillIcon from "@/assets/icons/add-fill-icon.svg"
 
 interface TrackTableRowProps {
   id: string
   music: MusicDTO
   index: number
   musics: MusicDTO[]
+  albumId: string
+  playlistId?: string
 }
 
-export default function TrackTableRow({ id, music, index, musics }: TrackTableRowProps) {
+export default function TrackTableRow({ id, music, index, musics, albumId, playlistId }: TrackTableRowProps) {
   const [isHovered, setIsHovered] = useState(false)
+  const [albumName, setAlbumName] = useState<string | null>(null)
+  const [isLiked, setIsLiked] = useState(music.liked ?? false)
   const { play, pause, currentTrack, isPlaying } = usePlayer()
   const { openMenu } = useMenuContext()
 
@@ -33,6 +39,18 @@ export default function TrackTableRow({ id, music, index, musics }: TrackTableRo
     }
     play(music, musics)
   }
+
+  const handleToggleLike = () => {
+    toggleMusicLike(id).then(() => {
+      setIsLiked(prev => !prev)
+    })
+  }
+
+  useEffect(() => {
+    if (!albumId) return
+    getAlbumById(albumId)
+      .then(album => setAlbumName(album.title))
+  }, [albumId])
 
   return (
     <div
@@ -57,38 +75,50 @@ export default function TrackTableRow({ id, music, index, musics }: TrackTableRo
       </div>
 
       <div className="flex gap-2 items-center">
-        <img src={TrackCover3} className="w-9 h-9 rounded-xs bg-white/10" />
+        <img src={TrackCover3} className="w-9 h-9 rounded-xs" />
 
         <div className="flex flex-col gap-1">
           <span className={`text-10-medium font-bold ${isThisTrack ? "text-primary" : "text-white"}`}>
             {music.title}
           </span>
           <span className="text-subdued text-10-medium font-bold">
-            Artist Name
+            {music.artistName ?? "Artist"}
           </span>
         </div>
       </div>
 
       <span className="text-subdued text-10-medium font-bold">
-        Album Title
+        {albumName ?? "—"}
       </span>
 
       <span className="text-subdued text-10-medium font-bold">
         {new Date(music.releaseDate).toLocaleDateString("pt-BR", { day: "numeric", month: "short", year: "numeric" })}
       </span>
 
-      <div className="bg-bg-divider">
-        {isHovered ? <img src={AddSubduedIcon} /> : <img src={AddSubduedIcon} />}
+      {/* like button */}
+      <div>
+        <button
+          onClick={(e) => { e.stopPropagation(); handleToggleLike() }}
+          className="cursor-pointer"
+        >
+          {isLiked ?
+            <img src={SavedIcon} /> :
+            (isHovered ?
+              <img src={AddFillIcon} /> :
+              <img src={AddSubduedIcon} />
+            )}
+        </button>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 items-center">
         <span className="text-subdued text-10-medium">
           {formatDuration(music.duration)}
         </span>
 
+        {/* options button */}
         <button
-          onClick={(e) => openMenu(e, "track", id)}
-          className="p-1 cursor-pointer"
+          onClick={(e) => openMenu(e, "track", id, music.artistId ?? undefined, music.albumId ?? undefined, music.liked, playlistId)}
+          className="p-1 rounded-sm hover:bg-bg-elements cursor-pointer outline-none"
         >
           <img src={OptionsIcon} />
         </button>

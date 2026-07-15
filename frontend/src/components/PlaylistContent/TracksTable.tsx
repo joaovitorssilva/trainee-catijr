@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { getPlaylistById } from "@/services/api";
+import { useMenuContext } from "@/context/useMenuContext";
 import type { PlaylistDTO } from "@/services/types";
 import ClockIcon from "@/assets/icons/clock-icon.svg"
 import TrackTableRow from "./TrackTableRow"
 
 export default function TracksTable() {
   const { playlistId } = useParams()
+  const { refreshKey } = useMenuContext()
   const [playlist, setPlaylist] = useState<PlaylistDTO | null>(null)
 
   useEffect(() => {
     if (!playlistId) return
     getPlaylistById(playlistId)
       .then(setPlaylist)
-  }, [playlistId])
+  }, [playlistId, refreshKey])
+
 
   if (!playlist) return null
 
@@ -40,6 +43,8 @@ export default function TracksTable() {
           music={music}
           index={index}
           musics={playlist.musics}
+          albumId={music.albumId}
+          playlistId={playlistId}
         />
       ))}
     </div>

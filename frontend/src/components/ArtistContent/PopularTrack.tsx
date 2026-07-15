@@ -24,10 +24,12 @@ export default function PopularTracks() {
         {tracks.map((track, i) => (
           <PopularTrackRow
             key={track.id}
+            trackId={track.id}
             title={track.title}
             timesListen={track.timesListen}
             duration={track.duration}
             isExplit={track.explicit}
+            liked={track.liked}
             index={i + 1}
           />
 

@@ -1,24 +1,39 @@
 import { useState } from "react"
 import { formatDuration } from "@/utils/FormatDuration"
 import { formatPlayCount } from "@/utils/FormatPlayCount"
+import { toggleMusicLike } from "@/services/api"
+import { useMenuContext } from "@/context/useMenuContext"
 import { cn } from "@/utils/utils"
-import SavedIcon from "@/assets/icons/verified-icon.svg"
 import PlayIcon from "@/assets/icons/play-icon.svg"
 import OptionsIcon from "@/assets/icons/options-icon.svg"
 import TrackCover from "@/assets/track-cover1.png"
+import SavedIcon from "@/assets/icons/verified-icon.svg"
+import AddFillIcon from "@/assets/icons/add-fill-icon.svg"
+import AddSubduedIcon from "@/assets/icons/add-subdued-icon.svg"
 
 interface PopularTrackRowProps {
+  trackId: string
   title: string
   timesListen: number
   duration: number
   index: number
   isExplit?: boolean
   isActive?: boolean
+  liked?: boolean
   onClick?: () => void
 }
 
-export default function PopularTrackRow({ title, timesListen, duration, index, isActive = false, onClick }: PopularTrackRowProps) {
+export default function PopularTrackRow({ trackId, title, timesListen, duration, index, isActive = false, liked, onClick }: PopularTrackRowProps) {
   const [isHovered, setIsHovered] = useState(false)
+  const [isLiked, setIsLiked] = useState(liked ?? false)
+  const { triggerRefresh } = useMenuContext()
+
+  const handleToggleLike = () => {
+    toggleMusicLike(trackId).then(() => {
+      setIsLiked(prev => !prev)
+      triggerRefresh()
+    })
+  }
 
   return (
     <div
@@ -54,24 +69,29 @@ export default function PopularTrackRow({ title, timesListen, duration, index, i
 
         {/* Todas as musicas estão retornando false para explit */}
         {/* {isExplit && ( */}
-          <span className="text-[8px] font-bold bg-text-subdued text-black rounded-[1px] w-fit h-12px px-1 ">
-            E
-          </span>
+        <span className="text-[8px] font-bold bg-text-subdued text-black rounded-[1px] w-fit h-12px px-1 ">
+          E
+        </span>
         {/* )} */}
-
-
       </div>
 
       <span className="text-10-medium text-subdued">
-        {formatPlayCount(timesListen ?? 0)}      
+        {formatPlayCount(timesListen ?? 0)}
       </span>
-
-      {/* todo: botao de adicionar à playlist  */}
-      <img src={SavedIcon} />
 
       <span className="text-10-medium text-subdued">
         {formatDuration(duration)}
       </span>
+
+      <button
+        onClick={(e) => { e.stopPropagation(); handleToggleLike() }}
+        className="transition ease-out duration-300 cursor-pointer outline-none"
+      >
+        {
+          isLiked ? <img src={SavedIcon} /> :
+            isHovered ? <img src={AddFillIcon} /> : <img src={AddSubduedIcon} />
+        }
+      </button>
 
       <span>
         <img src={OptionsIcon} />
