@@ -12,10 +12,37 @@ export default function OptionsMenuRenderer() {
   const props = { x: menu.x, y: menu.y, onClose: closeMenu }
 
   switch (menu.type) {
-    case "track": return <TrackOptionsMenu {...props} trackId={menu.id} isSaved={true} />
-    case "artist": return <ArtistOptionsMenu {...props}  />
-    case "album": return <AlbumOptionsMenu {...props} />
-    case "playlist": return <PlaylistOptionsMenu {...props} playlistId={menu.id} />
+    case "track":
+      return (
+        <TrackOptionsMenu {...props}
+          trackId={menu.id}
+          artistId={menu.artistId}
+          albumId={menu.albumId}
+          liked={menu.liked}
+          playlistId={menu.playlistId}
+          isSaved={true}
+        />
+      )
+    case "artist":
+      return (
+        <ArtistOptionsMenu {...props}
+          artistId={menu.id} />
+      )
+    case "album":
+      return (
+        <AlbumOptionsMenu {...props}
+          albumId={menu.id}
+          artistId={menu.artistId}
+        />
+      )
+    case "playlist":
+      return (
+        <PlaylistOptionsMenu {...props}
+          playlistId={menu.id}
+          playlistType={menu.playlistType}
+          isPublic={menu.isPublic}
+        />
+      )
     default: return null
   }
 }

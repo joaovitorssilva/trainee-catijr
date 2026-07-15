@@ -7,12 +7,18 @@ interface MenuContextState {
   x: number
   y: number
   id: string
+  artistId?: string
+  albumId?: string
+  liked?: boolean
+  playlistId?: string
+  playlistType?: string
+  isPublic?: boolean
   callbacks?: MenuContextCallbacks
 }
 
 interface MenuContextValue {
   menu: MenuContextState | null
-  openMenu: (e: React.MouseEvent, type: MenuContextType, id: string) => void
+  openMenu: (e: React.MouseEvent, type: MenuContextType, id: string, artistId?: string, albumId?: string, liked?: boolean, playlistId?: string, playlistType?: string, isPublic?: boolean) => void
   closeMenu: () => void
   editingPlaylistId: string | null
   openEditModal: (id: string) => void
@@ -40,11 +46,17 @@ export function MenuProvider({ children }: { children: ReactNode }) {
     e: React.MouseEvent,
     type: MenuContextType,
     id: string,
+    artistId?: string,
+    albumId?: string,
+    liked?: boolean,
+    playlistId?: string,
+    playlistType?: string,
+    isPublic?: boolean,
     callbacks?: MenuContextCallbacks
   ) => {
     e.preventDefault()
     e.stopPropagation()
-    setMenu({ type, x: e.clientX, y: e.clientY, id, callbacks })
+    setMenu({ type, x: e.clientX, y: e.clientY, id, artistId, albumId, liked, playlistId, playlistType, isPublic, callbacks })
   }, [])
 
   const closeMenu = useCallback(() => setMenu(null), [])
