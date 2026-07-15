@@ -36,6 +36,9 @@ public class Playlist {
     @Column(name = "is_public")
     private Boolean isPublic;
 
+    @Column(name = "type")
+    private String type;
+
     @Column(name = "created_at")
     private Instant createdAt;
 

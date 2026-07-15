@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
@@ -18,6 +19,7 @@ import java.util.List;
 @Slf4j
 @Component
 @Profile("dev")
+@Order(1)
 @RequiredArgsConstructor
 public class DataSeeder implements CommandLineRunner {
 
@@ -120,10 +122,13 @@ public class DataSeeder implements CommandLineRunner {
             }
 
             // 5. Criar e Salvar a Playlist com a relação ManyToMany direta e metadados calculados
+            String type = playlistNames[p].equals("Músicas Curtidas") ? "liked_songs" : "normal";
+
             Playlist playlist = Playlist.builder()
                     .name(playlistNames[p])
                     .description("Sua seleção especial para: " + playlistNames[p])
                     .isPublic(true)
+                    .type(type)
                     .songs(playlistSongs)
                     .musicQtd(targetMusicCount)
                     .duration(totalDuration)

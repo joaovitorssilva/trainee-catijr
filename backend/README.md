@@ -10,7 +10,7 @@ Rotas responsáveis por buscar o histórico e os dados associados ao perfil do u
 | GET | /user/recentArtists | Retorna os artistas ouvidos recentemente. |
 | GET | /user/mostPlayedArtists | Retorna os artistas mais ouvidos. |
 | GET | /user/recentMusics | Retorna as músicas ouvidas recentemente. |
-backend| GET | /user/mostPlayedMusics | Retorna as músicas mais ouvidas. |
+| GET | /user/mostPlayedMusics | Retorna as músicas mais ouvidas. |
 | GET | /user/recentAlbums | Retorna os álbuns ouvidos recentemente. |
 | GET | /user/followers | Retorna a lista de todos os seguidores do usuário. |
 
@@ -49,5 +49,9 @@ Rotas focadas na consulta de informações sobre os álbuns musicais.
 
 ---
 
-## Música
-*Esta entidade não possui rotas próprias de gerenciamento direto na API. O acesso às músicas é feito através das rotas de Playlists, Álbuns ou Usuário.*
+## Música (/music)
+Rotas para gerenciar interações com músicas, como curtir/descurtir.
+
+| Método | Endpoint | Descrição |
+| :--- | :--- | :--- |
+| PATCH | /music/{musicId}/like | Alterna o status de curtida da música. Se curtida, adiciona à playlist "Músicas Curtidas"; se descurtida, remove. Retorna os dados atualizados da música. |
