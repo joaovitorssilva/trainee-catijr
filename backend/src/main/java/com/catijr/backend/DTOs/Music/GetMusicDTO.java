@@ -12,7 +12,7 @@ public record GetMusicDTO(UUID id, String title, UUID artistId,
                           String artistName,
                           UUID albumId, List<UUID> playlistsId,
                           int duration, Instant releaseDate, int timesListen,
-                          Boolean explicit, Instant createdAt,
+                          Boolean explicit, Boolean liked, Instant createdAt,
                           Instant updatedAt) {
 
 
@@ -30,6 +30,7 @@ public record GetMusicDTO(UUID id, String title, UUID artistId,
                 music.getReleaseDate(),
                 music.getTimesListen(),
                 music.getExplicit(),
+                music.getLiked() != null ? music.getLiked() : false,
                 music.getCreatedAt(),
                 music.getUpdatedAt()
         );

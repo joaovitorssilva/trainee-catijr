@@ -40,6 +40,10 @@ public class PlaylistService {
         var playlist = playlistRepository.findById(playlistId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+        if ("liked_songs".equals(playlist.getType())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Cannot edit liked songs playlist");
+        }
+
         if (changesDTO.name() != null) {
             playlist.setName(changesDTO.name());
         }
@@ -86,6 +90,9 @@ public class PlaylistService {
         if (playlistEntity.getIsPublic() == null) {
             playlistEntity.setIsPublic(true);
         }
+        if (playlistEntity.getType() == null) {
+            playlistEntity.setType("normal");
+        }
         Playlist savedEntity = playlistRepository.save(playlistEntity);
 
         return playlistMapper.toDTO(savedEntity);
@@ -93,11 +100,14 @@ public class PlaylistService {
 
 
     public void deletePlaylistById(UUID playlistId) {
-        if (playlistRepository.existsById(playlistId)) {
-            playlistRepository.deleteById(playlistId);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        var playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        if ("liked_songs".equals(playlist.getType())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Cannot delete liked songs playlist");
         }
+
+        playlistRepository.deleteById(playlistId);
     }
 
     public void deleteMusicById(UUID playlistId, UUID musicId) {
@@ -111,8 +121,8 @@ public class PlaylistService {
 
             musics.removeIf(tgt_music -> tgt_music.getId().equals(musicId));
 
-            playlist.setMusicQtd(playlist.getMusicQtd() - 1);
-            playlist.setDuration(playlist.getDuration() - music.getDuration());
+            playlist.setMusicQtd(Math.max(0, playlist.getMusicQtd() - 1));
+            playlist.setDuration(Math.max(0, playlist.getDuration() - music.getDuration()));
 
             playlist.setSongs(musics);
 

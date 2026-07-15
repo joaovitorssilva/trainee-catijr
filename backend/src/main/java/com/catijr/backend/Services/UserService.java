@@ -39,9 +39,9 @@ public class UserService {
 
 
     public List<GetPlaylistNoMusicDTO> getUserPlaylists(){
-        List<Playlist> albums = playlistRepository.findAll();
+        List<Playlist> playlists = playlistRepository.findAll();
         
-        return albums.stream().map(playlistMapper::toDTO).toList();
+        return playlists.stream().map(playlistMapper::toDTO).toList();
     }
 
     public List<GetArtistDTO> getUserRecentArtists(){

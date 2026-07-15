@@ -47,6 +47,10 @@ public class Music {
     @Column(name = "explicit")
     private Boolean explicit;
 
+    @Builder.Default
+    @Column(name = "liked", nullable = false, columnDefinition = "boolean default false")
+    private Boolean liked = false;
+
     @Column(name = "created_at")
     private Instant createdAt;
 
