@@ -11,8 +11,14 @@ export default function DeletePlaylistModalRenderer() {
 
   useEffect(() => {
     if (!deletingPlaylistId) return
-    getPlaylistById(deletingPlaylistId).then(p => setPlaylistName(p.name))
-  }, [deletingPlaylistId])
+    getPlaylistById(deletingPlaylistId).then(p => {
+      if (p.type === "liked_songs") {
+        closeDeleteModal()
+        return
+      }
+      setPlaylistName(p.name)
+    })
+  }, [deletingPlaylistId, closeDeleteModal])
 
   const handleConfirm = async () => {
     await deletePlaylist(deletingPlaylistId!)

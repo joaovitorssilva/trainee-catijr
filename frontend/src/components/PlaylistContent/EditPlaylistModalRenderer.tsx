@@ -10,8 +10,14 @@ export default function EditPlaylistModalRenderer() {
 
   useEffect(() => {
     if (!editingPlaylistId) return
-    getPlaylistById(editingPlaylistId).then(setPlaylist)
-  }, [editingPlaylistId])
+    getPlaylistById(editingPlaylistId).then(p => {
+      if (p.type === "liked_songs") {
+        closeEditModal()
+        return
+      }
+      setPlaylist(p)
+    })
+  }, [editingPlaylistId, closeEditModal])
 
   if (!editingPlaylistId || !playlist) return null
 
