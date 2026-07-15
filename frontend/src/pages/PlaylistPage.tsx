@@ -33,6 +33,8 @@ export default function PlaylistPage() {
     }
   }
 
+  const isLikedSongs = playlist.type === "liked_songs"
+
   if (playlist.musics.length === 0) {
     return (
       <div className="flex flex-col bg-bg-base rounded-lg ">
@@ -41,11 +43,14 @@ export default function PlaylistPage() {
           musicQtd={0}
           duration={0}
           isPublic={playlist.isPublic}
-          onEditClick={() => openEditModal(playlistId!)}
+          type={playlist.type}
+          onEditClick={isLikedSongs ? undefined : () => openEditModal(playlistId!)}
         />
         <div className="flex flex-col p-5 gap-3">
           <p className="text-white text-18-bold">Nenhuma música encontrada</p>
-          <p className="text-subdued text-16-medium">Adicione músicas para começar a ouvir</p>
+          {!isLikedSongs && (
+            <p className="text-subdued text-16-medium">Adicione músicas para começar a ouvir</p>
+          )}
         </div>
       </div>
     )
@@ -58,7 +63,8 @@ export default function PlaylistPage() {
         musicQtd={playlist.musics.length}
         duration={playlist.duration}
         isPublic={playlist.isPublic}
-        onEditClick={() => openEditModal(playlistId!)}
+        type={playlist.type}
+        onEditClick={isLikedSongs ? undefined : () => openEditModal(playlistId!)}
       />
       <div className="px-5">
         <PlayButton
