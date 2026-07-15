@@ -88,3 +88,7 @@ export function getAlbumById(id: string): Promise<AlbumDTO> {
 export function getAlbumMusics(albumId: string): Promise<MusicDTO[]> {
   return api.get(`/album/${albumId}/musics`).then((r) => r.data)
 }
+
+export function toggleMusicLike(musicId: string): Promise<MusicDTO> {
+  return api.patch(`/music/${musicId}/like`).then((r) => r.data)
+}
