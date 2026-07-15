@@ -4,6 +4,7 @@ import { formatDuration } from "@/utils/FormatDuration";
 import { useMenuContext } from "@/context/useMenuContext";
 import { getAlbumById, toggleMusicLike } from "@/services/api";
 import type { MusicDTO } from "@/services/types";
+
 import TrackCover3 from "@/assets/track-cover3.png"
 import PauseIcon from "@/assets/icons/pause-icon.svg"
 import PlayIcon from "@/assets/icons/play-icon.svg"
