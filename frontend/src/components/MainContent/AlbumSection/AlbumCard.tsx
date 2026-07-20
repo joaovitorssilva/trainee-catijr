@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { usePlayer } from "@/context/PlayerContext"
-import { getAlbumMusics } from "@/services/api"
-import type { MusicDTO } from "@/services/types"
+import { getAlbumMusics } from "@/api"
+import type { MusicDTO } from "@/types/index.types"
 import AlbumCover from "@/assets/album-cover.png"
 import PlayButton from "@/components/ui/PlayButton"
 

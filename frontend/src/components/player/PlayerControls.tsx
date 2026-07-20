@@ -1,5 +1,5 @@
-import type { MusicDTO } from "../../services/types";
-import { formatDuration } from "../../utils/FormatDuration";
+import type { MusicDTO } from "@/types/index.types";
+import { formatDuration } from "@/utils/FormatDuration";
 import ProgressBar from "./ProgressBar";
 import PlayIcon from "@/assets/icons/play-icon.svg";
 import PauseIcon from "@/assets/icons/pause-icon.svg";

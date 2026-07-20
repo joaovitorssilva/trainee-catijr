@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getPlaylistById, updatePlaylistAttributes } from "@/services/api";
+import { getPlaylistById, updatePlaylistAttributes } from "@/api";
 import { useMenuContext } from "@/context/useMenuContext";
 import { usePinnedItems } from "@/hooks/usePinnedItems";
 import OptionsMenuContainer from "../OptionsMenuContainer";
@@ -21,8 +21,8 @@ interface PlaylistOptionsMenuProps {
 export default function PlaylistOptionsMenu({ x, y, onClose, playlistId, playlistType, isPublic }: PlaylistOptionsMenuProps) {
   const { openEditModal, openDeleteModal, triggerRefresh } = useMenuContext()
   const { isPinned, togglePin } = usePinnedItems("playlist")
-  const [ isPublicState, setIsPublicState ] = useState(isPublic ?? false)
-    
+  const [isPublicState, setIsPublicState] = useState(isPublic ?? false)
+
   const isLikedSongs = playlistType === "liked_songs"
 
   const handleTogglePublic = () => {

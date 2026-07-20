@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUserPlaylists } from "@/services/api";
-import type { PlaylistNoMusicDTO } from "@/services/types";
+import { getUserPlaylists } from "@/api";
+import type { PlaylistNoMusicDTO } from "@/types/index.types";
 import PlaylistCard from "./PlaylistCard";
 
 interface PlaylistSectionProps {

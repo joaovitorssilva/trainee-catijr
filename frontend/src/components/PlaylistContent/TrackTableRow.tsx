@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { usePlayer } from "@/context/PlayerContext";
 import { formatDuration } from "@/utils/FormatDuration";
 import { useMenuContext } from "@/context/useMenuContext";
-import { getAlbumById, toggleMusicLike } from "@/services/api";
-import type { MusicDTO } from "@/services/types";
+import { getAlbumById, toggleMusicLike } from "@/api";
+import type { MusicDTO } from "@/types/index.types";
 
 import TrackCover3 from "@/assets/track-cover3.png"
 import PauseIcon from "@/assets/icons/pause-icon.svg"

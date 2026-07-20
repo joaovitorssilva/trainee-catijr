@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getRecentAlbums } from "@/services/api";
-import type { AlbumNoMusicsDTO } from "@/services/types";
+import { getRecentAlbums } from "@/api";
+import type { AlbumNoMusicsDTO } from "@/types/index.types";
 import AlbumCard from "./AlbumCard";
 
 interface Props {

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { usePlayer } from "@/context/PlayerContext"
-import { getPlaylistById } from "@/services/api"
-import type { MusicDTO } from "@/services/types"
+import { getPlaylistById } from "@/api"
+import type { MusicDTO } from "@/types/index.types"
 import PlaylistCover from "@/assets/playlist-cover.png"
 import PlayButton from "@/components/ui/PlayButton"
 
@@ -55,7 +55,7 @@ export default function PlaylistCard({ id, name, musicQtd, onClick }: PlaylistCa
           className="w-full aspect-square object-cover rounded-xs "
         />
         <div className={`absolute bottom-0.5 right-1 trantision ease-out duration-300 ${isHovered ? "opacity-100" : "opacity-0"}`}>
-          <PlayButton 
+          <PlayButton
             isPlaying={isThisPlaying}
             onToggle={handleTogglePlay}
           />

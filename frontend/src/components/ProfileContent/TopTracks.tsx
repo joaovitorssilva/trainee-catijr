@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import TrackTableRow from "../PlaylistContent/TrackTableRow";
-import type { MusicDTO } from "@/services/types";
-import { getMostPlayedMusics } from "@/services/api";
+import type { MusicDTO } from "@/types/index.types";
+import { getMostPlayedMusics } from "@/api";
 
 export default function TopTracks() {
   const [mostPlayedMusics, setMostPlayedMusics] = useState<MusicDTO[]>([])

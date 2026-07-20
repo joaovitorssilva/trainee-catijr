@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useMenuContext } from "@/context/useMenuContext"
-import { getPlaylistById, updatePlaylistAttributes } from "@/services/api"
-import type { PlaylistDTO } from "@/services/types"
+import { getPlaylistById, updatePlaylistAttributes } from "@/api"
+import type { PlaylistDTO } from "@/types/index.types"
 import EditPlaylistModal from "./EditPlaylistModal"
 
 export default function EditPlaylistModalRenderer() {

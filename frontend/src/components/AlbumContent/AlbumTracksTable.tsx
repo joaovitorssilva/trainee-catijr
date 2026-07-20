@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getAlbumById } from "@/services/api";
+import { getAlbumById } from "@/api";
 import TrackTableRow from "../PlaylistContent/TrackTableRow";
-import type { AlbumDTO } from "@/services/types";
+import type { AlbumDTO } from "@/types/index.types";
 import ClockIcon from "@/assets/icons/clock-icon.svg"
 
 export default function AlbumTracksTable() {

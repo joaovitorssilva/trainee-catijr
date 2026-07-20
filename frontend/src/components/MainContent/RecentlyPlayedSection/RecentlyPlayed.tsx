@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { getRecentMusics } from "@/services/api"
-import type { MusicDTO } from "@/services/types"
+import { getRecentMusics } from "@/api"
+import type { MusicDTO } from "@/types/index.types"
 import RecentlyPlayedCard from "./RecentlyPlayedCard"
 
 interface RecentlyPlayedProps {

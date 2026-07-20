@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import type { ArtistDTO } from "@/services/types";
-import { getMostPlayedArtists } from "@/services/api";
+import type { ArtistDTO } from "@/types/index.types";
+import { getMostPlayedArtists } from "@/api";
 import ArtistCard from "../MainContent/ArtistSection/ArtistCard";
 import { useNavigate } from "react-router-dom";
 

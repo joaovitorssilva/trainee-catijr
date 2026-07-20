@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getArtistPopularMusics } from "@/services/api";
-import type { MusicDTO } from "@/services/types";
+import { getArtistPopularMusics } from "@/api";
+import type { MusicDTO } from "@/types/index.types";
 import PopularTrackRow from "./PopularTrackRow";
 
 export default function PopularTracks() {

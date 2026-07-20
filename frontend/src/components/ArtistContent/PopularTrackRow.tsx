@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { formatDuration } from "@/utils/FormatDuration"
 import { formatPlayCount } from "@/utils/FormatPlayCount"
-import { toggleMusicLike } from "@/services/api"
+import { toggleMusicLike } from "@/api"
 import { useMenuContext } from "@/context/useMenuContext"
 import { cn } from "@/utils/utils"
 import PlayIcon from "@/assets/icons/play-icon.svg"

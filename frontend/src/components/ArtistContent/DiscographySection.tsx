@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { getArtistAlbums } from "@/services/api"
-import type { AlbumDTO } from "@/services/types"
+import { getArtistAlbums } from "@/api"
+import type { AlbumDTO } from "@/types/index.types"
 import AlbumCard from "../MainContent/AlbumSection/AlbumCard"
 
 

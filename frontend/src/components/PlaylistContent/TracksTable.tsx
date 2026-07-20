@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { getPlaylistById } from "@/services/api";
+import { getPlaylistById } from "@/api";
 import { useMenuContext } from "@/context/useMenuContext";
-import type { PlaylistDTO } from "@/services/types";
+import type { PlaylistDTO } from "@/types/index.types";
 import ClockIcon from "@/assets/icons/clock-icon.svg"
 import TrackTableRow from "./TrackTableRow"
 
@@ -37,7 +37,7 @@ export default function TracksTable() {
       </div>
 
       {playlist.musics.map((music, index) => (
-        <TrackTableRow 
+        <TrackTableRow
           key={music.id}
           id={music.id}
           music={music}

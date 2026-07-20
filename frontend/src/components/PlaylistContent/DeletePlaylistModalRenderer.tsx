@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { useMenuContext } from "@/context/useMenuContext"
-import { deletePlaylist, getPlaylistById } from "@/services/api"
+import { deletePlaylist, getPlaylistById } from "@/api"
 import { useEffect, useState } from "react"
 import DeletePlaylistModal from "./DeletePlaylistModal"
 

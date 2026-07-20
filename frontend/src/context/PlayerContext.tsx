@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, useEffect, useCallback } from 'react'
-import type { MusicDTO } from '../services/types'
+import type { MusicDTO } from '../types/index.types'
 
 interface PlayerState {
   currentTrack: MusicDTO | null

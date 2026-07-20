@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useMenuContext } from "@/context/useMenuContext";
-import { removeMusicFromPlaylist, toggleMusicLike } from "@/services/api";
+import { removeMusicFromPlaylist, toggleMusicLike } from "@/api";
 import OptionsMenuContainer from "../OptionsMenuContainer";
 import OptionsMenuItem from "../OptionsMenuItem";
 import PlusIcon from "@/assets/icons/plus-icon.svg"
@@ -43,11 +43,11 @@ export default function TrackOptionsMenu({ x, y, onClose, trackId, artistId, alb
 
   return (
     <OptionsMenuContainer x={x} y={y} onClose={onClose}>
-      <OptionsMenuItem 
+      <OptionsMenuItem
         label="Adicionar à playlist"
         icon={PlusIcon}
       />
-      <OptionsMenuItem 
+      <OptionsMenuItem
         label="Remover desta playlist"
         icon={MinusIcon}
         onClick={handleRemoveMusicFromPlaylist}
@@ -73,7 +73,7 @@ export default function TrackOptionsMenu({ x, y, onClose, trackId, artistId, alb
           onClose()
         }}
       />
-      <OptionsMenuItem 
+      <OptionsMenuItem
         label="Ver créditos"
         icon={CreditsIcon}
       />

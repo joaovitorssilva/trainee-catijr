@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUserFollowers } from "@/services/api";
+import { getUserFollowers } from "@/api";
 import ProfileHeader from "@/components/ProfileContent/ProfileHeader";
 import TopArtists from "@/components/ProfileContent/TopArtists";
 // import TopTracks from "@/components/ProfileContent/TopTracks";

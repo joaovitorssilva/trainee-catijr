@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getRecentArtists } from "@/services/api";
-import type { ArtistDTO } from "@/services/types";
+import { getRecentArtists } from "@/api";
+import type { ArtistDTO } from "@/types/index.types";
 import ArtistCard from "./ArtistCard";
 
 interface ArtistSectionProps {
@@ -24,9 +24,6 @@ export default function ArtistSection({ activeFilter }: ArtistSectionProps) {
         <span className="text-white text-16-bold">
           Artistas Recente
         </span>
-        <span className="text-subdued text-10-bold cursor-pointer">
-          Mostrar tudo
-        </span >
 
       </div>
       <section className="flex gap-3 overflow-hidden">
