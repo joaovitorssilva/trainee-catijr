@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import { createPlaylist, getUserPlaylists, getRecentArtists, getRecentAlbums } from "@/services/api"
+import { createPlaylist, getUserPlaylists, getRecentArtists, getRecentAlbums } from "@/api"
 import { useMenuContext } from "@/context/useMenuContext";
 import { usePinnedItems } from "@/hooks/usePinnedItems";
 import { useLastAccessed } from "@/hooks/useLastAccessed";
 import { NavMenu } from "../sidebar/NavMenu";
 import { LibraryItem } from "../sidebar/LibraryItem";
-import type { ArtistDTO } from "@/services/types"
-import type { PlaylistNoMusicDTO } from "@/services/types"
-import type { AlbumNoMusicsDTO } from "@/services/types"
+import type { ArtistDTO } from "@/types/index.types"
+import type { PlaylistNoMusicDTO } from "@/types/index.types"
+import type { AlbumNoMusicsDTO } from "@/types/index.types"
 
 interface LibraryFilter {
   id: string
@@ -24,6 +24,7 @@ export default function Sidebar() {
   const navigate = useNavigate()
   const location = useLocation()
   const [activeFilter, setActiveFilter] = useState("Tudo")
+  const [searchQuery, setSearchQuery] = useState("")
   const [playlists, setPlaylists] = useState<PlaylistNoMusicDTO[]>([])
   const [artists, setArtists] = useState<ArtistDTO[]>([])
   const [albums, setAlbums] = useState<AlbumNoMusicsDTO[]>([])
@@ -66,9 +67,15 @@ export default function Sidebar() {
     })),
   ]
 
+  const query = searchQuery.toLowerCase().trim()
+
+  const searchedEntries = query
+    ? allEntries.filter((entry) => entry.name.toLowerCase().includes(query))
+    : allEntries
+
   const filteredEntries = activeFilter === "Tudo"
-    ? allEntries
-    : allEntries.filter((entry) => {
+    ? searchedEntries
+    : searchedEntries.filter((entry) => {
       if (activeFilter === "Playlists") return entry.type === "playlist"
       if (activeFilter === "Artistas") return entry.type === "artist"
       if (activeFilter === "Albuns") return entry.type === "album"
@@ -106,10 +113,10 @@ export default function Sidebar() {
 
   const handleCreatePlaylist = async () => {
     try {
-      const newPlaylist = await createPlaylist({ 
-          name: `Minha Playlist #${playlists.length + 1}`,
-          description: "" 
-        })
+      const newPlaylist = await createPlaylist({
+        name: `Minha Playlist #${playlists.length + 1}`,
+        description: ""
+      })
       setPlaylists((prev) => [...prev, newPlaylist])
       navigate(`/playlist/${newPlaylist.id}`)
     } catch {
@@ -126,6 +133,8 @@ export default function Sidebar() {
           activeFilter={activeFilter}
           onFilterChange={setActiveFilter}
           onCreatePlaylist={handleCreatePlaylist}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
         />
       </div>
 

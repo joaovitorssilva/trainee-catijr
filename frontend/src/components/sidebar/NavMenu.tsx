@@ -5,9 +5,11 @@ interface NavMenuProps {
   activeFilter: string
   onFilterChange: (filter: string) => void
   onCreatePlaylist?: () => void
+  searchQuery: string
+  onSearchChange: (query: string) => void
 }
 
-export function NavMenu({ activeFilter, onFilterChange, onCreatePlaylist }: NavMenuProps) {
+export function NavMenu({ activeFilter, onFilterChange, onCreatePlaylist, searchQuery, onSearchChange }: NavMenuProps) {
   const filters = ["Tudo", "Playlists", "Albuns", "Artistas"]
 
   return (
@@ -35,7 +37,10 @@ export function NavMenu({ activeFilter, onFilterChange, onCreatePlaylist }: NavM
         ))}
       </nav>
 
-      <LibrarySearchBar/>
+      <LibrarySearchBar
+        value={searchQuery}
+        onChange={onSearchChange}
+      />
     </div>
   )
 }
