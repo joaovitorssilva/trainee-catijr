@@ -9,6 +9,7 @@
   --color-bg-divider: #2A2A2A;
   --color-bg-popup: #282828;
   --color-textbox-bg: #3E3E3E;
+  --color-bg-recent-search: #404040;
 
   --color-text: #FFFFFF;
   --color-primary: #6FD168;
@@ -58,6 +59,10 @@
   background: linear-gradient(135deg, #422CED, #7B75DC, #BDD6CF)
 }
 
+@utility bg-linear-loading{
+  background: linear-gradient(to right, #424242, #525252, #424242)
+}
+
 @utility drop-shadow {
   box-shadow: 0px 12px 22.2px 0px #00000040;
 }
@@ -67,6 +72,16 @@
   font-weight: 700;
   font-style: Bold;
   font-size: 8px;
+  leading-trim: NONE;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+@utility text-10-regular {
+  font-family: Arial;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 10px;
   leading-trim: NONE;
   line-height: 100%;
   letter-spacing: 0%;

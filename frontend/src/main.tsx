@@ -10,6 +10,7 @@ import PlaylistPage from './pages/PlaylistPage'
 import ArtistPage from './pages/ArtistPage'
 import AlbumPage from './pages/AlbumPage'
 import NowPlayingPage from './pages/NowPlayingPage'
+import SearchPage from './pages/SearchPage'
 import './index.css'
 
 const router = createBrowserRouter([
@@ -36,6 +37,11 @@ const router = createBrowserRouter([
       {
         path: "/album/:albumId",
         element: <AlbumPage />,
+        errorElement: <NotFoundPage />
+      },
+      {
+        path: "/search",
+        element: <SearchPage />,
         errorElement: <NotFoundPage />
       },
       {
