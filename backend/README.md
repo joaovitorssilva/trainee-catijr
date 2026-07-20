@@ -55,3 +55,12 @@ Rotas para gerenciar interações com músicas, como curtir/descurtir.
 | Método | Endpoint | Descrição |
 | :--- | :--- | :--- |
 | PATCH | /music/{musicId}/like | Alterna o status de curtida da música. Se curtida, adiciona à playlist "Músicas Curtidas"; se descurtida, remove. Retorna os dados atualizados da música. |
+
+---
+
+## Busca (/search)
+Rotas para busca global de músicas, artistas, álbuns e playlists.
+
+| Método | Endpoint | Descrição |
+| :--- | :--- | :--- |
+| GET | /search?q={query} | Realiza a busca a partir do parâmetro `q` e retorna uma lista com os resultados encontrados. |

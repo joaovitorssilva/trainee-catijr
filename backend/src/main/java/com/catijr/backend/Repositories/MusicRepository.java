@@ -2,6 +2,8 @@ package com.catijr.backend.Repositories;
 
 import com.catijr.backend.Entities.Music;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,4 +15,8 @@ public interface MusicRepository extends JpaRepository<Music, UUID> {
     List<Music> findTop5By();
 
     List<Music> findTop5ByOrderByTimesListenDesc();
+
+    
+    @Query(value = "SELECT m.* FROM tb_musics m WHERE unaccent(LOWER(m.title)) LIKE unaccent(LOWER(CONCAT('%', :query, '%')))", nativeQuery = true)
+    List<Music> searchByTitle(@Param("query") String query);
 }

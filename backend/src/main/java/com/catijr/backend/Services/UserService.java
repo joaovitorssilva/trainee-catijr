@@ -59,13 +59,13 @@ public class UserService {
     public List<GetMusicDTO> getUserRecentMusics(){
         List<Music> musics = musicRepository.findTop5By();
 
-        return musics.stream().map(musicMapper::toDTO).toList();
+        return musics.stream().map(GetMusicDTO::new).toList();
     }
 
     public List<GetMusicDTO> getUserMostPlayedMusics(){
         List<Music> musics = musicRepository.findTop5ByOrderByTimesListenDesc();
 
-        return musics.stream().map(musicMapper::toDTO).toList();
+        return musics.stream().map(GetMusicDTO::new).toList();
     }
 
     public List<GetAlbumNoMusicsDTO> getUserRecentAlbums(){
