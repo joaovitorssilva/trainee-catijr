@@ -11,13 +11,13 @@ interface AlbumHeaderProps {
 export default function AlbumHeader({ name, musicQtd, duration }: AlbumHeaderProps) {
   return (
     <div className="flex items-center gap-3 bg-linear-to-b from-[#938D8E] to-[#3E3939] rounded-lg pl-5 pb-4 pt-10">
-      <div className="w-[174px]">
+      <div className="w-20 h-20 md:w-43.5 md:h-43.5">
         <img src={AlbumCover} className="rounded-sm" />
       </div>
 
       <div className="flex flex-col gap-1 md:gap-2.5">
-        <span className="text-10-medium text-white font-medium">Álbum público</span>
-        <h1 className="text-white font-black text-[64px]">
+        <span className="text-10-medium text-white ">Álbum público</span>
+        <h1 className="text-white text-18-bold md:text-64-black">
           {name}
         </h1>
         <div className="flex items-center gap-2 ">
