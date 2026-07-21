@@ -18,15 +18,17 @@ export default function PlaylistHeader({ name, musicQtd, duration, isPublic, onE
 
   return (
     <div className="flex items-center gap-3 bg-header-gradient rounded-lg pl-5 pb-4 pt-10">
+
+      {/* playlist cover image */}
       <button
         onClick={isLikedSongs ? undefined : onEditClick}
-        className="relative w-[174px] h-[174px] cursor-pointer outline-none group">
+        className="relative w-20 h-20 md:w-43.5 md:h-43.5 cursor-pointer outline-none group">
 
         {isLikedSongs ? (
           <div className="flex items-center justify-center rounded-sm bg-liked-songs-gradient w-full h-full">
             <img
               src={HeartIcon}
-              className="w-12 h-12 brightness-0 invert"
+              className="w-8 h-8 md:w-20 md:h-20 brightness-0 invert"
             />
           </div>
         ) : (
@@ -39,17 +41,23 @@ export default function PlaylistHeader({ name, musicQtd, duration, isPublic, onE
         {/* hover overlay */}
         {!isLikedSongs && (
           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-sm">
-            <img src={PencilIcon} className="w-8 h-8" />
+            <img
+              src={PencilIcon}
+              className="w-8 h-8"
+            />
           </div>
         )}
       </button>
 
+      {/* playlist info details */}
       <div className="flex flex-col gap-1 md:gap-2.5">
-        <span className="text-10-medium text-white font-medium">
+        <span className=" text-white  text-10-medium">
           Playlist {isPublic ? "pública" : "privada"}
         </span>
-        <button onClick={isLikedSongs ? undefined : onEditClick} className="cursor-pointer outline-none">
-          <h1 className="text-white text-64-black text-left">
+        <button
+          onClick={isLikedSongs ? undefined : onEditClick}
+          className="cursor-pointer outline-none">
+          <h1 className="text-white text-18-bold md:text-64-black text-left">
             {name}
           </h1>
         </button>

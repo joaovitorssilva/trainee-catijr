@@ -57,7 +57,7 @@ export default function TrackTableRow({ id, music, index, musics, albumId, playl
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handlePlay}
-      className="grid items-center grid-cols-[16px_400px_1fr_1fr_auto_80px] gap-4 px-4 py-2 cursor-pointer">
+      className="grid items-center grid-cols-[16px_1fr_16px] md:grid-cols-[16px_400px_1fr_1fr_auto_80px] gap-4 px-4 py-2 cursor-pointer">
 
       {/* track index */}
       <div className="flex items-center justify-center w-4">
@@ -91,19 +91,19 @@ export default function TrackTableRow({ id, music, index, musics, albumId, playl
       </div>
 
       {/* album name */}
-      <span className="text-subdued text-10-medium font-bold">
+      <span className="hidden md:block text-subdued text-10-medium font-bold">
         {albumName ?? "—"}
       </span>
 
       {/* release date */}
-      <span className="text-subdued text-10-medium font-bold">
+      <span className="hidden md:block text-subdued text-10-medium font-bold">
         {new Date(music.releaseDate).toLocaleDateString("pt-BR", { day: "numeric", month: "short", year: "numeric" })}
       </span>
 
       {/* like button */}
       <button
         onClick={(e) => { e.stopPropagation(); handleToggleLike() }}
-        className="cursor-pointer outline-none"
+        className=" cursor-pointer outline-none"
       >
         {isLiked ?
           <img src={SavedIcon} /> :
@@ -115,14 +115,16 @@ export default function TrackTableRow({ id, music, index, musics, albumId, playl
 
       <div className="flex gap-2 items-center">
         {/* song duration */}
-        <span className="text-subdued text-10-medium">
+        <span className="hidden md:block text-subdued text-10-medium">
           {formatDuration(music.duration)}
         </span>
 
         {/* options button */}
-        <OptionsButton
+        <div className="hidden md:block">
+          <OptionsButton
           onClick={(e) => openMenu(e, "track", id, music.artistId ?? undefined, music.albumId ?? undefined, music.liked, playlistId)}
         />
+        </div>
       </div>
     </div>
   )
