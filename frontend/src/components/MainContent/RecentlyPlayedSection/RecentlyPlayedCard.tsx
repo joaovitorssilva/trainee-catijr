@@ -1,18 +1,24 @@
 import { useState } from "react"
 import { usePlayer } from "@/context/PlayerContext"
-import type { MusicDTO } from "@/services/types"
+import type { MusicDTO } from "@/types/music.types"
 import PlayButton from "@/components/ui/PlayButton"
 import TrackCover from "@/assets/track-cover2.png"
-import PlayingAnimatedIcon from "@/assets/icons/playing-animated-icon.svg"
+import PlayingAnimatedIcon1 from "@/assets/icons/playing-animated-icon1.svg"
+import PlayingIconAnimation2 from "@/assets/icons/playing-animated-icon2.svg"
+import PlayingIconAnimation from "@/utils/PlayingIconAnimation"
 
 interface RecentlyPlayedCardProps {
   music: MusicDTO
   musics: MusicDTO[]
 }
 
+const frames = [PlayingAnimatedIcon1, PlayingIconAnimation2]
+
 export default function RecentlyPlayedCard({ music, musics }: RecentlyPlayedCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const { play, pause, currentTrack, isPlaying } = usePlayer()
+
+  const frame = PlayingIconAnimation()
 
   const isThisTrack = currentTrack?.id === music.id
   const isThisPlaying = isThisTrack && isPlaying
@@ -21,7 +27,7 @@ export default function RecentlyPlayedCard({ music, musics }: RecentlyPlayedCard
     if (isThisPlaying) {
       pause()
     } else {
-      play(music, musics)
+      play(music, musics, { type: "search" })
     }
   }
 
@@ -37,7 +43,7 @@ export default function RecentlyPlayedCard({ music, musics }: RecentlyPlayedCard
           className="w-full h-full rounded-xs"
         />
       </div>
-      <span className=" text-white text-12-bold pl-2.5 ">
+      <span className=" text-white text-12-bold p-2.5 truncate">
         {music.title}
       </span>
       <div className={" transition ease-out duration-300"}>
@@ -50,11 +56,11 @@ export default function RecentlyPlayedCard({ music, musics }: RecentlyPlayedCard
           </div>
         )}
         {isThisPlaying && !isHovered && (
-          <div className="pr-2">
+          <div className="relative w-4 h-4 pr-2">
             <img
-              src={PlayingAnimatedIcon}
+              src={frames[frame]}
               alt="Animated bars icon"
-              className="w-4"
+              className="absolute inset-0  "
             />
           </div>
 
