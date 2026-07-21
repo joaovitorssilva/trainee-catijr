@@ -2,6 +2,7 @@ import { usePlayer } from "@/context/PlayerContext";
 import SongPanelHeader from "../SongPanel/PanelHeader";
 import SongPanelTrackInfo from "../SongPanel/PanelTrackInfo";
 import SongPanelArtistCard from "../SongPanel/PanelArtistCard";
+import PanelNextSong from "../SongPanel/PanelNextSong";
 
 export default function SongPanel() {
   const { currentTrack } = usePlayer()
@@ -13,6 +14,7 @@ export default function SongPanel() {
       <SongPanelHeader music={currentTrack} />
       <SongPanelTrackInfo/>
       <SongPanelArtistCard/>
+      <PanelNextSong/>
      
     </aside>
   )

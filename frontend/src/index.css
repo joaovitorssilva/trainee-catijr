@@ -59,7 +59,7 @@
   background: linear-gradient(135deg, #422CED, #7B75DC, #BDD6CF)
 }
 
-@utility bg-linear-loading{
+@utility bg-linear-loading {
   background: linear-gradient(to right, #424242, #525252, #424242)
 }
 
@@ -102,6 +102,16 @@
   font-weight: 700;
   font-style: Bold;
   font-size: 10px;
+  leading-trim: NONE;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+@utility text-11-semibold {
+  font-family: Inter;
+  font-weight: 600;
+  font-style: Semi Bold;
+  font-size: 11px;
   leading-trim: NONE;
   line-height: 100%;
   letter-spacing: 0%;
