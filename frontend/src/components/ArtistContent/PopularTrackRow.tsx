@@ -5,11 +5,11 @@ import { toggleMusicLike } from "@/api"
 import { useMenuContext } from "@/context/useMenuContext"
 import { cn } from "@/utils/utils"
 import PlayIcon from "@/assets/icons/play-icon.svg"
-import OptionsIcon from "@/assets/icons/options-icon.svg"
 import TrackCover from "@/assets/track-cover1.png"
 import SavedIcon from "@/assets/icons/verified-icon.svg"
 import AddFillIcon from "@/assets/icons/add-fill-icon.svg"
 import AddSubduedIcon from "@/assets/icons/add-subdued-icon.svg"
+import OptionsButton from "@/components/ui/OptionsButton"
 
 interface PopularTrackRowProps {
   trackId: string
@@ -20,13 +20,15 @@ interface PopularTrackRowProps {
   isExplit?: boolean
   isActive?: boolean
   liked?: boolean
+  albumId?: string
+  artistId?: string
   onClick?: () => void
 }
 
-export default function PopularTrackRow({ trackId, title, timesListen, duration, index, isActive = false, liked, onClick }: PopularTrackRowProps) {
+export default function PopularTrackRow({ trackId, title, timesListen, duration, index, isActive = false, liked, albumId, artistId, onClick }: PopularTrackRowProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [isLiked, setIsLiked] = useState(liked ?? false)
-  const { triggerRefresh } = useMenuContext()
+  const { openMenu, triggerRefresh } = useMenuContext()
 
   const handleToggleLike = () => {
     toggleMusicLike(trackId).then(() => {
@@ -93,9 +95,7 @@ export default function PopularTrackRow({ trackId, title, timesListen, duration,
         }
       </button>
 
-      <span>
-        <img src={OptionsIcon} />
-      </span>
+      <OptionsButton onClick={(e) => { e.stopPropagation(); openMenu(e, "track", trackId, artistId, albumId, liked) }} />
     </div>
   )
 }

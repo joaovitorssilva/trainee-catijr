@@ -8,10 +8,10 @@ import type { MusicDTO } from "@/types/index.types";
 import TrackCover3 from "@/assets/track-cover3.png"
 import PauseIcon from "@/assets/icons/pause-icon.svg"
 import PlayIcon from "@/assets/icons/play-icon.svg"
-import OptionsIcon from "@/assets/icons/options-icon.svg"
 import SavedIcon from "@/assets/icons/verified-icon.svg"
 import AddSubduedIcon from "@/assets/icons/add-subdued-icon.svg"
 import AddFillIcon from "@/assets/icons/add-fill-icon.svg"
+import OptionsButton from "@/components/ui/OptionsButton"
 
 interface TrackTableRowProps {
   id: string
@@ -58,6 +58,8 @@ export default function TrackTableRow({ id, music, index, musics, albumId, playl
       onMouseLeave={() => setIsHovered(false)}
       onClick={handlePlay}
       className="grid items-center grid-cols-[16px_400px_1fr_1fr_auto_80px] gap-4 px-4 py-2 cursor-pointer">
+
+      {/* track index */}
       <div className="flex items-center justify-center w-4">
         {isHovered ? (
           isThisPlaying ? (
@@ -74,6 +76,7 @@ export default function TrackTableRow({ id, music, index, musics, albumId, playl
         )}
       </div>
 
+      {/* track info - image + title + subtitle */}
       <div className="flex gap-2 items-center">
         <img src={TrackCover3} className="w-9 h-9 rounded-xs" />
 
@@ -87,41 +90,39 @@ export default function TrackTableRow({ id, music, index, musics, albumId, playl
         </div>
       </div>
 
+      {/* album name */}
       <span className="text-subdued text-10-medium font-bold">
         {albumName ?? "—"}
       </span>
 
+      {/* release date */}
       <span className="text-subdued text-10-medium font-bold">
         {new Date(music.releaseDate).toLocaleDateString("pt-BR", { day: "numeric", month: "short", year: "numeric" })}
       </span>
 
       {/* like button */}
-      <div>
-        <button
-          onClick={(e) => { e.stopPropagation(); handleToggleLike() }}
-          className="cursor-pointer"
-        >
-          {isLiked ?
-            <img src={SavedIcon} /> :
-            (isHovered ?
-              <img src={AddFillIcon} /> :
-              <img src={AddSubduedIcon} />
-            )}
-        </button>
-      </div>
+      <button
+        onClick={(e) => { e.stopPropagation(); handleToggleLike() }}
+        className="cursor-pointer outline-none"
+      >
+        {isLiked ?
+          <img src={SavedIcon} /> :
+          (isHovered ?
+            <img src={AddFillIcon} /> :
+            <img src={AddSubduedIcon} />
+          )}
+      </button>
 
       <div className="flex gap-2 items-center">
+        {/* song duration */}
         <span className="text-subdued text-10-medium">
           {formatDuration(music.duration)}
         </span>
 
         {/* options button */}
-        <button
+        <OptionsButton
           onClick={(e) => openMenu(e, "track", id, music.artistId ?? undefined, music.albumId ?? undefined, music.liked, playlistId)}
-          className="p-1 rounded-sm hover:bg-bg-elements cursor-pointer outline-none"
-        >
-          <img src={OptionsIcon} />
-        </button>
+        />
       </div>
     </div>
   )

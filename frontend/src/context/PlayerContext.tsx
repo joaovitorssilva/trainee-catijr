@@ -26,6 +26,7 @@ interface PlayerContextType {
   isPlaying: boolean
   progress: number
   queue: MusicDTO[]
+  queueIndex: number
   playingFrom: PlayingFrom | null
   play: (track: MusicDTO, queue?: MusicDTO[], playingFrom?: PlayingFrom) => void
   pause: () => void
@@ -135,6 +136,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
       isPlaying: state.isPlaying,
       progress: state.progress,
       queue: state.queue,
+      queueIndex: state.queueIndex,
       playingFrom: state.playingFrom,
       play,
       pause,

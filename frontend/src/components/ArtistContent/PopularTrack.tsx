@@ -30,6 +30,8 @@ export default function PopularTracks() {
             duration={track.duration}
             isExplit={track.explicit}
             liked={track.liked}
+            albumId={track.albumId}
+            artistId={track.artistId ?? undefined}
             index={i + 1}
           />
 

@@ -2,7 +2,7 @@ import { useMenuContext } from "@/context/useMenuContext"
 import { usePlayer } from "@/context/PlayerContext"
 import { useNavigate } from "react-router-dom"
 import type { MusicDTO } from "@/types/index.types"
-import OptionsIcon from "@/assets/icons/options-icon.svg"
+import OptionsButton from "@/components/ui/OptionsButton"
 
 interface SongPanelHeaderProps {
   music: MusicDTO
@@ -41,12 +41,7 @@ export default function SongPanelHeader({ music }: SongPanelHeaderProps) {
         {getLabel()}
       </button>
       <span className="shrink-0">
-        <button
-          onClick={(e) => openMenu(e, "track", music.id, music.artistId ?? undefined, music.albumId, music.liked)}
-          className="p-1.5 rounded-sm hover:bg-bg-elements cursor-pointer outline-none"
-        >
-          <img src={OptionsIcon} />
-        </button>
+        <OptionsButton onClick={(e) => openMenu(e, "track", music.id, music.artistId ?? undefined, music.albumId, music.liked)} />
       </span>
     </div>
   )

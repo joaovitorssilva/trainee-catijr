@@ -2,9 +2,9 @@ import { useState } from "react"
 import { useMenuContext } from "@/context/useMenuContext"
 import { cn } from "@/utils/utils"
 import { type SearchResult } from "@/types/index.types"
-import OptionsIcon from "@/assets/icons/options-icon.svg"
 import CoverFallback from "@/assets/playlist-cover.png"
 import FollowButton from "../ui/FollowButton"
+import OptionsButton from "../ui/OptionsButton"
 
 const TYPE_LABEL: Record<string, string> = {
   track: "Música",
@@ -72,12 +72,7 @@ export default function SearchResultRow({ result, onClick }: SearchResultRowProp
       )}
 
       {/* Options "..." */}
-      <button
-        onClick={(e) => { e.stopPropagation(); openMenu(e, result.type, result.id) }}
-        className="p-2 rounded-sm hover:bg-bg-elements cursor-pointer outline-none"
-      >
-        <img src={OptionsIcon} />
-      </button>
+      <OptionsButton onClick={(e) => { e.stopPropagation(); openMenu(e, result.type, result.id) }} />
 
       {/* todo like musics button  */}
     </div>
