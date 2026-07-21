@@ -43,7 +43,7 @@ export default function PopularTrackRow({ trackId, title, timesListen, duration,
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        "grid grid-cols-[16px_40px_1fr_auto_auto_auto_auto] w-lg items-center gap-2.5 px-2 py-1 transition ease-in-out duration-300 cursor-pointer rounded-sm",
+        "grid grid-cols-[16px_36px_1fr] md:grid-cols-[16px_36px_1fr_auto_auto_auto_auto] w-full md:w-lg  items-center gap-2.5 px-2 py-1 transition ease-in-out duration-300 cursor-pointer rounded-sm",
         isActive && "bg-bg-elements"
       )}>
 
@@ -65,29 +65,26 @@ export default function PopularTrackRow({ trackId, title, timesListen, duration,
       />
 
       <div className="flex flex-col gap-1 overflow-hidden">
-        <span className="text-white font-bold text-10-medium">
+        <span className="text-white font-bold text-10-medium truncate">
           {title}
         </span>
 
-        {/* Todas as musicas estão retornando false para explit */}
-        {/* {isExplit && ( */}
         <span className="text-[8px] font-bold bg-text-subdued text-black rounded-[1px] w-fit h-12px px-1 ">
           E
         </span>
-        {/* )} */}
       </div>
 
-      <span className="text-10-medium text-subdued">
+      <span className="hidden md:block text-10-medium text-subdued">
         {formatPlayCount(timesListen ?? 0)}
       </span>
 
-      <span className="text-10-medium text-subdued">
+      <span className="hidden md:block text-10-medium text-subdued">
         {formatDuration(duration)}
       </span>
 
       <button
         onClick={(e) => { e.stopPropagation(); handleToggleLike() }}
-        className="transition ease-out duration-300 cursor-pointer outline-none"
+        className="hidden md:block transition ease-out duration-300 cursor-pointer outline-none"
       >
         {
           isLiked ? <img src={SavedIcon} /> :
@@ -95,7 +92,13 @@ export default function PopularTrackRow({ trackId, title, timesListen, duration,
         }
       </button>
 
-      <OptionsButton onClick={(e) => { e.stopPropagation(); openMenu(e, "track", trackId, artistId, albumId, liked) }} />
+      <div className="hidden md:block">
+        <OptionsButton
+          onClick={(e) => { e.stopPropagation(); openMenu(e, "track", trackId, artistId, albumId, liked) }}
+        />
+      </div>
     </div>
   )
 }
+
+

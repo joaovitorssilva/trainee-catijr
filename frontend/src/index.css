@@ -52,11 +52,11 @@
 }
 
 @utility bg-header-gradient {
-  background: linear-gradient(to bottom, #938D8E, #3E3939)
+  background: linear-gradient(to bottom, #938D8E, #3E3939);
 }
 
 @utility bg-liked-songs-gradient {
-  background: linear-gradient(135deg, #422CED, #7B75DC, #BDD6CF)
+  background: linear-gradient(135deg, #422CED, #7B75DC, #BDD6CF);
 }
 
 @utility bg-linear-loading {

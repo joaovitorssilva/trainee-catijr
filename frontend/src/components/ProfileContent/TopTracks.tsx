@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import TrackTableRow from "../PlaylistContent/TrackTableRow";
-import type { MusicDTO } from "@/types/index.types";
 import { getMostPlayedMusics } from "@/api";
+import type { MusicDTO } from "@/types/index.types";
+import PopularTrackRow from "../ArtistContent/PopularTrackRow";
 
 export default function TopTracks() {
   const [mostPlayedMusics, setMostPlayedMusics] = useState<MusicDTO[]>([])
@@ -13,7 +13,7 @@ export default function TopTracks() {
   return (
     <div className="flex flex-col gap-1 md:gap-2.5">
       <div className="flex flex-col gap-1">
-        <span className="text-white ">
+        <span className="text-white text-12-bold md:text-16-bold">
           Músicas mais tocadas este mês
         </span>
         <span className="text-subdued text-10-medium">
@@ -22,11 +22,17 @@ export default function TopTracks() {
       </div>
       <section>
         {mostPlayedMusics.map((m, index) => (
-          <TrackTableRow
+          <PopularTrackRow
             key={m.id}
-            music={m}
-            index={index}
-            musics={mostPlayedMusics}
+            trackId={m.id}
+            title={m.title}
+            timesListen={m.timesListen}
+            duration={m.duration}
+            index={index + 1}
+            isExplit={m.explicit}
+            liked={m.liked}
+            albumId={m.albumId}
+            artistId={m.artistId ?? undefined}
           />
         ))}
       </section>

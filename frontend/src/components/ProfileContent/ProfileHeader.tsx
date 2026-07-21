@@ -2,12 +2,13 @@ import UserAvatar from "@/assets/user-avatar.png"
 
 interface ProfileHeaderProps {
   followers: string;
+  playlistCount: string;
 }
 
-export default function ProfileHeader({ followers }: ProfileHeaderProps) {
+export default function ProfileHeader({ followers, playlistCount }: ProfileHeaderProps) {
   return (
     <div className="flex items-center gap-3 bg-linear-to-b from-[#938D8E] to-[#3E3939] rounded-lg pl-5 pb-4 pt-10">
-      <div className="w-[60px] h-[60px] md:w-[175px] md:h-[175px] rounded-full drop-shadow overflow-hidden shrink-0">
+      <div className="w-15 h-15 md:w-43.75 md:h-43.75 rounded-full drop-shadow overflow-hidden shrink-0">
         <img
           src={UserAvatar}
           alt="User Profile Image"
@@ -23,7 +24,7 @@ export default function ProfileHeader({ followers }: ProfileHeaderProps) {
         </h1>
         <div className="flex gap-1">
           <span className="text-subdued text-10-medium">
-            8 playlists públicas
+            {playlistCount} playlists 
           </span>
           <span className="text-subdued text-10-medium">
             • {followers} seguidores

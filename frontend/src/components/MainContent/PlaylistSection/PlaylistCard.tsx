@@ -3,16 +3,18 @@ import { usePlayer } from "@/context/PlayerContext"
 import { getPlaylistById } from "@/api"
 import type { MusicDTO } from "@/types/index.types"
 import PlaylistCover from "@/assets/playlist-cover.png"
+import HeartIcon from "@/assets/icons/heart-icon.png"
 import PlayButton from "@/components/ui/PlayButton"
 
 interface PlaylistCardProps {
   id: string
   name: string
   musicQtd: number
+  type?: string
   onClick?: () => void
 }
 
-export default function PlaylistCard({ id, name, musicQtd, onClick }: PlaylistCardProps) {
+export default function PlaylistCard({ id, name, musicQtd, type, onClick }: PlaylistCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [cachedMusics, setCachedMusics] = useState<MusicDTO[] | null>(null)
   const { play, pause, currentTrack, isPlaying } = usePlayer()
@@ -50,10 +52,16 @@ export default function PlaylistCard({ id, name, musicQtd, onClick }: PlaylistCa
       onMouseLeave={() => setIsHovered(false)}
       className="flex flex-col gap-2 cursor-pointer ">
       <div className="relative w-15 h-15 md:w-[132px] md:h-[132px]">
-        <img
-          src={PlaylistCover}
-          className="w-full aspect-square object-cover rounded-xs "
-        />
+        {type === "liked_songs" ? (
+          <div className="flex items-center justify-center rounded-xs bg-liked-songs-gradient w-full h-full">
+            <img src={HeartIcon} className="w-8 h-8 brightness-0 invert" />
+          </div>
+        ) : (
+          <img
+            src={PlaylistCover}
+            className="w-full aspect-square object-cover rounded-xs "
+          />
+        )}
         <div className={`absolute bottom-0.5 right-1 trantision ease-out duration-300 ${isHovered ? "opacity-100" : "opacity-0"}`}>
           <PlayButton
             isPlaying={isThisPlaying}
