@@ -37,7 +37,7 @@ export default function AlbumCard({ id, title, year, onClick }: AlbumCardProps) 
     if (isCurrentlyPlaying) {
       pause()
     } else if (musics.length > 0) {
-      play(musics[0], musics)
+      play(musics[0], musics, { type: "album", albumId: id, albumName: title })
     }
   }
 

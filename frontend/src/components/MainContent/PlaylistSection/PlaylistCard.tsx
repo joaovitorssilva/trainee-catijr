@@ -39,7 +39,7 @@ export default function PlaylistCard({ id, name, musicQtd, onClick }: PlaylistCa
     if (isCurrentlyPlaying) {
       pause()
     } else {
-      play(musics[0], musics)
+      play(musics[0], musics, { type: "playlist", playlistId: id, playlistName: name })
     }
   }
 

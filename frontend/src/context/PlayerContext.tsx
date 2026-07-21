@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, useEffect, useCallback } from 'react'
-import type { MusicDTO } from '../types/index.types'
+import type { MusicDTO, PlayingFrom } from '../types/index.types'
 
 interface PlayerState {
   currentTrack: MusicDTO | null
@@ -7,10 +7,11 @@ interface PlayerState {
   progress: number
   queue: MusicDTO[]
   queueIndex: number
+  playingFrom: PlayingFrom | null
 }
 
 type PlayerAction =
-  | { type: 'PLAY'; track: MusicDTO; queue?: MusicDTO[] }
+  | { type: 'PLAY'; track: MusicDTO; queue?: MusicDTO[]; playingFrom?: PlayingFrom }
   | { type: 'PAUSE' }
   | { type: 'RESUME' }
   | { type: 'TOGGLE_PLAY' }
@@ -25,7 +26,8 @@ interface PlayerContextType {
   isPlaying: boolean
   progress: number
   queue: MusicDTO[]
-  play: (track: MusicDTO, queue?: MusicDTO[]) => void
+  playingFrom: PlayingFrom | null
+  play: (track: MusicDTO, queue?: MusicDTO[], playingFrom?: PlayingFrom) => void
   pause: () => void
   resume: () => void
   togglePlay: () => void
@@ -48,6 +50,7 @@ function playerReducer(state: PlayerState, action: PlayerAction): PlayerState {
         progress: 0,
         queue,
         queueIndex: queueIndex >= 0 ? queueIndex : 0,
+        playingFrom: action.playingFrom ?? null,
       }
     }
     case 'PAUSE':
@@ -105,6 +108,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     progress: 0,
     queue: [],
     queueIndex: -1,
+    playingFrom: null,
   })
 
   useEffect(() => {
@@ -113,8 +117,8 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     return () => clearInterval(id)
   }, [state.isPlaying, state.currentTrack])
 
-  const play = useCallback((track: MusicDTO, queue?: MusicDTO[]) => {
-    dispatch({ type: 'PLAY', track, queue })
+  const play = useCallback((track: MusicDTO, queue?: MusicDTO[], playingFrom?: PlayingFrom) => {
+    dispatch({ type: 'PLAY', track, queue, playingFrom })
   }, [])
 
   const pause = useCallback(() => dispatch({ type: 'PAUSE' }), [])
@@ -131,6 +135,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
       isPlaying: state.isPlaying,
       progress: state.progress,
       queue: state.queue,
+      playingFrom: state.playingFrom,
       play,
       pause,
       resume,

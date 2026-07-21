@@ -29,7 +29,7 @@ export default function AlbumPage() {
     if (isThisPlaying) {
       pause()
     } else if (album.musics.length > 0) {
-      play(album.musics[0], album.musics)
+      play(album.musics[0], album.musics, { type: "album", albumId: album.id, albumName: album.title })
     }
   }
 

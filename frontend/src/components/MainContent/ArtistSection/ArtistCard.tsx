@@ -36,7 +36,7 @@ export default function ArtistCard({ id, name, onClick }: ArtistCardProps) {
     if (isCurrentlyPlaying) {
       pause()
     } else if (musics.length > 0) {
-      play(musics[0], musics)
+      play(musics[0], musics, { type: "search" })
     }
   }
 

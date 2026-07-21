@@ -29,7 +29,7 @@ export default function PlaylistPage() {
     if (isThisPlaying) {
       pause()
     } else if (playlist.musics.length > 0) {
-      play(playlist.musics[0], playlist.musics)
+      play(playlist.musics[0], playlist.musics, { type: "playlist", playlistId: playlist.id, playlistName: playlist.name })
     }
   }
 

@@ -13,3 +13,4 @@ export type {
   SearchFilterTab,
   RecentSearch,
 } from "./search.types"
+export type { PlayingFrom } from "./player.types"

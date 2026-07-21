@@ -32,7 +32,7 @@ export default function ArtistPage() {
     if (isThisPlaying) {
       pause()
     } else if (popularTracks.length > 0) {
-      play(popularTracks[0], popularTracks)
+      play(popularTracks[0], popularTracks, { type: "search" })
     }
   }
 
