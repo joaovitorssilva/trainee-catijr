@@ -5,7 +5,7 @@ import type { PlaylistNoMusicDTO } from "@/types/index.types";
 import PlaylistCard from "./PlaylistCard";
 
 interface PlaylistSectionProps {
-  activeFilter: string
+  activeFilter?: string
 }
 
 export default function PlaylistSection({ activeFilter }: PlaylistSectionProps) {
@@ -16,7 +16,7 @@ export default function PlaylistSection({ activeFilter }: PlaylistSectionProps) 
     getUserPlaylists().then(setPlaylists)
   }, [])
 
-  if (activeFilter !== "Tudo" && activeFilter !== "Playlists") return null
+  if (activeFilter && activeFilter !== "Tudo" && activeFilter !== "Playlists") return null
 
   return (
     <div className="flex flex-col gap-3">
@@ -30,6 +30,7 @@ export default function PlaylistSection({ activeFilter }: PlaylistSectionProps) 
             id={p.id}
             name={p.name}
             musicQtd={p.musicQtd}
+            type={p.type}
             onClick={() => navigate(`/playlist/${p.id}`)} />
         ))}
       </section>
