@@ -35,6 +35,7 @@ Rotas para obter detalhes sobre os artistas e seu engajamento.
 
 | Método | Endpoint | Descrição |
 | :--- | :--- | :--- |
+| GET | /artist/{artistId} | Retorna os dados de um artista específico (nome, ouvintes mensais, bio, etc.). |
 | GET | /artist/{artistId}/popularMusics | Retorna a lista (fixa) de músicas mais populares do artista. |
 | GET | /artist/{artistId}/albums | Retorna todos os álbuns associados ao artista específico. |
 
