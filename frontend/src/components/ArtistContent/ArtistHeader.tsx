@@ -1,9 +1,14 @@
 import ArtistBanner from "@/assets/artist-banner.png"
 import ArtistVerifiedIcon from "@/assets/icons/artist-verified-icon.svg"
 
-export default function ArtistHeader() {
+interface ArtistHeaderProps {
+  artistName?: string | null
+  listeners?: number
+}
+
+export default function ArtistHeader({ artistName, listeners }: ArtistHeaderProps) {
   return (
-    <div className="relative w-full h-[300px] overflow-hidden rounded-lg ">
+    <div className="relative w-full h-75 overflow-hidden rounded-lg ">
       <img
         src={ArtistBanner}
         alt="Artist Banner Image"
@@ -12,7 +17,9 @@ export default function ArtistHeader() {
 
       <div className="absolute bottom-0 left-0 p-4">
         <div className="flex flex-col gap-2.5">
-          <h1 className="text-white text-64-bold">Artista</h1>
+          <h1 className="text-white text-64-bold">
+            {artistName || "Artista"}
+          </h1>
           <div className="flex items-center gap-1">
             <img src={ArtistVerifiedIcon} alt="Verified" />
             <span className="text-white text-10-bold">
@@ -20,7 +27,7 @@ export default function ArtistHeader() {
             </span>
           </div>
           <span className="text-white text-10-medium">
-            115.719.455 ouvintes mensais
+            {listeners?.toLocaleString("pt-BR") || "—"} ouvintes mensais
           </span>
         </div>
       </div>
