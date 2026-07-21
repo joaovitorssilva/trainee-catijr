@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import VolumeIcon from "@/assets/icons/volume-icon.svg"
-import OpenIcon from "@/assets/icons/open-now-playing-page-icon.svg"
+import OpwnNowPlayingIcon from "@/assets/icons/open-now-playing-page-icon.svg"
+import CloseNowPlayingIcon from "@/assets/icons/close-now-playing-page-icon.svg"
 
 interface VolumeControlProps {
   volume: number;
@@ -9,7 +11,10 @@ interface VolumeControlProps {
 
 export default function VolumeControl({ volume, onChange }: VolumeControlProps) {
   const [isDragging, setIsDragging] = useState(false)
+  const navigate = useNavigate()
+  const location = useLocation()
   const trackRef = useRef<HTMLDivElement>(null)
+  const isNowPlaying = location.pathname === "/now-playing"
 
   const getPercentFromEvent = (e: React.MouseEvent): number => {
     if (!trackRef.current) return 0;
@@ -34,7 +39,7 @@ export default function VolumeControl({ volume, onChange }: VolumeControlProps) 
           onMouseUp={() => setIsDragging(false)}
           onMouseMove={(e) => { if (isDragging) onChange(getPercentFromEvent(e)) }}
           onMouseLeave={() => setIsDragging(false)}
-          className="relative flex-1 h-1 bg-track-bar rounded-full w-[70px] cursor-pointer group"
+          className="relative flex-1 h-1 bg-track-bar rounded-full w-17.5 cursor-pointer group"
         >
           {/* Fill */}
           <div
@@ -50,10 +55,11 @@ export default function VolumeControl({ volume, onChange }: VolumeControlProps) 
         </div>
       </div>
 
-      <button className="cursor-pointer">
+      <button
+        onClick={() => navigate(isNowPlaying ? "/" : "/now-playing")}
+        className="cursor-pointer">
         <img
-          src={OpenIcon}
-          alt=""
+          src={isNowPlaying ? CloseNowPlayingIcon : OpwnNowPlayingIcon}
         />
       </button>
     </div>

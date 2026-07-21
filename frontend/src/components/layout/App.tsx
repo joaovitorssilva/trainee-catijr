@@ -1,5 +1,4 @@
 import { Outlet } from "react-router-dom";
-import { PlayerProvider } from "@/context/PlayerContext";
 import { MenuProvider } from "@/context/useMenuContext";
 import { RecentSearchesProvider } from "@/hooks/useRecentSearches";
 import OptionsMenuRenderer from "../OptionsMenuContent/OptionsMenuRenderer";
@@ -13,7 +12,6 @@ import SongPanel from "./SongPanel";
 export default function App() {
   return (
     <RecentSearchesProvider>
-      <PlayerProvider>
         <MenuProvider>
           <div className="h-screen bg-bg flex flex-col overflow-hidden">
             <Topbar />
@@ -33,7 +31,6 @@ export default function App() {
           <EditPlaylistModalRenderer />
           <DeletePlaylistModalRenderer />
         </MenuProvider>
-      </PlayerProvider>
     </RecentSearchesProvider>
   );
 }
