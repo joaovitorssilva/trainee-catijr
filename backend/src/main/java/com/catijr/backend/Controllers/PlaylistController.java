@@ -6,6 +6,7 @@ import com.catijr.backend.DTOs.Playlist.GetPlaylistDTO;
 import com.catijr.backend.DTOs.Playlist.GetPlaylistNoMusicDTO;
 import com.catijr.backend.DTOs.Playlist.PutPlaylistDTO;
 import com.catijr.backend.DTOs.Playlist.CreatePlaylistDTO;
+import com.catijr.backend.DTOs.Playlist.ReorderPlaylistDTO;
 import com.catijr.backend.DTOs.Playlist.GetPlaylistDTO;
 import com.catijr.backend.Services.PlaylistService;
 import lombok.RequiredArgsConstructor;
@@ -59,6 +60,15 @@ public class PlaylistController {
         return playlistService.createPlaylist(playlist);
     }
     
+    @PutMapping("{playlistId}/reorder")
+    public ResponseEntity<GetPlaylistDTO> reorderPlaylist(@PathVariable String playlistId,
+                                                          @RequestBody ReorderPlaylistDTO reorderDTO) {
+        var playlist = playlistService.reorderPlaylist(UUID.fromString(playlistId), reorderDTO.musicIds());
+
+        GetPlaylistDTO responseDTO = new GetPlaylistDTO(playlist);
+
+        return ResponseEntity.ok(responseDTO);
+    }
 
     @DeleteMapping("{playlistId}")
     public ResponseEntity<Void> deletePlaylistById(@PathVariable String playlistId) {

@@ -15,11 +15,13 @@ import com.catijr.backend.Repositories.PlaylistRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -108,6 +110,27 @@ public class PlaylistService {
         }
 
         playlistRepository.deleteById(playlistId);
+    }
+
+    @Transactional
+    public Playlist reorderPlaylist(UUID playlistId, List<UUID> musicIds) {
+        var playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        var currentSongs = playlist.getSongs();
+        var currentIds = currentSongs.stream().map(Music::getId).collect(Collectors.toSet());
+
+        if (!currentIds.equals(musicIds.stream().collect(Collectors.toSet()))) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Provided music IDs do not match playlist tracks");
+        }
+
+        var musicMap = currentSongs.stream().collect(Collectors.toMap(Music::getId, m -> m));
+        var reordered = musicIds.stream().map(musicMap::get).toList();
+
+        playlist.getSongs().clear();
+        playlist.getSongs().addAll(reordered);
+
+        return playlistRepository.save(playlist);
     }
 
     public void deleteMusicById(UUID playlistId, UUID musicId) {

@@ -24,3 +24,7 @@ export function deletePlaylist(id: string): Promise<void> {
 export function removeMusicFromPlaylist(playlistId: string, musicId: string): Promise<void> {
   return api.delete(`/playlist/${playlistId}/${musicId}`)
 }
+
+export function reorderPlaylist(playlistId: string, musicIds: string[]): Promise<PlaylistDTO> {
+  return api.put(`/playlist/${playlistId}/reorder`, { musicIds }).then((r) => r.data)
+}

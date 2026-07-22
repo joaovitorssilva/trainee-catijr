@@ -55,6 +55,7 @@ public class Playlist {
         this.updatedAt = Instant.now();
     }
 
+    @OrderColumn(name = "music_order")
     @ManyToMany
     @JoinTable(name = "tb_playlist_music", joinColumns = @JoinColumn(name = "playlist"), inverseJoinColumns = @JoinColumn(name = "songs"))
     private List<Music> songs;
