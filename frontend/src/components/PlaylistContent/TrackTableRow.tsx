@@ -20,9 +20,10 @@ interface TrackTableRowProps {
   musics: MusicDTO[]
   albumId: string
   playlistId?: string
+  isDragging?: boolean
 }
 
-export default function TrackTableRow({ id, music, index, musics, albumId, playlistId }: TrackTableRowProps) {
+export default function TrackTableRow({ id, music, index, musics, albumId, playlistId, isDragging }: TrackTableRowProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [albumName, setAlbumName] = useState<string | null>(null)
   const [isLiked, setIsLiked] = useState(music.liked ?? false)
@@ -57,7 +58,8 @@ export default function TrackTableRow({ id, music, index, musics, albumId, playl
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handlePlay}
-      className="grid items-center grid-cols-[16px_1fr_16px] md:grid-cols-[16px_400px_1fr_1fr_auto_80px] gap-4 px-4 py-2 cursor-pointer">
+      className={`grid items-center grid-cols-[16px_1fr_16px] md:grid-cols-[16px_400px_1fr_1fr_auto_80px] gap-4 px-4 py-2 cursor-pointer outline-none 
+      ${isDragging ? "opacity-50" : ""}`}>
 
       {/* track index */}
       <div className="flex items-center justify-center w-4">
@@ -122,8 +124,8 @@ export default function TrackTableRow({ id, music, index, musics, albumId, playl
         {/* options button */}
         <div className="hidden md:block">
           <OptionsButton
-          onClick={(e) => openMenu(e, "track", id, music.artistId ?? undefined, music.albumId ?? undefined, music.liked, playlistId)}
-        />
+            onClick={(e) => openMenu(e, "track", id, music.artistId ?? undefined, music.albumId ?? undefined, music.liked, playlistId)}
+          />
         </div>
       </div>
     </div>
