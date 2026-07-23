@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { getRecentArtists } from "@/api";
 import type { ArtistDTO } from "@/types/index.types";
 import ArtistCard from "./ArtistCard";
+import SectionHeader from "@/components/ui/SectionHeader";
+import Carousel from "@/components/ui/Carousel";
 
 interface ArtistSectionProps {
   activeFilter: string
@@ -20,13 +22,8 @@ export default function ArtistSection({ activeFilter }: ArtistSectionProps) {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex justify-between">
-        <span className="text-white text-16-bold">
-          Artistas Recente
-        </span>
-
-      </div>
-      <section className="flex gap-3 overflow-hidden">
+      <SectionHeader title="Artistas Recente" />
+      <Carousel>
         {artists.map((a) => (
           <ArtistCard
             key={a.id}
@@ -35,7 +32,7 @@ export default function ArtistSection({ activeFilter }: ArtistSectionProps) {
             onClick={() => navigate(`/artist/${a.id}`)}
           />
         ))}
-      </section>
+      </Carousel>
     </div>
   )
 }

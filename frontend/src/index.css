@@ -63,6 +63,23 @@
   background: linear-gradient(to right, #424242, #525252, #424242)
 }
 
+@utility scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.carousel-track {
+  scroll-snap-type: x mandatory;
+}
+
+.carousel-track > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
 @utility drop-shadow {
   box-shadow: 0px 12px 22.2px 0px #00000040;
 }

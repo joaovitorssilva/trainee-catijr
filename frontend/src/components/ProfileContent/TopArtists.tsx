@@ -3,6 +3,8 @@ import type { ArtistDTO } from "@/types/index.types";
 import { getMostPlayedArtists } from "@/api";
 import ArtistCard from "../MainContent/ArtistSection/ArtistCard";
 import { useNavigate } from "react-router-dom";
+import Carousel from "../ui/Carousel";
+import SectionHeader from "../ui/SectionHeader";
 
 export default function TopArtists() {
   const navigate = useNavigate()
@@ -14,13 +16,11 @@ export default function TopArtists() {
 
   return (
     <div className="flex flex-col gap-1 ">
-      <span className="text-white text-12-bold md:text-16-bold">
-        Artistas mais tocados este mês
-      </span>
+      <SectionHeader title="Artistas mais tocados este mês" showAllLabel="Mostrar mais" />
       <span className="text-subdued text-10-medium">
         Visíveis apenas para você
       </span>
-      <section className="flex gap-3 overflow-x-auto overflow-y-clip">
+      <Carousel>
         {artists.map((a) => (
           <ArtistCard
             key={a.id}
@@ -29,7 +29,7 @@ export default function TopArtists() {
             onClick={() => navigate(`/artist/${a.id}`)}
           />
         ))}
-      </section>
+      </Carousel>
     </div>
   )
 

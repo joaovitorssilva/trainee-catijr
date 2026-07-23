@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { getRecentAlbums } from "@/api";
 import type { AlbumNoMusicsDTO } from "@/types/index.types";
 import AlbumCard from "./AlbumCard";
+import SectionHeader from "@/components/ui/SectionHeader";
+import Carousel from "@/components/ui/Carousel";
 
 interface Props {
   activeFilter: string
@@ -21,10 +23,8 @@ export default function AlbumSection({ activeFilter }: Props) {
 
   return (
     <div className="flex flex-col gap-3">
-      <span className="text-white text-16-bold">
-        Álbuns Recentes
-      </span>
-      <section className="flex gap-3 overflow-hidden">
+      <SectionHeader title="Álbuns Recentes" />
+      <Carousel>
         {albums.map((a) => (
           <AlbumCard
             key={a.id}
@@ -34,7 +34,7 @@ export default function AlbumSection({ activeFilter }: Props) {
             onClick={() => navigate(`/album/${a.id}`)}
           />
         ))}
-      </section>
+      </Carousel>
     </div>
   )
 }

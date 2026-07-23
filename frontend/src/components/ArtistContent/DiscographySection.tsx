@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { getArtistAlbums } from "@/api"
 import type { AlbumDTO } from "@/types/index.types"
 import AlbumCard from "../MainContent/AlbumSection/AlbumCard"
+import Carousel from "../ui/Carousel"
 
 
 export default function DiscographySection() {
@@ -22,7 +23,7 @@ export default function DiscographySection() {
         Discografia
       </span>
 
-      <section className="flex gap-4 overflow-x-auto overflow-y-clip">
+      <Carousel>
         {albums.map((album) => (
           <AlbumCard
             key={album.id}
@@ -32,7 +33,7 @@ export default function DiscographySection() {
             onClick={() => navigate(`/album/${album.id}`)}
           />
         ))}
-      </section>
+      </Carousel>
     </div>
   )
 }

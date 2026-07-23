@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { getUserPlaylists } from "@/api";
 import type { PlaylistNoMusicDTO } from "@/types/index.types";
 import PlaylistCard from "./PlaylistCard";
+import SectionHeader from "@/components/ui/SectionHeader";
+import Carousel from "@/components/ui/Carousel";
 
 interface PlaylistSectionProps {
   activeFilter?: string
@@ -20,10 +22,8 @@ export default function PlaylistSection({ activeFilter }: PlaylistSectionProps) 
 
   return (
     <div className="flex flex-col gap-3">
-      <span className="text-white text-16-bold">
-        Suas Playlists
-      </span>
-      <section className="flex gap-3 overflow-hidden">
+      <SectionHeader title="Suas Playlists" />
+      <Carousel>
         {playlists.map((p) => (
           <PlaylistCard
             key={p.id}
@@ -33,7 +33,7 @@ export default function PlaylistSection({ activeFilter }: PlaylistSectionProps) 
             type={p.type}
             onClick={() => navigate(`/playlist/${p.id}`)} />
         ))}
-      </section>
+      </Carousel>
     </div>
   )
 }
