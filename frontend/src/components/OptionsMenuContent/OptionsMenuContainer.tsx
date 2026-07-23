@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useLayoutEffect, useRef, useState, useCallback } from "react"
 
 interface OptionsMenuContainerProps {
   x: number
@@ -7,49 +7,68 @@ interface OptionsMenuContainerProps {
   children: React.ReactNode
 }
 
+const PADDING = 8
+const OFFSET = 6
+
 export default function OptionsMenuContainer({ x, y, onClose, children }: OptionsMenuContainerProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [position, setPosition] = useState({ x, y })
 
-  useEffect(() => {
+  const updatePosition = useCallback(() => {
     if (!ref.current) return
 
-    const { offsetWidth, offsetHeight } = ref.current
-    const viewportWidth = window.innerWidth
-    const viewportHeight = window.innerHeight
-    const padding = 8    // min distance from viewport edge
+    const { width, height } = ref.current.getBoundingClientRect()
+    const { innerWidth: viewportWidth, innerHeight: viewportHeight } = window
 
-    setPosition({
-      x: Math.min(x, viewportWidth - offsetWidth - padding),
-      y: Math.min(y, viewportHeight - offsetHeight - padding),
-    })
+    const posX = x + width + OFFSET + PADDING > viewportWidth ? x - width - OFFSET : x + OFFSET
+    const posY = y + height + OFFSET + PADDING > viewportHeight ? y - height - OFFSET : y + OFFSET
+
+    const clampedX = Math.max(PADDING, Math.min(posX, viewportWidth - width - PADDING))
+    const clampedY = Math.max(PADDING, Math.min(posY, viewportHeight - height - PADDING))
+
+    setPosition({ x: clampedX, y: clampedY })
   }, [x, y])
 
-  // close on outside click
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
+  useLayoutEffect(() => {
+    updatePosition()
+
+    const windowResizeHandler = () => updatePosition()
+    window.addEventListener("resize", windowResizeHandler)
+
+    const resizeObserver = new ResizeObserver(updatePosition)
+    if (ref.current) resizeObserver.observe(ref.current)
+
+    return () => {
+      window.removeEventListener("resize", windowResizeHandler)
+      resizeObserver.disconnect()
+    }
+  }, [updatePosition])
+
+  useLayoutEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
         onClose()
       }
     }
-    document.addEventListener("mousedown", handler)
-    return () => document.removeEventListener("mousedown", handler)
-  }, [onClose])
 
-  // close on esc
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose()
     }
-    document.addEventListener("keydown", handler)
-    return () => document.removeEventListener("keydown", handler)
+
+    document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener("keydown", handleKeyDown)
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+      document.removeEventListener("keydown", handleKeyDown)
+    }
   }, [onClose])
 
   return (
     <div
       ref={ref}
-      style={{ top: position.y, left: position.x }}
-      className="fixed z-50 min-w-[212px] bg-bg-popup rounded-sm"
+      style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
+      className="fixed top-0 left-0 z-50 min-w-53 bg-bg-popup rounded-sm"
     >
       {children}
     </div>
