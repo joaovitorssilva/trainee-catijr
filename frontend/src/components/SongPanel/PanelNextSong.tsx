@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { usePlayer } from "@/context/PlayerContext"
 import { useMenuContext } from "@/context/useMenuContext"
+import { coverUrl } from "@/utils/coverUrl"
 import TrackCover from "@/assets/track-cover1.png"
 import OptionsButton from "@/components/ui/OptionsButton"
 
@@ -24,24 +25,26 @@ export default function PanelNextSong() {
         onClick={() => play(nextTrack, queue)}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="flex items-center gap-3 hover:bg-textbox-bg rounded-lg border-8 border-transparent hover:border-textbox-bg cursor-pointer"
+        className="flex items-center justify-between  hover:bg-textbox-bg rounded-lg border-8 border-transparent hover:border-textbox-bg cursor-pointer"
       >
-        <img
-          src={TrackCover}
-          alt="Track Cover Image"
-          className="w-10.5 h-10.5 rounded-sm object-fit"
-        />
+        <div className="flex items-center gap-3">
+          <img
+            src={coverUrl(nextTrack.coverUrl) ?? TrackCover}
+            alt="Track Cover Image"
+            className="w-10.5 h-10.5 rounded-sm object-fit"
+          />
 
-        <div className="flex flex-col gap-1">
-          <span className="text-white text-11-semibold truncate">
-            {nextTrack.title}
-          </span>
-          <button
-            className="text-subdued text-10-medium cursor-pointer text-left truncate disabled:cursor-default"
-            disabled={!nextTrack.artistId}
-          >
-            {nextTrack.artistName || "Nome do Artista"}
-          </button>
+          <div className="flex flex-col gap-1">
+            <span className="text-white text-11-semibold truncate">
+              {nextTrack.title}
+            </span>
+            <button
+              className="text-subdued text-10-medium cursor-pointer text-left truncate disabled:cursor-default"
+              disabled={!nextTrack.artistId}
+            >
+              {nextTrack.artistName || "Nome do Artista"}
+            </button>
+          </div>
         </div>
 
         {/* options button - rendered on component hover*/}

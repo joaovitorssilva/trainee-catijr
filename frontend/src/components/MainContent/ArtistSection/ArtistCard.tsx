@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { usePlayer } from "@/context/PlayerContext"
 import { getArtistPopularMusics } from "@/api"
+import { coverUrl } from "@/utils/coverUrl"
 import type { MusicDTO } from "@/types/index.types"
 import ArtistCover from "@/assets/artist-cover.png"
 import PlayButton from "@/components/ui/PlayButton"
@@ -8,10 +9,11 @@ import PlayButton from "@/components/ui/PlayButton"
 interface ArtistCardProps {
   id: string
   name: string
+  coverUrl?: string
   onClick?: () => void
 }
 
-export default function ArtistCard({ id, name, onClick }: ArtistCardProps) {
+export default function ArtistCard({ id, name, coverUrl: coverUrlProp, onClick }: ArtistCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [cachedMusics, setCachedMusics] = useState<MusicDTO[] | null>(null)
   const { play, pause, currentTrack, isPlaying } = usePlayer()
@@ -48,9 +50,9 @@ export default function ArtistCard({ id, name, onClick }: ArtistCardProps) {
       className="flex flex-col gap-2 cursor-pointer ">
       <div className="relative w-15 h-15 md:w-33 md:h-33">
         <img
-          src={ArtistCover}
+          src={coverUrl(coverUrlProp) ?? ArtistCover}
           alt="Artist Profile Image"
-          className="rounded-full"
+          className="rounded-full w-full h-full object-cover"
         />
         <div className={`absolute bottom-0.5 right-1 transition ease-out duration-300 ${isHovered ? "opacity-100" : "opacity-0"}`}>
           <PlayButton

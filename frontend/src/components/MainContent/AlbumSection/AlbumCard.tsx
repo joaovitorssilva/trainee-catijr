@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { usePlayer } from "@/context/PlayerContext"
 import { getAlbumMusics } from "@/api"
+import { coverUrl } from "@/utils/coverUrl"
 import type { MusicDTO } from "@/types/index.types"
 import AlbumCover from "@/assets/album-cover.png"
 import PlayButton from "@/components/ui/PlayButton"
@@ -9,10 +10,11 @@ interface AlbumCardProps {
   id: string
   title: string
   year: string
+  coverUrl?: string
   onClick?: () => void
 }
 
-export default function AlbumCard({ id, title, year, onClick }: AlbumCardProps) {
+export default function AlbumCard({ id, title, year, coverUrl: coverUrlProp, onClick }: AlbumCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [cachedMusics, setCachedMusics] = useState<MusicDTO[] | null>(null)
   const { play, pause, currentTrack, isPlaying } = usePlayer()
@@ -46,11 +48,11 @@ export default function AlbumCard({ id, title, year, onClick }: AlbumCardProps) 
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={onClick}
-      className="flex flex-col gap-2  cursor-pointer">
-      <div className="relative w-15 md:w-33 h-15 md:h-33">
+      className="flex flex-col gap-2 cursor-pointer w-15 md:w-33">
+      <div className="relative w-full h-15 md:h-33">
         <img
-          src={AlbumCover}
-          alt="Artist Image"
+          src={coverUrl(coverUrlProp) ?? AlbumCover}
+          alt="Album Cover"
           className="w-full aspect-square object-cover rounded-xs "
         />
         <div className={`absolute bottom-0.5 right-1 transition ease-out duration-300 ${isHovered ? "opacity-100" : "opacity-0"}`}>
@@ -61,8 +63,8 @@ export default function AlbumCard({ id, title, year, onClick }: AlbumCardProps) 
         </div>
 
       </div>
-      <div className="flex flex-col gap-1">
-        <span className="text-white text-12-medium">
+      <div className="flex flex-col gap-1 min-w-0">
+        <span className="text-white text-12-medium line-clamp-2">
           {title}
         </span>
         <span className="hidden md:block text-subdued text-10-medium">

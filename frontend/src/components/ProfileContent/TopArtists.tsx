@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import type { ArtistDTO } from "@/types/index.types";
-import { getMostPlayedArtists } from "@/api";
-import ArtistCard from "../MainContent/ArtistSection/ArtistCard";
 import { useNavigate } from "react-router-dom";
+import { getMostPlayedArtists } from "@/api";
+import type { ArtistDTO } from "@/types/index.types";
+import ArtistCard from "../MainContent/ArtistSection/ArtistCard";
 import Carousel from "../ui/Carousel";
 import SectionHeader from "../ui/SectionHeader";
 
@@ -16,7 +16,7 @@ export default function TopArtists() {
 
   return (
     <div className="flex flex-col gap-1 ">
-      <SectionHeader title="Artistas mais tocados este mês" showAllLabel="Mostrar mais" />
+      <SectionHeader title="Artistas mais tocados este mês" />
       <span className="text-subdued text-10-medium">
         Visíveis apenas para você
       </span>
@@ -26,6 +26,7 @@ export default function TopArtists() {
             key={a.id}
             id={a.id}
             name={a.name}
+            coverUrl={a.coverUrl ?? undefined}
             onClick={() => navigate(`/artist/${a.id}`)}
           />
         ))}

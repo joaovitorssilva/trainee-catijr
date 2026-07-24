@@ -53,6 +53,7 @@ export default function SearchPage() {
       name: result.name,
       type: result.type,
       subtitle: result.subtitle,
+      coverUrl: result.coverUrl,
     })
     switch (result.type) {
       case "artist": navigate(`/artist/${result.id}`); break

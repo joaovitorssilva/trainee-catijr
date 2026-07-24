@@ -39,8 +39,12 @@ export default function ArtistPage() {
   }
 
   return (
-    <div className="flex flex-col gap-2.5 bg-home-bg-gradient-variant pb-10 rounded-lg p">
-      <ArtistHeader artistName={artist?.name} listeners={artist?.listeners} />
+    <div className="flex flex-col gap-2.5  bg-home-bg-gradient-variant pb-10 rounded-lg p">
+      <ArtistHeader 
+        artistName={artist?.name}
+        listeners={artist?.listeners}
+        coverUrl={artist?.coverUrl ?? undefined}
+      />
 
       <div className="flex items-center gap-2.5 px-4 ">
         <PlayButton

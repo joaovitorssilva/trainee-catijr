@@ -18,6 +18,7 @@ interface LibraryFilter {
   link: string
   playlistType?: string
   isPublic?: boolean
+  coverUrl?: string
 }
 
 export default function Sidebar() {
@@ -51,12 +52,14 @@ export default function Sidebar() {
       link: `/playlist/${playlist.id}`,
       playlistType: playlist.type,
       isPublic: playlist.isPublic,
+      coverUrl: playlist.coverUrl ?? undefined,
     })),
     ...artists.map((artist) => ({
       id: artist.id,
       name: artist.name,
       type: "artist" as const,
       link: `/artist/${artist.id}`,
+      coverUrl: artist.coverUrl ?? undefined,
     })),
     ...albums.map((album) => ({
       id: album.id,
@@ -64,6 +67,7 @@ export default function Sidebar() {
       type: "album" as const,
       subtitle: album.artistName,
       link: `/album/${album.id}`,
+      coverUrl: album.coverUrl ?? undefined,
     })),
   ]
 
@@ -125,6 +129,20 @@ export default function Sidebar() {
   }
 
   const currentPath = location.pathname
+  const [isTransitioning, setIsTransitioning] = useState(false)
+
+  const handleItemClick = (filter: LibraryFilter) => {
+    setIsTransitioning(true)
+    switch (filter.type) {
+      case "playlist": accessPlaylist(filter.id); break
+      case "artist": accessArtist(filter.id); break
+      case "album": accessAlbum(filter.id); break
+    }
+    navigate(filter.link)
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => setIsTransitioning(false))
+    })
+  }
 
   return (
     <aside className="flex flex-col gap-3 min-h-0 w-16 md:w-72 bg-bg-base playlist-4 shrink-0 rounded-lg">
@@ -138,7 +156,7 @@ export default function Sidebar() {
         />
       </div>
 
-      <div className="flex flex-col gap-2 md:gap-4 p-1.5 md:p-3 overflow-y-auto flex-1 min-h-0">
+      <div className={`flex flex-col gap-2 md:gap-4 p-1.5 md:p-3 overflow-y-auto flex-1 min-h-0 transition-opacity duration-700 ${isTransitioning ? "opacity-0" : "opacity-100"}`}>
         {sortedEntries.map((filter) => (
           <LibraryItem
             key={`${filter.type}-${filter.id}`}
@@ -147,17 +165,11 @@ export default function Sidebar() {
             type={filter.type}
             subtitle={filter.subtitle}
             isActive={currentPath === filter.link}
-            onClick={() => {
-              switch (filter.type) {
-                case "playlist": accessPlaylist(filter.id); break
-                case "artist": accessArtist(filter.id); break
-                case "album": accessAlbum(filter.id); break
-              }
-              navigate(filter.link)
-            }}
+            onClick={() => handleItemClick(filter)}
             playlistType={filter.playlistType}
             isPublic={filter.isPublic}
             isPinned={isEntryPinned(filter)}
+            coverUrl={filter.coverUrl}
           />
         ))}
       </div>

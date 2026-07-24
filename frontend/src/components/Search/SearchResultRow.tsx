@@ -1,8 +1,9 @@
 import { useState } from "react"
 import { useMenuContext } from "@/context/useMenuContext"
 import { cn } from "@/utils/utils"
+import { coverUrl } from "@/utils/coverUrl"
 import { type SearchResult } from "@/types/index.types"
-import CoverFallback from "@/assets/playlist-cover.png"
+import CoverFallback from "@/assets/empty-playlist-cover.png"
 import FollowButton from "../ui/FollowButton"
 import OptionsButton from "../ui/OptionsButton"
 
@@ -40,7 +41,7 @@ export default function SearchResultRow({ result, onClick }: SearchResultRowProp
     >
       {/* Thumbnail */}
       <img
-        src={CoverFallback}
+        src={coverUrl(result.coverUrl) ?? CoverFallback}
         alt={result.name}
         className={cn(
           "w-9 h-9 object-cover",

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { usePlayer } from "../../context/PlayerContext";
+import { coverUrl } from "@/utils/coverUrl";
 import TrackCover from "../../assets/track-cover1.png";
 
 export default function TrackInfo() {
@@ -21,7 +22,7 @@ export default function TrackInfo() {
   return (
     <div className="flex items-center gap-3">
       <img
-        src={TrackCover}
+        src={coverUrl(currentTrack.coverUrl) ?? TrackCover}
         alt="Track Cover Image"
         className="w-8 h-8 rounded-xs cursor-pointer"
         onClick={() => navigate("/now-playing")}

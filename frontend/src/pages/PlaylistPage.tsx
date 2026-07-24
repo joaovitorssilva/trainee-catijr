@@ -44,6 +44,7 @@ export default function PlaylistPage() {
           duration={0}
           isPublic={playlist.isPublic}
           type={playlist.type}
+          coverUrl={playlist.coverUrl ?? undefined}
           onEditClick={isLikedSongs ? undefined : () => openEditModal(playlistId!)}
         />
         <div className="flex flex-col p-5 gap-3">
@@ -64,6 +65,7 @@ export default function PlaylistPage() {
         duration={playlist.duration}
         isPublic={playlist.isPublic}
         type={playlist.type}
+        coverUrl={playlist.coverUrl ?? undefined}
         onEditClick={isLikedSongs ? undefined : () => openEditModal(playlistId!)}
       />
       <div className="px-5">

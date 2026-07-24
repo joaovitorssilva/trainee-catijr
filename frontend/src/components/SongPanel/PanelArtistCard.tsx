@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { usePlayer } from "@/context/PlayerContext"
 import { getArtistById } from "@/api"
+import { coverUrl } from "@/utils/coverUrl"
 import type { ArtistDTO } from "@/types/artist.types"
 import PanelArtistCover from "@/assets/panel-artist-cover.png"
 import VerifiedIcon from "@/assets/icons/artist-verified-icon.svg"
@@ -29,7 +30,7 @@ export default function SongPanelArtistCard() {
         className="relative h-48 w-full cursor-pointer"
       >
         <img
-          src={PanelArtistCover}
+          src={coverUrl(artist?.coverUrl) ?? PanelArtistCover}
           className="w-full h-full object-cover rounded-t-lg"
         />
         <div className="absolute inset-0 pointer-events-none">

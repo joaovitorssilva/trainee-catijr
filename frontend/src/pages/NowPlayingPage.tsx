@@ -1,9 +1,12 @@
 import { RecentSearchesProvider } from "@/hooks/useRecentSearches";
+import { usePlayer } from "@/context/PlayerContext";
+import { coverUrl } from "@/utils/coverUrl";
 import Topbar from "@/components/layout/Topbar";
 import TrackCover from "@/assets/track-cover.png"
 import PlayerBar from "@/components/layout/PlayerBar";
 
 export default function NowPlayingPage() {
+  const { currentTrack } = usePlayer();
 
   return (
     <RecentSearchesProvider>
@@ -13,7 +16,7 @@ export default function NowPlayingPage() {
           </div>
           <div className="flex-1 items-center justify-center flex">
             <img
-              src={TrackCover}
+              src={coverUrl(currentTrack?.coverUrl) ?? TrackCover}
               alt="Track Cover Image"
               className="w-65 h-65 rounded-2xl"
             />

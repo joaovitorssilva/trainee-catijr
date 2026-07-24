@@ -31,6 +31,7 @@ export default function AlbumSection({ activeFilter }: Props) {
             id={a.id}
             title={a.title}
             year={a.year}
+            coverUrl={a.coverUrl ?? undefined}
             onClick={() => navigate(`/album/${a.id}`)}
           />
         ))}

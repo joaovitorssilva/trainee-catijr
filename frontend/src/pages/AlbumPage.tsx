@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { getAlbumById } from "@/api"
+import { getAlbumById, getArtistById } from "@/api"
 import { usePlayer } from "@/context/PlayerContext"
 import type { AlbumDTO } from "@/types/index.types"
 import AlbumHeader from "@/components/AlbumContent/AlbumHeader"
@@ -10,11 +10,19 @@ import AlbumTracksTable from "@/components/AlbumContent/AlbumTracksTable"
 export default function AlbumPage() {
   const { albumId } = useParams<{ albumId: string }>()
   const [album, setAlbum] = useState<AlbumDTO | null>(null)
+  const [artistCover, setArtistCover] = useState<string | null>(null)
   const { currentTrack, isPlaying, play, pause } = usePlayer()
 
   useEffect(() => {
     if (!albumId) return
-    getAlbumById(albumId).then(setAlbum)
+    getAlbumById(albumId).then((data) => {
+      setAlbum(data)
+      if (data.artistId) {
+        getArtistById(data.artistId).then((artist) => {
+          setArtistCover(artist.coverUrl)
+        })
+      }
+    })
   }, [albumId])
 
   if (!album) return <p className="text-subdued p-8">carregando...</p>
@@ -39,6 +47,9 @@ export default function AlbumPage() {
         name={album.title}
         musicQtd={album.musics.length}
         duration={totalDuration}
+        coverUrl={album.coverUrl ?? undefined}
+        artistName={album.artistName}
+        artistCoverUrl={artistCover ?? undefined}
       />
       <div className="px-5">
         <PlayButton
