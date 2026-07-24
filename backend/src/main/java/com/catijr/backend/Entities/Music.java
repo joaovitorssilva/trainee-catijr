@@ -51,6 +51,9 @@ public class Music {
     @Column(name = "liked", nullable = false, columnDefinition = "boolean default false")
     private Boolean liked = false;
 
+    @Column(name = "cover_url")
+    private String coverUrl;
+
     @Column(name = "created_at")
     private Instant createdAt;
 

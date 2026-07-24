@@ -11,6 +11,7 @@ export interface SearchResult {
   isExplicit?: boolean
   isSaved?: boolean
   isFollowing?: boolean
+  coverUrl?: string
 }
 
 export interface RecentSearch {
@@ -18,4 +19,5 @@ export interface RecentSearch {
   name: string
   type: SearchResultType
   subtitle: string
+  coverUrl?: string
 }

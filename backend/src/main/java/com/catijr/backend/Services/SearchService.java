@@ -31,7 +31,8 @@ public class SearchService {
                 "Música • " + (m.getArtist() != null ? m.getArtist().getName() : "Artista desconhecido"),
                 m.getAlbum() != null ? m.getAlbum().getId().toString() : null,
                 m.getExplicit(),
-                m.getLiked() != null ? m.getLiked() : false
+                m.getLiked() != null ? m.getLiked() : false,
+                m.getCoverUrl()
             ))
         );
 
@@ -43,7 +44,8 @@ public class SearchService {
                 "Artista",
                 null,
                 null,
-                null
+                null,
+                a.getCoverUrl()
             ))
         );
 
@@ -55,7 +57,8 @@ public class SearchService {
                 "Álbum • " + (a.getOwner() != null ? a.getOwner().getName() : "Artista desconhecido") + " • " + a.getYear(),
                 a.getId().toString(),
                 null,
-                null
+                null,
+                a.getCoverUrl()
             ))
         );
 
@@ -67,7 +70,8 @@ public class SearchService {
                 "Playlist",
                 null,
                 null,
-                null
+                null,
+                p.getCoverUrl()
             ))
         );
 

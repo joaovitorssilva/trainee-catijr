@@ -7,5 +7,6 @@ public record SearchResultItemDTO(
     String subtitle,
     String albumId,
     Boolean isExplicit,
-    Boolean isSaved
+    Boolean isSaved,
+    String coverUrl
 ) {}

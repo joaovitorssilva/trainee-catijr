@@ -10,6 +10,7 @@ export interface MusicDTO {
   timesListen: number
   explicit: boolean
   liked: boolean
+  coverUrl: string | null
   createdAt: string
   updatedAt: string | null
 }

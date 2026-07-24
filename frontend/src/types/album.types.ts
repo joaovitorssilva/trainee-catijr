@@ -6,6 +6,7 @@ export interface AlbumNoMusicsDTO {
   year: string
   artistId: string
   artistName: string
+  coverUrl: string | null
   createdAt: string
   updatedAt: string
 }
@@ -17,6 +18,7 @@ export interface AlbumDTO {
   artistId: string
   artistName: string
   musics: MusicDTO[]
+  coverUrl: string | null
   createdAt: string
   updatedAt: string
 }
