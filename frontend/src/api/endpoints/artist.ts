@@ -1,14 +1,17 @@
 import api from "../api"
 import type { AlbumDTO, ArtistDTO, MusicDTO } from "../../types/index.types"
 
-export function getArtistById(artistId: string): Promise<ArtistDTO> {
-  return api.get(`/artist/${artistId}`).then((r) => r.data)
+export async function getArtistById(artistId: string): Promise<ArtistDTO> {
+  const response = await api.get(`/artist/${artistId}`)
+  return response.data
 }
 
-export function getArtistPopularMusics(artistId: string): Promise<MusicDTO[]> {
-  return api.get(`/artist/${artistId}/popularMusics`).then((r) => r.data)
+export async function getArtistPopularMusics(artistId: string): Promise<MusicDTO[]> {
+  const response = await api.get(`/artist/${artistId}/popularMusics`)
+  return response.data
 }
 
-export function getArtistAlbums(artistId: string): Promise<AlbumDTO[]> {
-  return api.get(`/artist/${artistId}/albums`).then((r) => r.data)
+export async function getArtistAlbums(artistId: string): Promise<AlbumDTO[]> {
+  const response = await api.get(`/artist/${artistId}/albums`)
+  return response.data
 }
