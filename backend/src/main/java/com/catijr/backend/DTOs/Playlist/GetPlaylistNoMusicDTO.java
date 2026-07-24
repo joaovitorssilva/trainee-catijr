@@ -6,7 +6,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 public record GetPlaylistNoMusicDTO(UUID id, String name, String description, int musicQtd,
-                                    int duration, Boolean isPublic, String type, Instant createdAt, Instant updatedAt ){
+                                    int duration, Boolean isPublic, String type, Instant createdAt, Instant updatedAt, String coverUrl ){
 
     public GetPlaylistNoMusicDTO(Playlist playlist){
         this(
@@ -18,8 +18,8 @@ public record GetPlaylistNoMusicDTO(UUID id, String name, String description, in
             playlist.getIsPublic(),
             playlist.getType(),
             playlist.getCreatedAt(),
-            playlist.getUpdatedAt()
-
+            playlist.getUpdatedAt(),
+            playlist.getCoverUrl()
         );
     }
 }

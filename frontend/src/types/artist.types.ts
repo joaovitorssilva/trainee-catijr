@@ -3,6 +3,7 @@ export interface ArtistDTO {
   name: string
   listeners: number
   about: string
+  coverUrl: string | null
   createdAt: string
   updatedAt: string
 }

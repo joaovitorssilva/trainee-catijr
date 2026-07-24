@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public record GetPlaylistDTO(UUID id, String name, String description, int musicQtd,
                              int duration, Boolean isPublic, String type, List<GetMusicDTO> musics,
-                             Instant createdAt, Instant updatedAt ) {
+                             Instant createdAt, Instant updatedAt, String coverUrl) {
 
     public GetPlaylistDTO(Playlist playlist) {
         this(
@@ -22,7 +22,8 @@ public record GetPlaylistDTO(UUID id, String name, String description, int music
                 playlist.getType(),
                 playlist.getSongs().stream().map(song -> new GetMusicDTO(song)).toList(),
                 playlist.getCreatedAt(),
-                playlist.getUpdatedAt()
+                playlist.getUpdatedAt(),
+                playlist.getCoverUrl()
         );
     }
 }

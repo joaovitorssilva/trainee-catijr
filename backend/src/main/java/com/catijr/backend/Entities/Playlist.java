@@ -39,6 +39,9 @@ public class Playlist {
     @Column(name = "type")
     private String type;
 
+    @Column(name = "cover_url")
+    private String coverUrl;
+
     @Column(name = "created_at")
     private Instant createdAt;
 

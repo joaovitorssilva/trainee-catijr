@@ -4,17 +4,19 @@ import com.catijr.backend.Entities.*;
 import com.catijr.backend.Repositories.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.nio.file.*;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.*;
+import java.util.stream.Stream;
 
 @Slf4j
 @Component
@@ -28,124 +30,265 @@ public class DataSeeder implements CommandLineRunner {
     private final MusicRepository musicRepository;
     private final PlaylistRepository playlistRepository;
 
+    @Value("${app.storage.artist-upload-dir:uploads/artists}")
+    private String artistUploadDir;
+
+    @Value("${app.storage.album-upload-dir:uploads/albums}")
+    private String albumUploadDir;
+
+    private record AlbumData(String title, String year, List<TrackData> tracks) {}
+    private record TrackData(String title, int durationSeconds, boolean explicit) {}
+    private record ArtistData(String name, int listeners, String about, List<AlbumData> albums) {}
+
     @Override
-    @Transactional // Mantém a sessão aberta para gerenciar as listas do ManyToMany de forma segura
+    @Transactional
     public void run(String... args) throws Exception {
 
-        System.out.println("====== INICIANDO SEEDER: ARQUITETURA CONSOLIDADA ======");
+        log.info("====== INICIANDO SEEDER: DADOS REALISTAS ======");
 
-        var artists = artistRepository.findAll();
-
-        if (artists.size() > 0) {
-            System.out.println(">>> Banco de dados já iniciado! Pulando Seeding...");
+        if (artistRepository.count() > 0) {
+            log.info(">>> Banco de dados já iniciado! Pulando Seeding...");
             return;
         }
 
         List<Music> allCreatedSongs = new ArrayList<>();
+        List<ArtistData> catalog = buildCatalog();
 
-        // 1. Gerar 5 Artistas
-        for (int i = 1; i <= 5; i++) {
+        for (ArtistData artistData : catalog) {
+            String coverUrl = findArtistImage(artistData.name());
+
             Artist artist = Artist.builder()
-                    .name("Artista" + i)
-                    .listeners(200_000 * i)
-                    .about("Biografia do Artista " + i + ". Totalmente gerada via automação de teste.")
+                    .name(artistData.name())
+                    .listeners(artistData.listeners())
+                    .about(artistData.about())
+                    .coverUrl(coverUrl)
                     .build();
+
             artist = artistRepository.save(artist);
 
             List<Album> artistAlbums = new ArrayList<>();
-            List<Music> artistSongs = new ArrayList<>();
 
-            // 2. Cada Artista possui 4 Álbuns
-            for (int j = 1; j <= 4; j++) {
+            for (AlbumData albumData : artistData.albums()) {
+                String albumCoverUrl = findAlbumImage(artistData.name(), albumData.title());
+
                 Album album = Album.builder()
-                        .title("Álbum " + j + " do Artista " + i)
-                        .year("202" + j)
+                        .title(albumData.title())
+                        .year(albumData.year())
                         .owner(artist)
+                        .coverUrl(albumCoverUrl)
                         .build();
+
                 album = albumRepository.save(album);
                 artistAlbums.add(album);
 
                 List<Music> albumSongs = new ArrayList<>();
+                int trackNumber = 1;
 
-                // 3. Cada Álbum possui 8 Músicas (Total: 160 músicas)
-                for (int k = 1; k <= 8; k++) {
+                for (TrackData trackData : albumData.tracks()) {
                     Music music = Music.builder()
-                            .title("Música " + k + " [Álbum " + j + " - Artista " + i + "]")
+                            .title(trackData.title())
                             .artist(artist)
                             .album(album)
-                            .duration(160 + (k * 15)) // Durações variadas para testar somatórios
-                            .explicit(k % 3 == 0)
-                            .timesListen(5000 * k)
-                            .releaseDate(Instant.now().minus(k * 10, ChronoUnit.DAYS))
+                            .duration(trackData.durationSeconds())
+                            .explicit(trackData.explicit())
+                            .timesListen(50_000 + (int) (Math.random() * 5_000_000))
+                            .releaseDate(Instant.now().minus(trackNumber * 10L, ChronoUnit.DAYS))
+                            .coverUrl(albumCoverUrl)
                             .build();
 
-                    music = musicRepository.save(music);
                     albumSongs.add(music);
-                    artistSongs.add(music);
-                    allCreatedSongs.add(music);
+                    trackNumber++;
                 }
 
-                // Vincula as músicas criadas de volta ao álbum em memória
-                album.setMusics(albumSongs);
+                List<Music> savedSongs = musicRepository.saveAll(albumSongs);
+                allCreatedSongs.addAll(savedSongs);
+
+                album.setMusics(savedSongs);
                 albumRepository.save(album);
             }
 
-            // Sincroniza as coleções no objeto do artista
             artist.setAlbums(artistAlbums);
-            artist.setSongs(artistSongs);
             artistRepository.save(artist);
         }
 
-        System.out.println(">> Catálogo criado: " + allCreatedSongs.size() + " músicas prontas para as playlists.");
+        log.info(">> Catálogo criado: {} músicas prontas para as playlists.", allCreatedSongs.size());
 
-        // 4. Configuração das 4 Playlists solicitadas
-        String[] playlistNames = {
-                "Músicas Curtidas", // Obrigatória
+        // --- Standard Playlists (Removed 'Músicas Curtidas' to prevent overlap) ---
+        List<String> playlistNames = List.of(
                 "Playlist de Academia",
                 "Estudo Concentrado",
                 "Modo Viagem"
-        };
+        );
 
-        for (int p = 0; p < playlistNames.length; p++) {
-            // A quantidade de músicas vai variar de 1 a 4 dependendo do índice da playlist (p + 1)
-            int targetMusicCount = p + 1;
+        List<Playlist> playlistsToSave = new ArrayList<>();
+
+        for (int p = 0; p < playlistNames.size(); p++) {
+            int targetMusicCount = p + 3;
             List<Music> playlistSongs = new ArrayList<>();
             int totalDuration = 0;
 
-            // Seleciona músicas bem espaçadas para garantir que venham de álbuns/artistas distintos
             for (int s = 0; s < targetMusicCount; s++) {
                 int songIndex = (p * 37 + s * 19) % allCreatedSongs.size();
                 Music selectedMusic = allCreatedSongs.get(songIndex);
-
                 playlistSongs.add(selectedMusic);
                 totalDuration += selectedMusic.getDuration();
             }
 
-            // 5. Criar e Salvar a Playlist com a relação ManyToMany direta e metadados calculados
-            String type = playlistNames[p].equals("Músicas Curtidas") ? "liked_songs" : "normal";
-
             Playlist playlist = Playlist.builder()
-                    .name(playlistNames[p])
-                    .description("Sua seleção especial para: " + playlistNames[p])
+                    .name(playlistNames.get(p))
+                    .description("Sua seleção especial para: " + playlistNames.get(p))
                     .isPublic(true)
-                    .type(type)
+                    .type("normal")
                     .songs(playlistSongs)
                     .musicQtd(targetMusicCount)
                     .duration(totalDuration)
                     .build();
 
-            playlistRepository.save(playlist);
-
-            // 6. Atualizar a relação bidirecional nas entidades de Música para o Hibernate mapear a tabela de junção
-            for (Music music : playlistSongs) {
-                if (music.getPlaylists() == null) {
-                    music.setPlaylists(new ArrayList<>());
-                }
-                music.getPlaylists().add(playlist);
-                musicRepository.save(music); // Persiste o vínculo na tabela 'playlist_music'
-            }
+            playlistsToSave.add(playlist);
         }
 
-        System.out.println("====== SEEDER EXECUTADO COM SUCESSO: BANCO TOTALMENTE POPULADO ======");
+        playlistRepository.saveAll(playlistsToSave);
+
+        log.info("====== SEEDER EXECUTADO COM SUCESSO: BANCO TOTALMENTE POPULADO ======");
+    }
+
+    private String toKebabCase(String input) {
+        return input.toLowerCase()
+                .replaceAll("[^a-z0-9\\s-]", "")
+                .replaceAll("\\s+", "-")
+                .replaceAll("-+", "-")
+                .replaceAll("^-|-$", "");
+    }
+
+    private String findArtistImage(String artistName) {
+        String kebab = toKebabCase(artistName);
+        Path uploadDir = Paths.get(artistUploadDir);
+
+        if (!Files.exists(uploadDir)) return null;
+
+        try (Stream<Path> stream = Files.list(uploadDir)) {
+            return stream
+                .filter(p -> p.getFileName().toString().toLowerCase().startsWith(kebab))
+                .findFirst()
+                .map(p -> "/artists/" + p.getFileName().toString())
+                .orElse(null);
+        } catch (IOException e) {
+            log.error("Failed to find artist image for {}", artistName, e);
+            return null;
+        }
+    }
+
+    private String findAlbumImage(String artistName, String albumTitle) {
+        String prefix = toKebabCase(artistName) + "-" + toKebabCase(albumTitle);
+        Path uploadDir = Paths.get(albumUploadDir);
+
+        if (!Files.exists(uploadDir)) return null;
+
+        try (Stream<Path> stream = Files.list(uploadDir)) {
+            return stream
+                .filter(p -> p.getFileName().toString().toLowerCase().startsWith(prefix))
+                .findFirst()
+                .map(p -> "/albums/" + p.getFileName().toString())
+                .orElse(null);
+        } catch (IOException e) {
+            log.error("Failed to find album image for {} - {}", artistName, albumTitle, e);
+            return null;
+        }
+    }
+
+   // ---------------------------------------------------------------
+    // Catálogo com dados realistas (nomes de artistas, álbuns e faixas)
+    // ---------------------------------------------------------------
+    private List<ArtistData> buildCatalog() {
+        return List.of(
+                new ArtistData(
+                        "Bad Bunny",
+                        68_000_000,
+                        "Superastro porto-riquenho e um dos artistas mais ouvidos do mundo, revolucionando a música urbana com fusões de reggaeton, trap, cumbia e indie pop.",
+                        List.of(
+                                new AlbumData("Un Verano Sin Ti", "2022", List.of(
+                                        new TrackData("Moscow Mule", 245, true),
+                                        new TrackData("Me Porto Bonito", 178, true),
+                                        new TrackData("Tití Me Preguntó", 243, true),
+                                        new TrackData("Ojitos Lindos", 258, false),
+                                        new TrackData("Efecto", 213, true),
+                                        new TrackData("Party", 227, true),
+                                        new TrackData("Callaíta", 250, true)
+                                ))
+                        )
+                ),
+                new ArtistData(
+                        "Juice WRLD",
+                        31_000_000,
+                        "Rapper e cantor americano, pioneiro do emo rap e trap melódico, conhecido por suas letras introspectivas e capacidade única de freestyle.",
+                        List.of(
+                                new AlbumData("Legends Never Die (5 Year Anniversary Edition)", "2025", List.of(
+                                        new TrackData("Conversations", 181, true),
+                                        new TrackData("Right Right", 182, true),
+                                        new TrackData("The Way", 205, true),
+                                        new TrackData("Wishing Well", 194, true),
+                                        new TrackData("Lucid Dreams", 239, true),
+                                        new TrackData("Come & Go", 205, true)
+                                ))
+                        )
+                ),
+                new ArtistData(
+                        "Travis Scott",
+                        14_500_000,
+                        "Rapper, cantor e produtor americano, conhecido por misturar trap, psicodelia e elementos de rock em sua produção.",
+                        List.of(
+                                new AlbumData("Astroworld", "2018", List.of(
+                                        new TrackData("Stargazing", 269, true),
+                                        new TrackData("Carousel", 249, true),
+                                        new TrackData("Sicko Mode", 312, true),
+                                        new TrackData("Stop Trying to Be God", 336, true)
+                                )),
+                                new AlbumData("Utopia", "2023", List.of(
+                                        new TrackData("Hyaena", 195, true),
+                                        new TrackData("Thank God", 195, true),
+                                        new TrackData("Fein", 184, true),
+                                        new TrackData("I Know?", 165, true)
+                                ))
+                        )
+                ),
+                new ArtistData(
+                        "Drake",
+                        30_200_000,
+                        "Rapper e cantor canadense, um dos artistas de maior sucesso comercial na história do hip-hop e do R&B.",
+                        List.of(
+                                new AlbumData("Iceman", "2024", List.of(
+                                        new TrackData("Frostbite", 214, true),
+                                        new TrackData("North Star", 198, true),
+                                        new TrackData("Cold Nights", 231, true),
+                                        new TrackData("Winter Wave", 205, false)
+                                )),
+                                new AlbumData("Scorpion", "2018", List.of(
+                                        new TrackData("God's Plan", 198, true),
+                                        new TrackData("In My Feelings", 217, true),
+                                        new TrackData("Nice for What", 208, true),
+                                        new TrackData("Nonstop", 268, true)
+                                ))
+                        )
+                ),
+                new ArtistData(
+                        "Kendrick Lamar",
+                        19_800_000,
+                        "Rapper e compositor americano, aclamado pela crítica por letras densas e álbuns conceituais.",
+                        List.of(
+                                new AlbumData("good kid, m.A.A.d city", "2012", List.of(
+                                        new TrackData("Swimming Pools (Drank)", 313, true),
+                                        new TrackData("Bitch, Don't Kill My Vibe", 302, true),
+                                        new TrackData("Money Trees", 386, true),
+                                        new TrackData("Poetic Justice", 300, true)
+                                )),
+                                new AlbumData("GNX", "2024", List.of(
+                                        new TrackData("Squabble Up", 175, true),
+                                        new TrackData("Luther", 213, false),
+                                        new TrackData("TV Off", 232, true),
+                                        new TrackData("Peekaboo", 219, true)
+                                ))
+                        )
+                )
+        );
     }
 }

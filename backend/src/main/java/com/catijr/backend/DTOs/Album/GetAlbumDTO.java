@@ -12,7 +12,8 @@ public record GetAlbumDTO(UUID id, String title,
                           String year, UUID artistId,
                           String artistName,
                           List<GetMusicDTO> musics,
-                          Instant createdAt, Instant updatedAt) {
+                          Instant createdAt, Instant updatedAt,
+                          String coverUrl) {
 
     public GetAlbumDTO(Album album) {
         this(
@@ -23,7 +24,8 @@ public record GetAlbumDTO(UUID id, String title,
                 album.getOwner().getName(),
                 album.getMusics().stream().map(GetMusicDTO::new).collect(Collectors.toList()),
                 album.getCreatedAt(),
-                album.getUpdatedAt()
+                album.getUpdatedAt(),
+                album.getCoverUrl()
         );
     }
     
