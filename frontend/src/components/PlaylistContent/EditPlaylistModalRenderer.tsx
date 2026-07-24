@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useMenuContext } from "@/context/useMenuContext"
-import { getPlaylistById, updatePlaylistAttributes } from "@/api"
+import { getPlaylistById, updatePlaylistAttributes, uploadPlaylistCover } from "@/api"
 import type { PlaylistDTO } from "@/types/index.types"
 import EditPlaylistModal from "./EditPlaylistModal"
 
@@ -21,14 +21,20 @@ export default function EditPlaylistModalRenderer() {
 
   if (!editingPlaylistId || !playlist) return null
 
+  const handleSave = async (data: { name: string; description: string; isPublic?: boolean }, coverFile?: File | null) => {
+    await updatePlaylistAttributes(editingPlaylistId, data)
+    if (coverFile) {
+      await uploadPlaylistCover(editingPlaylistId, coverFile)
+    }
+    triggerRefresh()
+  }
+
   return (
     <EditPlaylistModal
       isOpen
       onClose={closeEditModal}
-      playlist={{ name: playlist.name, description: playlist.description, isPublic: playlist.isPublic }}
-      onSave={(data) =>
-        updatePlaylistAttributes(editingPlaylistId, data).then(() => { triggerRefresh() })
-      }
+      playlist={{ name: playlist.name, description: playlist.description, isPublic: playlist.isPublic, coverUrl: playlist.coverUrl ?? undefined }}
+      onSave={handleSave}
     />
   )
 }

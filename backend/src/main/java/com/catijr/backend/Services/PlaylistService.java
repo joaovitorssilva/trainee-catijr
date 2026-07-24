@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class PlaylistService {
     private final PlaylistRepository playlistRepository;
     private final MusicRepository musicRepository;
     private final PlaylistMapper playlistMapper;
+    private final FileStorageService fileStorageService;
 
     public Playlist getPlaylistById(UUID playlistId) {
         var playlist = playlistRepository.findById(playlistId)
@@ -153,5 +155,19 @@ public class PlaylistService {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+    }
+
+    public Playlist uploadCover(UUID playlistId, MultipartFile file) {
+        var playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        if ("liked_songs".equals(playlist.getType())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Cannot edit liked songs playlist");
+        }
+
+        String coverUrl = fileStorageService.store(file);
+        playlist.setCoverUrl(coverUrl);
+
+        return playlistRepository.save(playlist);
     }
 }

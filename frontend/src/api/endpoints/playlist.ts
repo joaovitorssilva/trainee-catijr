@@ -47,3 +47,17 @@ export async function reorderPlaylist(
   const response = await api.put(`/playlist/${playlistId}/reorder`, { musicIds })
   return response.data
 }
+export async function uploadPlaylistCover(
+  playlistId: string, 
+  file: File
+): Promise<PlaylistNoMusicDTO> {
+  const formData = new FormData()
+  formData.append("file", file)
+
+  const response = await api.post<PlaylistNoMusicDTO>(
+    `/playlist/${playlistId}/cover`, 
+    formData
+  )
+
+  return response.data
+}

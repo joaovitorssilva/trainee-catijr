@@ -1,8 +1,9 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Modal } from "../ui/Modal"
+import { coverUrl } from "@/utils/coverUrl"
 import LockIcon from "@/assets/icons/lock-icon.svg"
 import PencilIcon from "@/assets/icons/pencil-icon.svg"
-import CoverImage from "@/assets/playlist-cover.png"
+import PlaylistEmptyImage from "@/assets/empty-playlist-cover.png"
 
 interface EditPlaylistModalProps {
   isOpen: boolean
@@ -11,12 +12,13 @@ interface EditPlaylistModalProps {
     name: string
     description: string
     isPublic: boolean
+    coverUrl?: string
   }
   onSave: (data: {
     name: string,
     description: string
     isPublic?: boolean
-  }) => void
+  }, coverFile?: File | null) => void
 }
 
 export default function EditPlaylistModal({
@@ -28,15 +30,34 @@ export default function EditPlaylistModal({
   const [name, setName] = useState(playlist.name)
   const [description, setDescription] = useState(playlist.description)
   const [isPublic, setIsPublic] = useState(playlist.isPublic)
+  const [coverFile, setCoverFile] = useState<File | null>(null)
+  const [coverPreview, setCoverPreview] = useState<string | null>(null)
 
   const fileInputRef = useRef<HTMLInputElement>(null)
 
+  useEffect(() => {
+    return () => {
+      if (coverPreview) URL.revokeObjectURL(coverPreview)
+    }
+  }, [coverPreview])
+
   const handleCoverClick = () => fileInputRef.current?.click()
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    if (coverPreview) URL.revokeObjectURL(coverPreview)
+    setCoverFile(file)
+    setCoverPreview(URL.createObjectURL(file))
+  }
+
   const handleSave = () => {
-    onSave({ name, description, isPublic })
+    onSave({ name, description, isPublic }, coverFile)
     onClose()
   }
+
+  const displayImage = coverPreview ?? coverUrl(playlist.coverUrl) ?? PlaylistEmptyImage
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -49,12 +70,18 @@ export default function EditPlaylistModal({
           {/* cover image */}
           <div
             onClick={handleCoverClick}
-            className="relative h-[134px] w-[134px] rounded-sm shrink-0 group">
-            <img src={CoverImage} className="object-fit" />
+            className="relative h-33.5 w-33.5 rounded-sm shrink-0 group">
+            <img 
+              src={displayImage}
+              className="w-full h-full object-cover rounded-xs" 
+            />
 
             {/* hover overlay */}
             <div className="absolute flex flex-col gap-3 items-center justify-center inset-0 bg-bg-popup opacity-0 group-hover:opacity-100 transition-opacity ">
-              <img src={PencilIcon} className="w-8 h-8" />
+              <img 
+                src={PencilIcon}
+                className="w-8 h-8"
+              />
               <span className="text-white text-12-bold px-2">
                 Escolher foto
               </span>
@@ -65,6 +92,7 @@ export default function EditPlaylistModal({
               type="file"
               ref={fileInputRef}
               accept="image/*"
+              onChange={handleFileChange}
               className="hidden"
             />
           </div>
@@ -76,13 +104,13 @@ export default function EditPlaylistModal({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Nome da playlist"
-              className="w-full h-[30px] bg-textbox-bg text-10-medium text-white placeholder:text-subdued p-2 rounded-sm outline-none"
+              className="w-full h-7.5 bg-textbox-bg text-10-medium text-white placeholder:text-subdued p-2 rounded-sm outline-none"
             />
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Descrição da playlist preenchida"
-              className="w-full h-[93px] bg-textbox-bg text-10-medium text-white placeholder:text-subdued p-2 rounded-sm outline-none "
+              className="w-full h-23.25 bg-textbox-bg text-10-medium text-white placeholder:text-subdued p-2 rounded-sm outline-none "
             />
           </div>
         </div>

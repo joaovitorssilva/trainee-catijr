@@ -10,6 +10,7 @@ export interface PlaylistNoMusicDTO {
   type: string
   createdAt: string
   updatedAt: string | null
+  coverUrl: string | null
 }
 
 export interface PlaylistDTO {
@@ -23,6 +24,7 @@ export interface PlaylistDTO {
   type: string
   createdAt: string
   updatedAt: string | null
+  coverUrl: string | null
 }
 
 export interface CreatePlaylistDTO {
