@@ -31,6 +31,7 @@ export default function PlaylistSection({ activeFilter }: PlaylistSectionProps) 
             name={p.name}
             musicQtd={p.musicQtd}
             type={p.type}
+            coverUrl={p.coverUrl ?? undefined}
             onClick={() => navigate(`/playlist/${p.id}`)} />
         ))}
       </Carousel>

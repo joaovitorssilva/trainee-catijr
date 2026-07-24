@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { usePlayer } from "@/context/PlayerContext"
+import { coverUrl } from "@/utils/coverUrl"
 import type { MusicDTO } from "@/types/music.types"
 import PlayButton from "@/components/ui/PlayButton"
 import TrackCover from "@/assets/track-cover2.png"
@@ -39,11 +40,11 @@ export default function RecentlyPlayedCard({ music, musics }: RecentlyPlayedCard
     >
       <div className="w-8 h-8 md:w-15 md:h-15 shrink-0">
         <img
-          src={TrackCover}
+          src={coverUrl(music.coverUrl) ?? TrackCover}
           className="w-full h-full rounded-xs"
         />
       </div>
-      <span className=" text-white text-12-bold p-2.5 truncate">
+      <span className=" text-white text-12-bold p-2.5 truncate text-left flex-1">
         {music.title}
       </span>
       <div className={" transition ease-out duration-300"}>

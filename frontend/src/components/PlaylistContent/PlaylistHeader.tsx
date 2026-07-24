@@ -1,5 +1,6 @@
 import { formatDurationText } from "@/utils/FormatDuration"
-import PlaylistCover from "@/assets/playlist-cover.png"
+import { coverUrl } from "@/utils/coverUrl"
+import PlaylistEmptyCover from "@/assets/empty-playlist-cover.png"
 import UserAvatar from "@/assets/user-avatar.png"
 import PencilIcon from "@/assets/icons/pencil-icon.svg"
 import HeartIcon from "@/assets/icons/heart-icon.png"
@@ -11,9 +12,10 @@ interface PlaylistHeaderProps {
   isPublic: boolean
   onEditClick?: () => void
   type?: string
+  coverUrl?: string
 }
 
-export default function PlaylistHeader({ name, musicQtd, duration, isPublic, onEditClick, type }: PlaylistHeaderProps) {
+export default function PlaylistHeader({ name, musicQtd, duration, isPublic, onEditClick, type, coverUrl: cover }: PlaylistHeaderProps) {
   const isLikedSongs = type === "liked_songs"
 
   return (
@@ -33,8 +35,8 @@ export default function PlaylistHeader({ name, musicQtd, duration, isPublic, onE
           </div>
         ) : (
           <img
-            src={PlaylistCover}
-            className="rounded-sm"
+            src={coverUrl(cover) ?? PlaylistEmptyCover}
+            className="rounded-sm w-full h-full object-cover"
           />
         )}
 

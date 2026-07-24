@@ -1,12 +1,14 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getArtistPopularMusics } from "@/api";
+import { usePlayer } from "@/context/PlayerContext";
 import type { MusicDTO } from "@/types/index.types";
 import PopularTrackRow from "./PopularTrackRow";
 
 export default function PopularTracks() {
   const { artistId } = useParams<{ artistId: string }>()
   const [tracks, setTracks] = useState<MusicDTO[]>([])
+  const { play, pause, currentTrack, isPlaying } = usePlayer()
 
   useEffect(() => {
     if (!artistId) return
@@ -32,7 +34,16 @@ export default function PopularTracks() {
             liked={track.liked}
             albumId={track.albumId}
             artistId={track.artistId ?? undefined}
+            coverUrl={track.coverUrl ?? undefined}
             index={i + 1}
+            isActive={currentTrack?.id === track.id}
+            onClick={() => {
+              if (currentTrack?.id === track.id && isPlaying) {
+                pause()
+                return
+              }
+              play(track, tracks)
+            }}
           />
 
         ))}

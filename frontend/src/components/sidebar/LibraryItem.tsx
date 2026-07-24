@@ -1,5 +1,6 @@
 import { useMenuContext } from "@/context/useMenuContext"
-import PlaylistCover from "@/assets/playlist-cover.png"
+import { coverUrl } from "@/utils/coverUrl"
+import EmptyPlaylistCover from "@/assets/empty-playlist-cover.png"
 import ArtistCover from "@/assets/artist-cover.png"
 import AlbumCover from "@/assets/album-cover.png"
 import PinIcon from "@/assets/icons/pin-icon.svg"
@@ -17,10 +18,11 @@ interface LibraryItemProps {
   playlistType?: string;
   isPublic?: boolean;
   isPinned?: boolean;
+  coverUrl?: string;
 }
 
 const imageCover: Record<LibraryItemType, string> = {
-  playlist: PlaylistCover,
+  playlist: EmptyPlaylistCover,
   artist: ArtistCover,
   album: AlbumCover,
 }
@@ -31,7 +33,7 @@ const typeLabel: Record<LibraryItemType, string> = {
   album: "Álbum",
 }
 
-export function LibraryItem({ id, name, type, subtitle, isActive, onClick, playlistType, isPublic, isPinned }: LibraryItemProps) {
+export function LibraryItem({ id, name, type, subtitle, isActive, onClick, playlistType, isPublic, isPinned, coverUrl: cover }: LibraryItemProps) {
   const { openMenu } = useMenuContext()
 
   const handleContextMenu = (e: React.MouseEvent) => {
@@ -58,8 +60,8 @@ export function LibraryItem({ id, name, type, subtitle, isActive, onClick, playl
           </div>
         ) : (
           <img
-            src={imageCover[type]}
-            className="rounded-xs w-full h-full object-cover"
+            src={coverUrl(cover) ?? imageCover[type]}
+            className={`${type === "artist" ? "rounded-full" : "rounded-xs"} w-full h-full object-cover`}
           />
         )}
       </div>
@@ -73,7 +75,7 @@ export function LibraryItem({ id, name, type, subtitle, isActive, onClick, playl
         </div>
         <div className="flex items-center gap-1">
           {isPinned && (
-            <img src={PinIcon} className="w-[10px] h-[10px] shrink-0 " />
+            <img src={PinIcon} className="w-2.5 h-2.5 shrink-0 " />
           )}
           <span className="text-10-medium text-subdued font-normal truncate">
             {subtitle ?? typeLabel[type]}

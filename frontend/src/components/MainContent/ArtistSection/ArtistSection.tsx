@@ -29,6 +29,7 @@ export default function ArtistSection({ activeFilter }: ArtistSectionProps) {
             key={a.id}
             id={a.id}
             name={a.name}
+            coverUrl={a.coverUrl ?? undefined}
             onClick={() => navigate(`/artist/${a.id}`)}
           />
         ))}

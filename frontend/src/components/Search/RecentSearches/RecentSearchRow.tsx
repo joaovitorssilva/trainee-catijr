@@ -1,8 +1,9 @@
 import { useState } from "react"
 import { cn } from "@/utils/utils"
+import { coverUrl } from "@/utils/coverUrl"
 import { type RecentSearch } from "@/types/index.types"
 import XIcon from "@/assets/icons/x.svg"
-import CoverFallback from "@/assets/playlist-cover.png"
+import CoverFallback from "@/assets/empty-playlist-cover.png"
 
 interface RecentSearchRowProps {
   item: RecentSearch
@@ -24,7 +25,7 @@ export default function RecentSearchRow({ item, onRemove, onSelect }: RecentSear
       )}
     >
       <img
-        src={CoverFallback}
+        src={coverUrl(item.coverUrl) ?? CoverFallback}
         alt={item.name}
         className={cn(
           "w-9 h-9 object-cover shrink-0",

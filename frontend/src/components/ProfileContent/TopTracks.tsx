@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { getMostPlayedMusics } from "@/api";
+import { usePlayer } from "@/context/PlayerContext";
 import type { MusicDTO } from "@/types/index.types";
 import PopularTrackRow from "../ArtistContent/PopularTrackRow";
 
 export default function TopTracks() {
   const [mostPlayedMusics, setMostPlayedMusics] = useState<MusicDTO[]>([])
+  const { play, pause, currentTrack, isPlaying } = usePlayer()
 
   useEffect(() => {
     getMostPlayedMusics().then(setMostPlayedMusics)
@@ -33,6 +35,15 @@ export default function TopTracks() {
             liked={m.liked}
             albumId={m.albumId}
             artistId={m.artistId ?? undefined}
+            coverUrl={m.coverUrl ?? undefined}
+            isActive={currentTrack?.id === m.id}
+            onClick={() => {
+              if (currentTrack?.id === m.id && isPlaying) {
+                pause()
+                return
+              }
+              play(m, mostPlayedMusics)
+            }}
           />
         ))}
       </section>

@@ -3,6 +3,7 @@ import { usePlayer } from "@/context/PlayerContext";
 import { formatDuration } from "@/utils/FormatDuration";
 import { useMenuContext } from "@/context/useMenuContext";
 import { getAlbumById, toggleMusicLike } from "@/api";
+import { coverUrl } from "@/utils/coverUrl";
 import type { MusicDTO } from "@/types/index.types";
 
 import TrackCover3 from "@/assets/track-cover3.png"
@@ -80,7 +81,7 @@ export default function TrackTableRow({ id, music, index, musics, albumId, playl
 
       {/* track info - image + title + subtitle */}
       <div className="flex gap-2 items-center">
-        <img src={TrackCover3} className="w-9 h-9 rounded-xs" />
+        <img src={coverUrl(music.coverUrl) ?? TrackCover3} className="w-9 h-9 rounded-xs" />
 
         <div className="flex flex-col gap-1">
           <span className={`text-10-medium font-bold ${isThisTrack ? "text-primary" : "text-white"}`}>
@@ -93,7 +94,7 @@ export default function TrackTableRow({ id, music, index, musics, albumId, playl
       </div>
 
       {/* album name */}
-      <span className="hidden md:block text-subdued text-10-medium font-bold">
+      <span className="hidden md:block text-subdued text-10-medium truncate font-bold">
         {albumName ?? "—"}
       </span>
 

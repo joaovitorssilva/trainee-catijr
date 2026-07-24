@@ -1,8 +1,9 @@
 import { useState } from "react"
 import { usePlayer } from "@/context/PlayerContext"
 import { getPlaylistById } from "@/api"
+import { coverUrl } from "@/utils/coverUrl"
 import type { MusicDTO } from "@/types/index.types"
-import PlaylistCover from "@/assets/playlist-cover.png"
+import PlaylistEmptyCover from "@/assets/empty-playlist-cover.png"
 import HeartIcon from "@/assets/icons/heart-icon.png"
 import PlayButton from "@/components/ui/PlayButton"
 
@@ -11,10 +12,11 @@ interface PlaylistCardProps {
   name: string
   musicQtd: number
   type?: string
+  coverUrl?: string
   onClick?: () => void
 }
 
-export default function PlaylistCard({ id, name, musicQtd, type, onClick }: PlaylistCardProps) {
+export default function PlaylistCard({ id, name, musicQtd, type, coverUrl: cover, onClick }: PlaylistCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [cachedMusics, setCachedMusics] = useState<MusicDTO[] | null>(null)
   const { play, pause, currentTrack, isPlaying } = usePlayer()
@@ -51,14 +53,14 @@ export default function PlaylistCard({ id, name, musicQtd, type, onClick }: Play
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className="flex flex-col gap-2 cursor-pointer ">
-      <div className="relative w-15 h-15 md:w-[132px] md:h-[132px]">
+      <div className="relative w-15 h-15 md:w-33 md:h-33">
         {type === "liked_songs" ? (
           <div className="flex items-center justify-center rounded-xs bg-liked-songs-gradient w-full h-full">
             <img src={HeartIcon} className="w-8 h-8 brightness-0 invert" />
           </div>
         ) : (
           <img
-            src={PlaylistCover}
+            src={coverUrl(cover) ?? PlaylistEmptyCover}
             className="w-full aspect-square object-cover rounded-xs "
           />
         )}

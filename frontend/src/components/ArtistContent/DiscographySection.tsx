@@ -30,6 +30,7 @@ export default function DiscographySection() {
             id={album.id}
             title={album.title}
             year={album.year}
+            coverUrl={album.coverUrl ?? undefined}
             onClick={() => navigate(`/album/${album.id}`)}
           />
         ))}

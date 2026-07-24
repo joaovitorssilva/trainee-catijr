@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { usePlayer } from "@/context/PlayerContext"
+import { coverUrl } from "@/utils/coverUrl"
 import TrackCover from "@/assets/panel-track.png"
 
 export default function SongPanelTrackInfo() {
@@ -7,13 +8,13 @@ export default function SongPanelTrackInfo() {
   const { currentTrack } = usePlayer()
 
   return (
-    <div className="flex flex-col gap-3">
-      <div className="w-72.75 h-72.75 ">
+    <div className="flex flex-col gap-3 ">
+      <div className="w-full h-50 xl:h-72.75 ">
         <img
-          src={TrackCover}
+          src={coverUrl(currentTrack?.coverUrl) ?? TrackCover}
           alt="Track Cover Image"
           onClick={() => currentTrack && navigate(`/album/${currentTrack.albumId}`)}
-          className="w-full h-full rounded-sm object-fit cursor-pointer"
+          className="w-full h-full rounded-sm object-cover cursor-pointer"
         />
       </div>
 

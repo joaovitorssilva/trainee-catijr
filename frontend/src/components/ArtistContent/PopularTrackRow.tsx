@@ -2,9 +2,12 @@ import { useState } from "react"
 import { formatDuration } from "@/utils/FormatDuration"
 import { formatPlayCount } from "@/utils/FormatPlayCount"
 import { toggleMusicLike } from "@/api"
+import { usePlayer } from "@/context/PlayerContext"
 import { useMenuContext } from "@/context/useMenuContext"
 import { cn } from "@/utils/utils"
+import { coverUrl } from "@/utils/coverUrl"
 import PlayIcon from "@/assets/icons/play-icon.svg"
+import PauseIcon from "@/assets/icons/pause-icon.svg"
 import TrackCover from "@/assets/track-cover1.png"
 import SavedIcon from "@/assets/icons/verified-icon.svg"
 import AddFillIcon from "@/assets/icons/add-fill-icon.svg"
@@ -22,13 +25,17 @@ interface PopularTrackRowProps {
   liked?: boolean
   albumId?: string
   artistId?: string
+  coverUrl?: string
   onClick?: () => void
 }
 
-export default function PopularTrackRow({ trackId, title, timesListen, duration, index, isActive = false, liked, albumId, artistId, onClick }: PopularTrackRowProps) {
+export default function PopularTrackRow({ trackId, title, timesListen, duration, index, isActive = false, liked, albumId, artistId, coverUrl: coverUrlProp, onClick }: PopularTrackRowProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [isLiked, setIsLiked] = useState(liked ?? false)
   const { openMenu, triggerRefresh } = useMenuContext()
+  const { currentTrack, isPlaying } = usePlayer()
+
+  const isThisPlaying = currentTrack?.id === trackId && isPlaying
 
   const handleToggleLike = () => {
     toggleMusicLike(trackId).then(() => {
@@ -49,9 +56,13 @@ export default function PopularTrackRow({ trackId, title, timesListen, duration,
 
       <div className="flex items-center justify-center w-4">
         {isHovered ? (
-          <span className="text-white text-sm">
-            <img src={PlayIcon} />
-          </span>
+          isThisPlaying ? (
+            <img src={PauseIcon} />
+          ) : (
+            <span className="text-white text-sm">
+              <img src={PlayIcon} />
+            </span>
+          )
         ) :
           <span className="text-sm text-subdued tabular-nums">
             {index}
@@ -59,7 +70,7 @@ export default function PopularTrackRow({ trackId, title, timesListen, duration,
       </div>
 
       <img
-        src={TrackCover}
+        src={coverUrl(coverUrlProp) ?? TrackCover}
         alt="Track Cover Image"
         className="w-9 h-9 rounded-xs"
       />
