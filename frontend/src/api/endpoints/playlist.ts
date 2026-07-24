@@ -28,3 +28,17 @@ export function removeMusicFromPlaylist(playlistId: string, musicId: string): Pr
 export function reorderPlaylist(playlistId: string, musicIds: string[]): Promise<PlaylistDTO> {
   return api.put(`/playlist/${playlistId}/reorder`, { musicIds }).then((r) => r.data)
 }
+export async function uploadPlaylistCover(
+  playlistId: string, 
+  file: File
+): Promise<PlaylistNoMusicDTO> {
+  const formData = new FormData()
+  formData.append("file", file)
+
+  const response = await api.post<PlaylistNoMusicDTO>(
+    `/playlist/${playlistId}/cover`, 
+    formData
+  )
+
+  return response.data
+}

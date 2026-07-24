@@ -12,11 +12,10 @@ import com.catijr.backend.Services.PlaylistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
@@ -83,5 +82,15 @@ public class PlaylistController {
         playlistService.deleteMusicById(UUID.fromString(playlistId), UUID.fromString(musicId));
 
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("{playlistId}/cover")
+    public ResponseEntity<GetPlaylistNoMusicDTO> uploadCover(@PathVariable String playlistId,
+                                                             @RequestParam("file") MultipartFile file) {
+        var playlist = playlistService.uploadCover(UUID.fromString(playlistId), file);
+
+        GetPlaylistNoMusicDTO responseDTO = new GetPlaylistNoMusicDTO(playlist);
+
+        return ResponseEntity.ok(responseDTO);
     }
 }
