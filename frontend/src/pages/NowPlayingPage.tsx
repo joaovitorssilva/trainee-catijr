@@ -1,16 +1,21 @@
 import { RecentSearchesProvider } from "@/hooks/useRecentSearches";
 import { usePlayer } from "@/context/PlayerContext";
 import { coverUrl } from "@/utils/coverUrl";
+import { useDominantColor } from "@/hooks/useDominantColor";
 import Topbar from "@/components/layout/Topbar";
 import TrackCover from "@/assets/track-cover.png"
 import PlayerBar from "@/components/layout/PlayerBar";
 
 export default function NowPlayingPage() {
   const { currentTrack } = usePlayer();
+  const gradient = useDominantColor(coverUrl(currentTrack?.coverUrl));
 
   return (
     <RecentSearchesProvider>
-      <div className="h-screen flex flex-col justify-between bg-linear-to-b from-[#8F0313] to-[#3D0007] overflow-hidden">
+      <div
+        className="h-screen flex flex-col justify-between overflow-hidden transition-[background] duration-700 ease-in-out"
+        style={{ background: `linear-gradient(to bottom, ${gradient.top}, ${gradient.bottom})` }}
+      >
           <div className="md:hidden">
             <Topbar />
           </div>

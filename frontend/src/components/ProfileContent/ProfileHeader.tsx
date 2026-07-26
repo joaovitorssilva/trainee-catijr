@@ -1,3 +1,4 @@
+import { useDominantColor } from "@/hooks/useDominantColor"
 import UserAvatar from "@/assets/user-avatar.png"
 
 interface ProfileHeaderProps {
@@ -6,8 +7,13 @@ interface ProfileHeaderProps {
 }
 
 export default function ProfileHeader({ followers, playlistCount }: ProfileHeaderProps) {
+  const gradient = useDominantColor(UserAvatar);
+
   return (
-    <div className="flex items-center gap-3 bg-linear-to-b from-[#938D8E] to-[#3E3939] rounded-lg pl-5 pb-4 pt-10">
+    <div
+      className="flex items-center gap-3 rounded-lg pl-5 pb-4 pt-10 transition-[background] duration-300 ease-in-out"
+      style={{ background: `linear-gradient(to bottom, ${gradient.top}, ${gradient.bottom})` }}
+    >
       <div className="w-15 h-15 md:w-43.75 md:h-43.75 rounded-full drop-shadow overflow-hidden shrink-0">
         <img
           src={UserAvatar}
