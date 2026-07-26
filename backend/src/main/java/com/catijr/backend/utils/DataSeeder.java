@@ -196,16 +196,43 @@ public class DataSeeder implements CommandLineRunner {
         }
     }
 
-   // ---------------------------------------------------------------
+    // ---------------------------------------------------------------
     // Catálogo com dados realistas (nomes de artistas, álbuns e faixas)
     // ---------------------------------------------------------------
     private List<ArtistData> buildCatalog() {
         return List.of(
+                 new ArtistData(
+                        "Drake",
+                        30_200_000,
+                        "Rapper e cantor canadense, um dos artistas de maior sucesso comercial na história do hip-hop e do R&B.",
+                        List.of(
+                                new AlbumData("Iceman", "2024", List.of(
+                                        new TrackData("Frostbite", 214, true),
+                                        new TrackData("North Star", 198, true),
+                                        new TrackData("Cold Nights", 231, true),
+                                        new TrackData("Winter Wave", 205, false)
+                                )),
+                                new AlbumData("Scorpion", "2018", List.of(
+                                        new TrackData("God's Plan", 198, true),
+                                        new TrackData("In My Feelings", 217, true),
+                                        new TrackData("Nice for What", 208, true),
+                                        new TrackData("Nonstop", 268, true)
+                                ))
+                        )
+                ),
                 new ArtistData(
                         "Bad Bunny",
                         68_000_000,
                         "Superastro porto-riquenho e um dos artistas mais ouvidos do mundo, revolucionando a música urbana com fusões de reggaeton, trap, cumbia e indie pop.",
                         List.of(
+                                new AlbumData("Debí Tirar Más Fotos", "2025", List.of(
+                                        new TrackData("NUEVAYoL", 184, true),
+                                        new TrackData("BAILE INoLVIDABLE", 368, true),
+                                        new TrackData("EL CLúB", 223, true),
+                                        new TrackData("PIToRRO DE COCO", 215, true),
+                                        new TrackData("DTMF", 232, true),
+                                        new TrackData("EoO", 210, true)
+                                )),
                                 new AlbumData("Un Verano Sin Ti", "2022", List.of(
                                         new TrackData("Moscow Mule", 245, true),
                                         new TrackData("Me Porto Bonito", 178, true),
@@ -218,17 +245,22 @@ public class DataSeeder implements CommandLineRunner {
                         )
                 ),
                 new ArtistData(
-                        "Juice WRLD",
-                        31_000_000,
-                        "Rapper e cantor americano, pioneiro do emo rap e trap melódico, conhecido por suas letras introspectivas e capacidade única de freestyle.",
+                        "Don Toliver",
+                        22_000_000,
+                        "Cantor e rapper americano conhecido por suas melodias hipnóticas, vocais marcantes e fusão única de trap, R&B e elementos psicodélicos.",
                         List.of(
-                                new AlbumData("Legends Never Die (5 Year Anniversary Edition)", "2025", List.of(
-                                        new TrackData("Conversations", 181, true),
-                                        new TrackData("Right Right", 182, true),
-                                        new TrackData("The Way", 205, true),
-                                        new TrackData("Wishing Well", 194, true),
-                                        new TrackData("Lucid Dreams", 239, true),
-                                        new TrackData("Come & Go", 205, true)
+                                new AlbumData("Love Sick", "2023", List.of(
+                                        new TrackData("LoveSickness", 195, true),
+                                        new TrackData("4 Me", 187, true),
+                                        new TrackData("Private Landing", 238, true),
+                                        new TrackData("Slow Motion", 188, true),
+                                        new TrackData("Leave the Club", 209, true)
+                                )),
+                                new AlbumData("OCTANE", "2025", List.of(
+                                        new TrackData("High Octane", 192, true),
+                                        new TrackData("Tear It Down", 204, true),
+                                        new TrackData("Full Throttle", 218, true),
+                                        new TrackData("Speedin", 185, true)
                                 ))
                         )
                 ),
@@ -248,25 +280,6 @@ public class DataSeeder implements CommandLineRunner {
                                         new TrackData("Thank God", 195, true),
                                         new TrackData("Fein", 184, true),
                                         new TrackData("I Know?", 165, true)
-                                ))
-                        )
-                ),
-                new ArtistData(
-                        "Drake",
-                        30_200_000,
-                        "Rapper e cantor canadense, um dos artistas de maior sucesso comercial na história do hip-hop e do R&B.",
-                        List.of(
-                                new AlbumData("Iceman", "2024", List.of(
-                                        new TrackData("Frostbite", 214, true),
-                                        new TrackData("North Star", 198, true),
-                                        new TrackData("Cold Nights", 231, true),
-                                        new TrackData("Winter Wave", 205, false)
-                                )),
-                                new AlbumData("Scorpion", "2018", List.of(
-                                        new TrackData("God's Plan", 198, true),
-                                        new TrackData("In My Feelings", 217, true),
-                                        new TrackData("Nice for What", 208, true),
-                                        new TrackData("Nonstop", 268, true)
                                 ))
                         )
                 ),
