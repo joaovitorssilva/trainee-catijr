@@ -1,5 +1,6 @@
 import { formatDurationText } from "@/utils/FormatDuration"
 import { coverUrl } from "@/utils/coverUrl"
+import { useDominantColor } from "@/hooks/useDominantColor"
 import PlaylistEmptyCover from "@/assets/empty-playlist-cover.png"
 import UserAvatar from "@/assets/user-avatar.png"
 import PencilIcon from "@/assets/icons/pencil-icon.svg"
@@ -17,14 +18,17 @@ interface PlaylistHeaderProps {
 
 export default function PlaylistHeader({ name, musicQtd, duration, isPublic, onEditClick, type, coverUrl: cover }: PlaylistHeaderProps) {
   const isLikedSongs = type === "liked_songs"
+  const gradient = useDominantColor(coverUrl(cover));
 
   return (
-    <div className="flex items-center gap-3 bg-header-gradient rounded-lg pl-5 pb-4 pt-10">
+    <div 
+      className="flex items-center gap-3 rounded-lg pl-5 pb-4 pt-10 transition-[background] duration-300 ease-in-out overflow-hidden min-w-0"
+      style={{ background: `linear-gradient(to bottom, ${gradient.top}, ${gradient.bottom})` }}>
 
       {/* playlist cover image */}
       <button
         onClick={isLikedSongs ? undefined : onEditClick}
-        className="relative w-20 h-20 md:w-43.5 md:h-43.5 cursor-pointer outline-none group">
+        className="relative w-20 h-20 md:w-43.5 md:h-43.5 cursor-pointer outline-none group shrink-0">
 
         {isLikedSongs ? (
           <div className="flex items-center justify-center rounded-sm bg-liked-songs-gradient w-full h-full">
@@ -59,7 +63,7 @@ export default function PlaylistHeader({ name, musicQtd, duration, isPublic, onE
         <button
           onClick={isLikedSongs ? undefined : onEditClick}
           className="cursor-pointer outline-none">
-          <h1 className="text-white text-18-bold md:text-64-black text-left">
+          <h1 className="text-white text-18-bold md:text-64-black text-left line-clamp-1">
             {name}
           </h1>
         </button>
