@@ -45,7 +45,7 @@ public class UserService {
     }
 
     public List<GetArtistDTO> getUserRecentArtists(){
-        List<Artist> artists = artistRepository.findTop5By();
+        List<Artist> artists = artistRepository.findTop10By();
 
         return artists.stream().map(artistMapper::toDTO).toList();   
     }
@@ -57,7 +57,7 @@ public class UserService {
     }
 
     public List<GetMusicDTO> getUserRecentMusics(){
-        List<Music> musics = musicRepository.findTop5By();
+        List<Music> musics = musicRepository.findTop8By();
 
         return musics.stream().map(GetMusicDTO::new).toList();
     }
@@ -69,7 +69,7 @@ public class UserService {
     }
 
     public List<GetAlbumNoMusicsDTO> getUserRecentAlbums(){
-        List<Album> albums= albumRepository.findTop5By();
+        List<Album> albums= albumRepository.findTop10By();
 
         return albums.stream().map(albumMapper::toNoMusicsDTO).toList();
     }

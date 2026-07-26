@@ -12,7 +12,7 @@ import java.util.UUID;
 @Repository
 public interface MusicRepository extends JpaRepository<Music, UUID> {
 
-    List<Music> findTop5By();
+    List<Music> findTop8By();
 
     List<Music> findTop5ByOrderByTimesListenDesc();
 

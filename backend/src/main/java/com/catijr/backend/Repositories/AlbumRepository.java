@@ -13,7 +13,7 @@ import java.util.UUID;
 @Repository
 public interface AlbumRepository extends JpaRepository<Album, UUID> {
 
-    List<Album> findTop5By();
+    List<Album> findTop10By();
 
     @Query(value = "SELECT a.* FROM tb_albums a WHERE unaccent(LOWER(a.album_title)) LIKE unaccent(LOWER(CONCAT('%', :query, '%')))", nativeQuery = true)
     List<Album> searchByTitle(@Param("query") String query);
