@@ -35,8 +35,8 @@ export default function SearchResultRow({ result, onClick }: SearchResultRowProp
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={cn(
-        "grid grid-cols-[36px_1fr_auto_auto] md:grid-cols-[36px_1fr_1fr_auto_auto] items-center justify-between gap-4 p-2 rounded-sm cursor-pointer transition-colors",
-        hovered ? "bg-bg-elements " : "bg-transparent"
+        "grid grid-cols-[60px_1fr_auto_auto] md:grid-cols-[60px_1fr_1fr_auto_auto] items-center justify-between gap-4 p-2 rounded-sm cursor-pointer transition",
+        hovered ? "bg-bg-elements ring-4 ring-bg-elements" : "bg-transparent"
       )}
     >
       {/* Thumbnail */}
@@ -44,7 +44,7 @@ export default function SearchResultRow({ result, onClick }: SearchResultRowProp
         src={coverUrl(result.coverUrl) ?? CoverFallback}
         alt={result.name}
         className={cn(
-          "w-9 h-9 object-cover",
+          "w-15 h-15 object-cover",
           result.type === "artist" ? "rounded-full" : "rounded-sm"
         )}
       />
