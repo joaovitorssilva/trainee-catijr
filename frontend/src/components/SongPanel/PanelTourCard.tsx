@@ -1,12 +1,12 @@
 
-export default function TourCard() {
+export default function SongPanelTourCard() {
   return (
-    <div className="max-w-md w-full flex flex-col gap-3 bg-bg-highlight p-3 rounded-lg">
+    <div className="max-w-md w-full flex flex-col gap-3 p-3 rounded-lg bg-bg-highlight ">
       <h2 className="text-white text-12-bold">
         Em turnê
       </h2>
 
-      <div className="flex gap-3">
+      <div className="flex gap-3 hover:bg-textbox-bg hover:ring-8 ring-textbox-bg rounded-sm">
         {/* date badge */}
         <div className="w-10.5 h-10.5 flex flex-col gap-1 items-center bg-bg-base py-1.5 px-2.5 rounded-sm ">
           <span className="text-white text-8-bold">Mai.</span>
