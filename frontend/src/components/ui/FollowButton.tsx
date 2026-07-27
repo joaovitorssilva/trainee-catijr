@@ -14,7 +14,7 @@ export default function FollowButton({ isFollowing = false, onToggle }: FollowBu
   return (
     <button
       onClick={handleClick}
-      className="rounded-full text-white text-10-medium font-bold px-3 py-1.5 border border-essential-subdued hover:border-white hover:border-2 transition-all duration-150 cursor-pointer"
+      className="rounded-full text-white text-10-medium font-bold px-3 py-1.5 border border-essential-subdued hover:ring-white hover:ring-1 transition-all duration-150 cursor-pointer"
     >
       {label}
     </button>

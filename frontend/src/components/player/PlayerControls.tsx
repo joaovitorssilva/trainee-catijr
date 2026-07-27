@@ -35,7 +35,7 @@ export default function PlayerControls({
   return (
     <div className="flex flex-col items-center gap-1">
       <div className="flex items-center gap-2.5">
-        <button className="hidden md:block cursor-pointer" onClick={previous}>
+        <button className="cursor-pointer" onClick={previous}>
           <img
             src={SkipPrevIcon}
             alt="Previous track"
