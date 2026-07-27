@@ -7,12 +7,12 @@ Rotas responsáveis por buscar o histórico e os dados associados ao perfil do u
 | Método | Endpoint | Descrição |
 | :--- | :--- | :--- |
 | GET | /user/playlists | Retorna todas as playlists do banco de dados (equivalente às playlists do usuário). |
-| GET | /user/recentArtists | Retorna os artistas ouvidos recentemente. |
-| GET | /user/mostPlayedArtists | Retorna os artistas mais ouvidos. |
-| GET | /user/recentMusics | Retorna as músicas ouvidas recentemente. |
-| GET | /user/mostPlayedMusics | Retorna as músicas mais ouvidas. |
-| GET | /user/recentAlbums | Retorna os álbuns ouvidos recentemente. |
-| GET | /user/followers | Retorna a lista de todos os seguidores do usuário. |
+| GET | /user/recentArtists | Retorna os últimos 5 artistas ouvidos. |
+| GET | /user/mostPlayedArtists | Retorna os 5 artistas mais ouvidos. |
+| GET | /user/recentMusics | Retorna as últimas 5 músicas ouvidas. |
+| GET | /user/mostPlayedMusics | Retorna as 5 músicas mais ouvidas. |
+| GET | /user/recentAlbums | Retorna os últimos 5 álbuns ouvidos. |
+| GET | /user/followers | Retorna a lista (fixa) de seguidores do usuário. |
 
 ---
 
@@ -25,6 +25,8 @@ Rotas destinadas à criação, atualização, exclusão e visualização de play
 | POST | /playlist | Cria uma nova playlist. Espera um JSON estruturado no corpo da requisição. |
 | PUT | /playlist/{playlistId}/attributes | Atualiza os atributos de texto/metadados da playlist (exceto a lista de músicas). |
 | PATCH | /playlist/{playlistId}/{musicId} | Insere uma música específica (`musicId`) na playlist (`playlistId`). |
+| PUT | /playlist/{playlistId}/reorder | Reordena as músicas da playlist. Espera um JSON com a lista de IDs das músicas na nova ordem. |
+| POST | /playlist/{playlistId}/cover | Faz upload de uma imagem de capa para a playlist (multipart file). |
 | DELETE | /playlist/{playlistId}/{musicId} | Remove uma música específica (`musicId`) da playlist (`playlistId`). |
 | DELETE | /playlist/{playlistId} | Exclui a playlist inteira do banco de dados. |
 
@@ -47,6 +49,7 @@ Rotas focadas na consulta de informações sobre os álbuns musicais.
 | Método | Endpoint | Descrição |
 | :--- | :--- | :--- |
 | GET | /album/{albumId} | Retorna todos os dados de um álbum específico a partir do seu Id. |
+| GET | /album/{albumId}/musics | Retorna todas as músicas de um álbum específico. |
 
 ---
 
