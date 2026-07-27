@@ -18,7 +18,7 @@ export default function AlbumTracksTable() {
 
   return (
     <div>
-      <div className="grid items-center grid-cols-[16px_1fr] md:grid-cols-[16px_400px_1fr_auto_50px] gap-4 px-4 py-2 border-b border-white/10 mb-2">
+      <div className="grid items-center grid-cols-[16px_1fr] md:grid-cols-[16px_400px_1fr_auto_50px] gap-4 px-4 py-2 border-b border-b-bg-divider mb-2">
         <span className="text-subdued text-10-medium">#</span>
         <span className="text-subdued text-10-medium">
           Título

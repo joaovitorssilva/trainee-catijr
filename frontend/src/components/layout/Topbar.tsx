@@ -19,7 +19,7 @@ export default function Topbar() {
           variant="icon"
           size="md"
           onClick={() => navigate("/")}
-          className="w-9 h-9 rounded-full bg-bg-highlight cursor-pointer">
+          className="w-9 h-9 rounded-full bg-bg-highlight shrink-0 cursor-pointer">
           <img
             src={HomeIcon}
             alt="Home Icon"

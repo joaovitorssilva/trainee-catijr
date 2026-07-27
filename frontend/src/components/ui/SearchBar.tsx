@@ -23,7 +23,7 @@ export default function SearchBar() {
         src={SearchIcon}
         alt="Search Icon"
       />
-      <div className="hidden md:flex flex-1">
+      <div className="flex flex-1">
         <input
           type="text"
           value={query}

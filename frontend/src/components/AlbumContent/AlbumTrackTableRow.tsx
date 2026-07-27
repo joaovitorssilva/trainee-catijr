@@ -110,7 +110,7 @@ export default function AlbumTrackTableRow({ id, music, index, musics }: AlbumTr
         {/* options button */}
         <div className="hidden md:block">
           <OptionsButton
-          onClick={(e) => openMenu(e, "album", id, music.artistId ?? undefined, music.albumId ?? undefined, music.liked)}
+          onClick={(e) => openMenu(e, "track", id, music.artistId ?? undefined, music.albumId ?? undefined, music.liked)}
         />
         </div>
       </div>

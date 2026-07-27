@@ -13,7 +13,7 @@ export default function FollowersSection() {
 
   return (
     <section className="flex flex-col gap-2">
-      <SectionHeader title="Seguidores" showAllLabel="Mostrar mais" />
+      <SectionHeader title="Seguidores"/>
       <Carousel>
         {followers.map((f, i) => (
           <FollowerCard

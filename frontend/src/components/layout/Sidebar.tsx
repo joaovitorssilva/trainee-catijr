@@ -146,7 +146,7 @@ export default function Sidebar() {
 
   return (
     <aside className="flex flex-col gap-3 min-h-0 w-16 md:w-72 bg-bg-base playlist-4 shrink-0 rounded-lg">
-      <div className="hidden md:flex md:flex-col">
+      <div className="hidden md:flex md:flex-col shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
         <NavMenu
           activeFilter={activeFilter}
           onFilterChange={setActiveFilter}

@@ -52,7 +52,7 @@ export default function PlaylistCard({ id, name, musicQtd, type, coverUrl: cover
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="flex flex-col gap-2 cursor-pointer ">
+      className="flex flex-col gap-2 cursor-pointer overflow-hidden min-w-0 shrink-0 w-15 md:w-33">
       <div className="relative w-15 h-15 md:w-33 md:h-33">
         {type === "liked_songs" ? (
           <div className="flex items-center justify-center rounded-xs bg-liked-songs-gradient w-full h-full">
@@ -73,7 +73,7 @@ export default function PlaylistCard({ id, name, musicQtd, type, coverUrl: cover
       </div>
 
       <div className="flex flex-col gap-1 overflow-hidden">
-        <span className="text-white text-12-medium ">
+        <span className="text-white text-12-medium line-clamp-2">
           {name}
         </span>
         <span className="hidden md:block text-subdued text-10-medium">
