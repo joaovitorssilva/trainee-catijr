@@ -35,7 +35,7 @@ export default function SearchResultRow({ result, onClick }: SearchResultRowProp
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={cn(
-        "grid grid-cols-[36px_1fr_1fr_auto_auto] items-center justify-between gap-4 p-2 rounded-sm cursor-pointer transition-colors",
+        "grid grid-cols-[36px_1fr_auto_auto] md:grid-cols-[36px_1fr_1fr_auto_auto] items-center justify-between gap-4 p-2 rounded-sm cursor-pointer transition-colors",
         hovered ? "bg-bg-elements " : "bg-transparent"
       )}
     >
