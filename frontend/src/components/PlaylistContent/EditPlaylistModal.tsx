@@ -36,6 +36,14 @@ export default function EditPlaylistModal({
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
+    setName(prev => prev !== playlist.name ? playlist.name : prev)
+    setDescription(prev => prev !== playlist.description ? playlist.description : prev)
+    setIsPublic(prev => prev !== playlist.isPublic ? playlist.isPublic : prev)
+    setCoverFile(null)
+    setCoverPreview(null)
+  }, [playlist.name, playlist.description, playlist.isPublic])
+  
+  useEffect(() => {
     return () => {
       if (coverPreview) URL.revokeObjectURL(coverPreview)
     }
@@ -71,14 +79,14 @@ export default function EditPlaylistModal({
           <div
             onClick={handleCoverClick}
             className="relative h-33.5 w-33.5 rounded-sm shrink-0 group">
-            <img 
+            <img
               src={displayImage}
-              className="w-full h-full object-cover rounded-xs" 
+              className="w-full h-full object-cover rounded-xs"
             />
 
             {/* hover overlay */}
             <div className="absolute flex flex-col gap-3 items-center justify-center inset-0 bg-bg-popup opacity-0 group-hover:opacity-100 transition-opacity ">
-              <img 
+              <img
                 src={PencilIcon}
                 className="w-8 h-8"
               />

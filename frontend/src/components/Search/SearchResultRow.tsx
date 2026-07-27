@@ -60,7 +60,7 @@ export default function SearchResultRow({ result, onClick }: SearchResultRowProp
       </div>
 
       {/* Type badge */}
-      <span className="text-subdued text-10-bold bg-bg-elements w-fit px-2 py-1 rounded-xs shrink-0">
+      <span className="hidden md:block text-subdued text-10-bold bg-bg-elements w-fit px-2 py-1 rounded-xs shrink-0">
         {TYPE_LABEL[result.type]}
       </span>
 

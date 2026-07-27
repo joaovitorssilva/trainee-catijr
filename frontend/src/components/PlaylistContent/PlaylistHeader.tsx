@@ -68,7 +68,7 @@ export default function PlaylistHeader({ name, musicQtd, duration, isPublic, onE
           </h1>
         </button>
 
-        <div className="flex items-center gap-2 ">
+        <div className="flex items-center gap-1 md:gap-2 ">
           <img src={UserAvatar} className="w-6 h-6 rounded-full" />
           <span className="text-white text-10-bold">João Vitor</span>
           <span className="text-subdued text-10-medium "> • {musicQtd} músicas,</span>
