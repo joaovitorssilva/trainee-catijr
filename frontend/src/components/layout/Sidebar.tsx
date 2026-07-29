@@ -145,7 +145,7 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="flex flex-col gap-3 min-h-0 w-16 md:w-72 bg-bg-base playlist-4 shrink-0 rounded-lg">
+    <aside className="flex flex-col gap-3 min-h-0 w-15 md:w-72 bg-bg-base playlist-4 shrink-0 rounded-lg">
       <div className="hidden md:flex md:flex-col shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
         <NavMenu
           activeFilter={activeFilter}
@@ -156,7 +156,7 @@ export default function Sidebar() {
         />
       </div>
 
-      <div className={`flex flex-col gap-2 md:gap-4 p-1.5 md:p-3 overflow-y-auto flex-1 min-h-0 transition-opacity duration-700 ${isTransitioning ? "opacity-0" : "opacity-100"}`}>
+      <div className={`flex flex-col gap-4 p-3 overflow-y-auto flex-1 min-h-0 transition-opacity duration-700 ${isTransitioning ? "opacity-0" : "opacity-100"}`}>
         {sortedEntries.map((filter) => (
           <LibraryItem
             key={`${filter.type}-${filter.id}`}

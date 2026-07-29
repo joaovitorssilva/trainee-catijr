@@ -103,7 +103,7 @@ export function LibraryItem({ id, name, type, subtitle, isActive, onClick, playl
     <div
       onClick={onClick}
       onContextMenu={handleContextMenu}
-      className={`flex items-center justify-center md:justify-start gap-2 cursor-pointer rounded-sm transition ease-out duration-150 ${isActive ? "bg-bg-divider ring-4 ring-bg-divider" : "hover:bg-bg-elements hover:ring-4 ring-bg-elements "}`}
+      className={`flex items-center  gap-2 cursor-pointer rounded-sm transition ease-out duration-150 ${isActive ? "bg-bg-divider ring-4 ring-bg-divider" : "hover:bg-bg-elements hover:ring-4 ring-bg-elements "}`}
     >
       <div
         className="relative w-9 h-9 shrink-0"
@@ -126,7 +126,7 @@ export function LibraryItem({ id, name, type, subtitle, isActive, onClick, playl
         {isHovered && (
           <button
             onClick={handleTogglePlay}
-            className="absolute inset-0 flex items-center justify-center bg-black/45 rounded-xs cursor-pointer"
+            className={`absolute inset-0 flex items-center justify-center bg-black/45 ${type === "artist" ? "rounded-full" : "rounded-xs"} cursor-pointer`}
           >
             <img
               src={isThisPlaying ? PauseIcon : PlayIcon}
@@ -136,7 +136,7 @@ export function LibraryItem({ id, name, type, subtitle, isActive, onClick, playl
         )}
       </div>
 
-      <div className="flex-1 min-w-0 flex items-center justify-between">
+      <div className="flex flex-1 min-w-0 items-center justify-between">
         <div className="hidden md:flex md:flex-col md:gap-1 md:min-w-0">
           <div className="flex items-center gap-1 min-w-0">
             <span className={`${isThisPlaying ? "text-primary" : "text-white"} text-10-bold truncate`}>
