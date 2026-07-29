@@ -152,14 +152,14 @@ export function LibraryItem({ id, name, type, subtitle, isActive, onClick, playl
             </span>
           </div>
         </div>
-        <div className="hidden md:block">
-          {isThisPlaying && (
-            <img
-              src={SoundIcon}
-              className="w-3 h-3 shrink-0"
-            />
-          )}
-        </div>
+            <div>
+            {isThisPlaying && (
+              <img 
+                src={SoundIcon} 
+                className="w-3 h-3 shrink-0"
+              />
+            )}
+          </div>
       </div>
     </div>
   )

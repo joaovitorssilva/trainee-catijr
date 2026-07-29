@@ -28,7 +28,7 @@ interface TrackOptionsMenuProps {
 
 export default function TrackOptionsMenu({ x, y, onClose, trackId, artistId, albumId, liked, playlistId }: TrackOptionsMenuProps) {
   const navigate = useNavigate()
-  const { triggerRefresh } = useMenuContext()
+  const { triggerRefresh, openCreditsModal } = useMenuContext()
   const [showPlaylistSubmenu, setShowPlaylistSubmenu] = useState(false)
 
   const handleRemoveMusicFromPlaylist = () => {
@@ -91,6 +91,7 @@ export default function TrackOptionsMenu({ x, y, onClose, trackId, artistId, alb
       <OptionsMenuItem
         label="Ver créditos"
         icon={CreditsIcon}
+        onClick={() => { openCreditsModal(); onClose() }}
       />
     </OptionsMenuContainer>
   )

@@ -1,9 +1,11 @@
 import { usePlayer } from "@/context/PlayerContext";
+import { mockCredits } from "@/utils/credits.mock";
 import SongPanelHeader from "../SongPanel/PanelHeader";
 import SongPanelTrackInfo from "../SongPanel/PanelTrackInfo";
 import SongPanelArtistCard from "../SongPanel/PanelArtistCard";
 import PanelNextSong from "../SongPanel/PanelNextSong";
-import TourCard from "../SongPanel/TourCard";
+import SongPanelTourCard from "../SongPanel/PanelTourCard";
+import SongPanelCreditsCard from "../SongPanel/PanelCreditsCard";
 
 export default function SongPanel() {
   const { currentTrack } = usePlayer()
@@ -15,9 +17,9 @@ export default function SongPanel() {
       <SongPanelHeader music={currentTrack} />
       <SongPanelTrackInfo />
       <SongPanelArtistCard />
-      <TourCard/>
+      <SongPanelCreditsCard credits={mockCredits} />
+      <SongPanelTourCard />
       <PanelNextSong />
-
     </aside>
   )
 }

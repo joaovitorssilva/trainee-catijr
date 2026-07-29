@@ -26,6 +26,9 @@ interface MenuContextValue {
   deletingPlaylistId: string | null
   openDeleteModal: (id: string) => void
   closeDeleteModal: () => void
+  isCreditsModalOpen: boolean
+  openCreditsModal: () => void
+  closeCreditsModal: () => void
   refreshKey: number
   triggerRefresh: () => void
 }
@@ -40,6 +43,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
   const [menu, setMenu] = useState<MenuContextState | null>(null)
   const [editingPlaylistId, setEditingPlaylistId] = useState<string | null>(null)
   const [deletingPlaylistId, setDeletingPlaylistId] = useState<string | null>(null)
+  const [isCreditsModalOpen, setIsCreditsModalOpen] = useState(false)
   const [refreshKey, setRefreshKey] = useState(0)
 
   const openMenu = useCallback((
@@ -69,6 +73,14 @@ export function MenuProvider({ children }: { children: ReactNode }) {
     setEditingPlaylistId(null)
   }, [])
 
+  const openCreditsModal = useCallback(() => {
+    setIsCreditsModalOpen(true)
+  }, [])
+
+  const closeCreditsModal = useCallback(() => {
+    setIsCreditsModalOpen(false)
+  }, [])
+
   const openDeleteModal = useCallback((id: string) => {
     setDeletingPlaylistId(id)
   }, [])
@@ -82,7 +94,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
   }, [])
 
   return (
-    <MenuContext.Provider value={{ menu, openMenu, closeMenu, editingPlaylistId, openEditModal, closeEditModal, deletingPlaylistId, openDeleteModal, closeDeleteModal, refreshKey, triggerRefresh }}>
+    <MenuContext.Provider value={{ menu, openMenu, closeMenu, editingPlaylistId, openEditModal, closeEditModal, deletingPlaylistId, openDeleteModal, closeDeleteModal, isCreditsModalOpen, openCreditsModal, closeCreditsModal, refreshKey, triggerRefresh }}>
       {children}
     </MenuContext.Provider>
   )
