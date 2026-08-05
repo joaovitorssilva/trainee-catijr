@@ -34,3 +34,5 @@ build/
 
 ### Database ###
 /spotify_data
+
+/uploads/covers
